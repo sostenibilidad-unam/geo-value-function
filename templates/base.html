@@ -73,16 +73,47 @@
 	  </div>
 
 	  
-	  <div class="ui blue primary button" onclick="update_plot()">Plot</div>
+	  <div class="ui blue primary button" onclick="update_plot(); update_code();">Plot</div>
 	</div>
+
 	
 	{% endblock %}
       </div>
-    </div>    
+
+      <div class="ui segment">
+
+	<script>
+	  function update_code() {
+	  var L = $('#L').val(),
+	  k = $('#k').val(),
+	  center = $('#center').val();
+	  
+	  document.getElementById("python").value="/plot_logistica/?L=" + L + "&k=" + k + "&center=" + center;
+	  }
+	</script>
+	
+	<div class="ui form" id="args">	
+	  <div class="field">
+            <label>scala code</label>
+            <div class="ui left icon input">
+              <input placeholder="to_report" id="scala">
+            </div>
+	  </div>
+
+	  <div class="field">
+            <label>Python code</label>
+            <textarea id="python" rows="2"></textarea>
+	  </div>	
+	</div>
+      </div>
+    </div>
+
+
+    
     <div class="ten wide column">
       <div class="ui segment">
 	{% block plot %}
-	<img src="/plot_logistica" id="plot">
+	<img src="/plot_logistica" id="plot">77
 	{% endblock %}
       </div>
     </div>
