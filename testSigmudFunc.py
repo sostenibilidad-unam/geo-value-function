@@ -6,7 +6,7 @@ import numpy
 
 from jinja2 import Environment, FileSystemLoader
 
-from flask import Flask, make_response, request
+from flask import Flask, make_response, request, send_from_directory
 app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('templates'))
@@ -42,6 +42,11 @@ def plot_logistica():
 def form():
     template = env.get_template('base.html')
     return template.render()
+
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
 
 
 if __name__ == "__main__":
