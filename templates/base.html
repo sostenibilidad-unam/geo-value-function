@@ -19,15 +19,19 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"
 	    integrity="sha256-Bhi6GMQ/72uYZcJXCJ2LToOIcN3+Cx47AZnq/Bw1f7A="
-	    crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.1/ol.min.css" integrity="sha256-sHpvTx84mhebaHVUwkVCJuwLaTkjv3YnHWDbYyWFblw=" crossorigin="anonymous" />
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.css"
+integrity="sha256-fjKCwdf+fsFNnRRFfKZIznHEygdh6vtEJqVg8Eu3Kuw="
+crossorigin="anonymous" />  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.js" integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.1/ol.min.js" integrity="sha256-KD/43M9dwhTg3mXquPpT7fJMUvIFT2ZTN5rfAhD06MU=" crossorigin="anonymous"></script>
+  
     
 
-    <script src="/static/encharcamientos_ageb0.js"></script>
+    <script src="/static/AGEB_elev0.js"></script>
 
 
     <style type="text/css">
@@ -56,6 +60,7 @@
 	  center = $('#center').val();
 	  
 	  document.getElementById("plot").src="/plot_logistica/?L=" + L + "&k=" + k + "&center=" + center;
+	  recalculate();
 	  }
 	</script>
 
@@ -128,7 +133,7 @@
 
     
     <div class="ten wide column">
-      <div id="map" style="width: 100%; height=800px"></div>
+      <div id="map" style="width: 100%; height=100%;"></div>
     </div>
     </div>
 
