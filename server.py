@@ -3,6 +3,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import StringIO
 import numpy
+from os import listdir
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -41,7 +42,16 @@ def plot_logistica():
 @app.route("/")
 def form():
     template = env.get_template('logistic.html')
-    return template.render()
+    return template.render(layers=get_layers())
+
+
+def get_layers():
+    layers = []
+    for f in listdir('static/layers'):
+        if f.endswith('.json'):
+            layers.append({'name': f.replace('.json', ''),
+                           'url': "/static/layers/%s" % f})
+    return layers
 
 
 @app.route('/static/<path:path>')

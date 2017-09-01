@@ -84,33 +84,44 @@ var style_data_layer = function(feature, resolution) {
 
 
 
+function get_features(url) {
+    var data_layer = {};
+    
+    $.ajax({
+	url: url,
+	async: false,
+	dataType: 'json',
+	success: function(data) {
+            data_layer = data;
+	}
+    });
+    var format_data_layer = new ol.format.GeoJSON();
+    var features = format_data_layer.readFeatures(data_layer,
+						  {dataProjection: 'EPSG:4326',
+						   featureProjection: 'EPSG:3857'});
+    
+    return features;
+}
 
-var data_layer = {};
-
-$.ajax({
-    url: '/static/elevacion.json',
-    async: false,
-    dataType: 'json',
-    success: function(data) {
-        data_layer = data;
-    }
-});
-
-
-var format_data_layer = new ol.format.GeoJSON();
-var features_data_layer = format_data_layer.readFeatures(data_layer,
-					       {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
 
 var jsonSource_data_layer = new ol.source.Vector();
+var layer = new ol.layer.Vector();
 
-jsonSource_data_layer.addFeatures(features_data_layer);
+function set_layer(url) {
+    map.removeLayer(layer);
+    jsonSource_data_layer = new ol.source.Vector();
+    jsonSource_data_layer.addFeatures(get_features(url));
 
-var layer = new ol.layer.Vector({
-    source:jsonSource_data_layer,
-    style: style_data_layer,
-    opacity: 0.85
-});
+    layer = new ol.layer.Vector({
+	source: jsonSource_data_layer,
+	style: style_data_layer,
+	opacity: 0.85
+    });
+    map.addLayer(layer);
+}
 
+
+    
 function logistica(x){
     var L = $('#L').val(),
 	k = $('#k').val(),
@@ -142,12 +153,10 @@ var map = new ol.Map({
     })
 });
 
+aguas('/static/layers/elevacion.json');
 
 
-map.addLayer(layer);
-
-
-function update_map(){
+function apply_vf(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
             fv: logistica(feature.get("value"))

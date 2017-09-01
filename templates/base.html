@@ -59,8 +59,25 @@
 	</div>
       </div>
 
+      <!-- open layers map -->
       <div class="ten wide column">
-	<div id="map" style="width: 100%; height=100%;"></div>
+	<div class="ui segment">
+	  <div class="ui form">
+	    <div class="field">
+	      <label>Layer</label>
+	      <select class="ui search dropdown"
+		      onchange="set_layer(this.value);">
+		<option value="">Select Layer</option>		
+		{% for layer in layers %}
+		<option value="{{ layer.url }}">{{ layer.name }}</option>
+		{% endfor %}
+	      </select>
+	    </div>
+	  </div>
+	</div>
+	<div class="ui segment">
+	  <div id="map" style="width: 100%; height=100%;"></div>
+	</div>
       </div>
     </div>
 
