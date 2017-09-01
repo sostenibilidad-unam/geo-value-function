@@ -66,8 +66,8 @@
 	    <div class="field">
 	      <label>Layer</label>
 	      <select class="ui search dropdown"
-		      onchange="set_layer(this.value);">
-		<option value="">Select Layer</option>		
+		      onchange="update_to(this.value);"
+		      id="select_layer">
 		{% for layer in layers %}
 		<option value="{{ layer.url }}">{{ layer.name }}</option>
 		{% endfor %}

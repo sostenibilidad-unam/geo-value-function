@@ -108,6 +108,8 @@ var jsonSource_data_layer = new ol.source.Vector();
 var layer = new ol.layer.Vector();
 var range = {'min': 10000000,
 	     'max': 0}
+
+
 function set_layer(url) {
     map.removeLayer(layer);
     jsonSource_data_layer = new ol.source.Vector();
@@ -119,8 +121,25 @@ function set_layer(url) {
 	opacity: 0.85
     });
     map.addLayer(layer);
-    range = get_range();    
 }
+
+
+function logistic_args_from_range() {
+    var center = range['min'] + ((range['max'] - range['min']) / 2);
+    k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min'])
+    $('#k').val(k);
+    $('#center').val(center);
+}
+
+
+
+function update_to(url) {
+    set_layer(url);
+    range = get_range();
+    logistic_args_from_range();
+    update_plot();
+}
+
 
 function get_range() {
     var max = 0, min = 1000000000;    
@@ -163,9 +182,6 @@ var map = new ol.Map({
     })
 });
 
-var pruebita = 0;
-set_layer('/static/layers/elevacion.json');
-
 
 function apply_vf(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
@@ -191,3 +207,4 @@ function update_plot() {
 }
 
 
+update_to($("#select_layer").val());
