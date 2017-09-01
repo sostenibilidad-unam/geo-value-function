@@ -37,20 +37,20 @@ var style_data_layer = function(feature, resolution) {
 			    fill: new ol.style.Fill({color: paleta[4]})
 			})]]];
     var context = {
-        feature: feature,
-        variables: {}
+	feature: feature,
+	variables: {}
     };
     var value = feature.get("fv");
     var style = ranges_data_layer[0][2];
     for (i = 0; i < ranges_data_layer.length; i++){
-        var range = ranges_data_layer[i];
-        if (value > range[0] && value<=range[1]){
-	    
-            style =  range[2];
-	    
-        }
+	var range = ranges_data_layer[i];
+	if (value > range[0] && value<=range[1]){
+
+	    style =  range[2];
+
+	}
     };
-    
+
     var labelText = "";
     var key = "";
     size = 0;
@@ -58,11 +58,11 @@ var style_data_layer = function(feature, resolution) {
     var offsetX = 8;
     var offsetY = 3;
     if ("" !== null) {
-        labelText = String("");
+	labelText = String("");
     } else {
-        labelText = ""
-    }                                                            
-    
+	labelText = ""
+    }
+
     if (!styleCache_data_layer[key]){
 	var text = new ol.style.Text({
 	    font: '14.3px \'Ubuntu\', sans-serif',
@@ -86,27 +86,28 @@ var style_data_layer = function(feature, resolution) {
 
 function get_features(url) {
     var data_layer = {};
-    
+
     $.ajax({
 	url: url,
 	async: false,
 	dataType: 'json',
 	success: function(data) {
-            data_layer = data;
+	    data_layer = data;
 	}
     });
     var format_data_layer = new ol.format.GeoJSON();
     var features = format_data_layer.readFeatures(data_layer,
 						  {dataProjection: 'EPSG:4326',
 						   featureProjection: 'EPSG:3857'});
-    
+
     return features;
 }
 
 
 var jsonSource_data_layer = new ol.source.Vector();
 var layer = new ol.layer.Vector();
-
+var range = {'min': 10000000,
+	     'max': 0}
 function set_layer(url) {
     map.removeLayer(layer);
     jsonSource_data_layer = new ol.source.Vector();
@@ -118,15 +119,24 @@ function set_layer(url) {
 	opacity: 0.85
     });
     map.addLayer(layer);
+    range = get_range();    
 }
 
+function get_range() {
+    var max = 0, min = 1000000000;    
+    jsonSource_data_layer.getFeatures().forEach(function(feature){
+	max = Math.max(max, feature.get("value"));
+	min = Math.min(min, feature.get("value"));	
+    });
+    return {'max': max,
+	    'min': min}
+}
 
-    
 function logistica(x){
     var L = $('#L').val(),
 	k = $('#k').val(),
 	center = $('#center').val();
-    return L / (1.0 + Math.exp(-k * (x - center)))    
+    return L / (1.0 + Math.exp(-k * (x - center)))
 }
 
 
@@ -134,7 +144,7 @@ function setIntervals(cuts){
     webber_cuts = cuts;
     layer.setStyle(style_data_layer);
     layer.redraw();
-    
+
 }
 
 var stamenLayer = new ol.layer.Tile({
@@ -153,13 +163,14 @@ var map = new ol.Map({
     })
 });
 
-aguas('/static/layers/elevacion.json');
+var pruebita = 0;
+set_layer('/static/layers/elevacion.json');
 
 
 function apply_vf(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-            fv: logistica(feature.get("value"))
+	    fv: logistica(feature.get("value"))
 	});
     });
     layer.setStyle(style_data_layer);
@@ -170,7 +181,13 @@ function update_plot() {
     var L = $('#L').val(),
 	k = $('#k').val(),
 	center = $('#center').val();
-
+    
     // update plot
-    document.getElementById("plot").src="/plot_logistica/?L=" + L + "&k=" + k + "&center=" + center;
+    document.getElementById("plot").src="/plot_logistica/?L=" + L
+	+ "&k=" + k
+	+ "&center=" + center
+	+ "&min=" + range['min']
+	+ "&max=" + range['max'];
 }
+
+
