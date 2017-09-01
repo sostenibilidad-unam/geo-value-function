@@ -41,13 +41,21 @@
 
   <body>
 
-    <h1 class="ui center aligned header">Funciones de Valor</h1>
+    <h1 class="ui center aligned header">Value Function</h1>
 
-    <h2 class="ui center aligned header">Logística</h2>
+    <h2 class="ui center aligned header">{{ function_name }}</h2>
 
 
     <div class="ui two column stackable grid">
       <div class="six wide column">
+
+	<div class="ui segment">
+	  <ul>
+	    <li><a href="/logistic/">logistic</a></li>
+	    <li><a href="/bell/">bell</a></li>
+	  </ul>
+	</div>
+	
 	<div class="ui segment">
 	  {% block form %}
 	  {% endblock %}
@@ -81,7 +89,9 @@
       </div>
     </div>
 
-    <script src="/static/vf.js"></script>
+    <script src="/static/map_setup.js"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 
 </html>

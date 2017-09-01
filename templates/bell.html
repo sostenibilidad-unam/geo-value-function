@@ -3,18 +3,12 @@
 {% block form %}
 <div class="ui form" id="args">
   <div class="field">
-    <label>L</label>
+    <label>a</label>
     <div class="ui left icon input">
-      <input placeholder="1" id="L" value="1">
+      <input placeholder="1" id="a" value="1">
     </div>
   </div>
   
-  <div class="field">
-    <label>k</label>
-    <div class="ui left icon input">
-      <input placeholder="0.02" id="k" value="0.02">
-    </div>
-  </div>
   
   <div class="field">
     <label>center</label>
@@ -22,16 +16,17 @@
       <input placeholder="2600" type="number" id="center" value="2600">
     </div>
   </div>
-  <div class="ui blue primary button" onclick="apply_logistic(); logistic_plot();">Plot</div>
+  <div class="ui blue primary button" onclick="apply_bell(); bell_plot();">Plot</div>
 </div>
 {% endblock %}
 
 
 {% block plot %}
-<img src="/logistic/plot/" id="plot" width="100%" >
+<img src="/bell/plot/" id="plot" width="100%" >
 {% endblock %}
 
 
+
 {% block scripts %}
-<script src="/static/logistic.js"></script>
+<script src="/static/bell.js"></script>
 {% endblock %}
