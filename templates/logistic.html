@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block form %}
+<div class="ui form" id="args">
+  <div class="field">
+    <label>L</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="L" value="1">
+    </div>
+  </div>
+  
+  <div class="field">
+    <label>k</label>
+    <div class="ui left icon input">
+      <input placeholder="0.02" id="k" value="0.02">
+    </div>
+  </div>
+  
+  <div class="field">
+    <label>center</label>
+    <div class="ui left icon input">
+      <input placeholder="2600" type="number" id="center" value="2600">
+    </div>
+  </div>
+  <div class="ui blue primary button" onclick="update_map(); update_plot();">Plot</div>
+</div>
+{% endblock %}
+
+
+{% block plot %}
+<img src="/plot_logistica" id="plot" width="100%" >
+{% endblock %}

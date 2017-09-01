@@ -19,19 +19,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"
 	    integrity="sha256-Bhi6GMQ/72uYZcJXCJ2LToOIcN3+Cx47AZnq/Bw1f7A="
-crossorigin="anonymous"></script>
+	    crossorigin="anonymous"></script>
 
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.css"
-integrity="sha256-fjKCwdf+fsFNnRRFfKZIznHEygdh6vtEJqVg8Eu3Kuw="
-crossorigin="anonymous" />  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.js" integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+	  href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.css"
+	  integrity="sha256-fjKCwdf+fsFNnRRFfKZIznHEygdh6vtEJqVg8Eu3Kuw="
+	  crossorigin="anonymous" />
 
-  
-    
-
-    <script src="/static/AGEB_elev0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.js"
+	    integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
 
 
     <style type="text/css">
@@ -42,104 +39,32 @@ crossorigin="anonymous" />
 
   </head>
 
-<body>
+  <body>
 
-  <h1 class="ui center aligned header">Funciones de Valor</h1>
+    <h1 class="ui center aligned header">Funciones de Valor</h1>
 
-  <h2 class="ui center aligned header">Logística</h2>
+    <h2 class="ui center aligned header">Logística</h2>
 
 
-  <div class="ui two column stackable grid">
-    <div class="six wide column">
-      <div class="ui segment">
-	{% block form %}
-	<script>
-	  function update_plot() {
-	  var L = $('#L').val(),
-	  k = $('#k').val(),
-	  center = $('#center').val();
-	  
-	  document.getElementById("plot").src="/plot_logistica/?L=" + L + "&k=" + k + "&center=" + center;
-	  recalculate();
-	  }
-	</script>
-
-	
-	<div class="ui form" id="args">
-	  <div class="field">
-            <label>L</label>
-            <div class="ui left icon input">
-              <input placeholder="1" id="L" value="1">
-            </div>
-	  </div>
-
-	  <div class="field">
-            <label>k</label>
-            <div class="ui left icon input">
-              <input placeholder="0.02" id="k" value="0.02">
-            </div>
-	  </div>
-
-	  <div class="field">
-            <label>center</label>
-            <div class="ui left icon input">
-              <input placeholder="2600" type="number" id="center" value="2600">
-            </div>
-	  </div>
-
-	  
-	  <div class="ui blue primary button" onclick="update_plot(); update_code();">Plot</div>
+    <div class="ui two column stackable grid">
+      <div class="six wide column">
+	<div class="ui segment">
+	  {% block form %}
+	  {% endblock %}
 	</div>
 
-	
-	{% endblock %}
-      </div>
-
-      <div class="ui segment">
-	{% block plot %}
-	<img src="/plot_logistica" id="plot" width="100%" >
-	{% endblock %}
-      </div>
-      
-      
-      <div class="ui segment">
-
-	<script>
-	  function update_code() {
-	  var L = $('#L').val(),
-	  k = $('#k').val(),
-	  center = $('#center').val();
-	  
-	  document.getElementById("python").value="/plot_logistica/?L=" + L + "&k=" + k + "&center=" + center;
-	  }
-	</script>
-	
-	<div class="ui form" id="args">	
-	  <div class="field">
-            <label>scala code</label>
-            <div class="ui left icon input">
-              <input placeholder="to_report" id="scala">
-            </div>
-	  </div>
-
-	  <div class="field">
-            <label>Python code</label>
-            <textarea id="python" rows="2"></textarea>
-	  </div>	
+	<div class="ui segment">
+	  {% block plot %}
+	  {% endblock %}
 	</div>
       </div>
+
+      <div class="ten wide column">
+	<div id="map" style="width: 100%; height=100%;"></div>
+      </div>
     </div>
 
-
-    
-    <div class="ten wide column">
-      <div id="map" style="width: 100%; height=100%;"></div>
-    </div>
-    </div>
-
-
-    <script src="/static/styles.js">
-    </script> 
-</body>
+    <script src="/static/vf.js"></script>
+  </body>
 
 </html>

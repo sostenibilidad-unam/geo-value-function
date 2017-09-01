@@ -40,7 +40,7 @@ def plot_logistica():
 
 @app.route("/")
 def form():
-    template = env.get_template('base.html')
+    template = env.get_template('logistic.html')
     return template.render()
 
 
