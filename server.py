@@ -17,20 +17,20 @@ def logistic(t, L, k, center):
     return L / (1.0 + math.exp(-k * (t - center)))
 
 
-def bell(min_v, max_v, a, center):
-    return 1
+def bell(t, a, center):
+    return  math.exp(0.0  - (((t - center)/a)*((t - center)/a)))
 
 
 @app.route("/bell/plot/")
 def bell_plot():
-    L = float(request.args.get('L', 1))
-    k = float(request.args.get('k', 0.02))
+    a = float(request.args.get('a', 0.5))
+
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', (max_v - min_v) / 2.0))
+    center = float(request.args.get('center', min_v + ( (max_v - min_v) / 2.0)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [bell(t, L, k, center) for t in x]
+    y = [bell(t, a, center) for t in x]
 
     fig = Figure()
     ax = fig.add_subplot(111)
