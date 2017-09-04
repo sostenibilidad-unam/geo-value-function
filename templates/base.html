@@ -31,6 +31,9 @@
 	    integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
     <style type="text/css">
       body {
            margin: 3em;
@@ -73,10 +76,14 @@
 	    <li><a href="/wf/">Webber-Feshner</a></li>	    
 	  </ul>
 	</div>
-	
+
 	<div class="ui segment">
 	  {% block form %}
 	  {% endblock %}
+	</div>
+	
+	<div class="ui segment">
+	  {{ equation }}
 	</div>
 
 	<div class="ui segment">

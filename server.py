@@ -125,10 +125,17 @@ def wf_plot():
     return response
 
 
+def logistic_latex(L, k, center):
+    # http://docs.mathjax.org/en/latest/advanced/typeset.html#manipulating-individual-math-elements
+    return "$$ \\frac{%s}{1+e^{-%s(t-%s)}} $$" % (L, k, center)
+
+
 @app.route("/logistic/")
 def logistic_form():
     template = env.get_template('logistic.html')
-    return template.render(layers=get_layers(), function_name='Logistic')
+    return template.render(layers=get_layers(),
+                           function_name='Logistic',
+                           equation=logistic_latex(1, 1, 1))
 
 
 @app.route("/gaussian/")
@@ -141,7 +148,6 @@ def gaussian_form():
 def wf_form():
     template = env.get_template('wf.html')
     return template.render(layers=get_layers(), function_name='Webber-Feshner')
-
 
 
 def get_layers():
