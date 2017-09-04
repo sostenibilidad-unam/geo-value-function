@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block form %}
+<div class="ui form" id="args">
+  <div class="field">
+    <label>x-cut 1</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="x1" value="0.1">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>x-cut 2</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="x2" value="0.3">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>x-cut 3</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="x3" value="0.7">
+    </div>
+  </div>
+
+  <div class="field">
+    <label>x-cut 4</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="x4" value="0.9">
+    </div>
+  </div>
+  
+  <div class="field">
+    <label>FP</label>
+    <div class="ui left icon input">
+      <input type="number" id="fp" value="2">
+    </div>
+  </div>
+  <div class="ui blue primary button" onclick="apply_wf(); wf_plot();">Plot</div>
+</div>
+{% endblock %}
+
+
+{% block plot %}
+<img src="/wf/plot/" id="plot" width="100%" >
+{% endblock %}
+
+
+{% block scripts %}
+<script src="/static/wf.js"></script>
+{% endblock %}

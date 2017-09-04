@@ -18,7 +18,37 @@ def logistic(t, L, k, center):
 
 
 def gaussian(t, a, center):
-    return  math.exp(0.0  - (((t - center)/a)*((t - center)/a)))
+    return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+
+
+def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
+    the_sum = 0
+    for i in range(categories):
+        the_sum += ((fp) ** i)
+
+    bit = (maximum - minimum) / the_sum
+    cuts = []
+    cuts.append(minimum)
+    for i in range(categories):
+        prev = cuts[i]
+        cut = prev + fp ** i * bit
+        cuts.append(cut)
+
+    return cuts
+
+
+def wf(t, x_cuts, fp):
+    wf_cuts = bojorquezSerrano(fp)
+    if t < x_cuts[0]:
+        return wf_cuts[1]
+    elif t >= x_cuts[0] and t < x_cuts[1]:
+        return wf_cuts[2]
+    elif t >= x_cuts[1] and t < x_cuts[2]:
+        return wf_cuts[3]
+    elif t >= x_cuts[2] and t < x_cuts[3]:
+        return wf_cuts[4]
+    elif t >= x_cuts[3]:
+        return wf_cuts[5]
 
 
 @app.route("/gaussian/plot/")
@@ -27,7 +57,7 @@ def gaussian_plot():
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', min_v + ( (max_v - min_v) / 2.0)))
+    center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [gaussian(t, a, center) for t in x]
@@ -68,6 +98,33 @@ def logistic_plot():
     return response
 
 
+@app.route("/wf/plot/")
+def wf_plot():
+
+    x_cuts = [0, 0, 0, 0]
+    x_cuts[0] = float(request.args.get('x1', 0.1))
+    x_cuts[1] = float(request.args.get('x2', 0.3))
+    x_cuts[2] = float(request.args.get('x3', 0.7))
+    x_cuts[3] = float(request.args.get('x4', 0.9))
+    fp = float(request.args.get('fp', 2))
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [wf(t, x_cuts, fp) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+
 @app.route("/logistic/")
 def logistic_form():
     template = env.get_template('logistic.html')
@@ -78,6 +135,13 @@ def logistic_form():
 def gaussian_form():
     template = env.get_template('gaussian.html')
     return template.render(layers=get_layers(), function_name='Gaussian')
+
+
+@app.route("/wf/")
+def wf_form():
+    template = env.get_template('wf.html')
+    return template.render(layers=get_layers(), function_name='Webber-Feshner')
+
 
 
 def get_layers():
