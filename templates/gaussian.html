@@ -16,17 +16,17 @@
       <input placeholder="2600" type="number" id="center" value="2600">
     </div>
   </div>
-  <div class="ui blue primary button" onclick="apply_bell(); bell_plot();">Plot</div>
+  <div class="ui blue primary button" onclick="apply_gaussian(); gaussian_plot();">Plot</div>
 </div>
 {% endblock %}
 
 
 {% block plot %}
-<img src="/bell/plot/" id="plot" width="100%" >
+<img src="/gaussian/plot/" id="plot" width="100%" >
 {% endblock %}
 
 
 
 {% block scripts %}
-<script src="/static/bell.js"></script>
+<script src="/static/gaussian.js"></script>
 {% endblock %}

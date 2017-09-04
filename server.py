@@ -17,12 +17,12 @@ def logistic(t, L, k, center):
     return L / (1.0 + math.exp(-k * (t - center)))
 
 
-def bell(t, a, center):
+def gaussian(t, a, center):
     return  math.exp(0.0  - (((t - center)/a)*((t - center)/a)))
 
 
-@app.route("/bell/plot/")
-def bell_plot():
+@app.route("/gaussian/plot/")
+def gaussian_plot():
     a = float(request.args.get('a', 0.5))
 
     min_v = float(request.args.get('min', 0))
@@ -30,7 +30,7 @@ def bell_plot():
     center = float(request.args.get('center', min_v + ( (max_v - min_v) / 2.0)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [bell(t, a, center) for t in x]
+    y = [gaussian(t, a, center) for t in x]
 
     fig = Figure()
     ax = fig.add_subplot(111)
@@ -74,10 +74,10 @@ def logistic_form():
     return template.render(layers=get_layers(), function_name='Logistic')
 
 
-@app.route("/bell/")
-def bell_form():
-    template = env.get_template('bell.html')
-    return template.render(layers=get_layers(), function_name='Bell')
+@app.route("/gaussian/")
+def gaussian_form():
+    template = env.get_template('gaussian.html')
+    return template.render(layers=get_layers(), function_name='Gaussian')
 
 
 def get_layers():
