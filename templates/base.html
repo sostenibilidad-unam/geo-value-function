@@ -61,22 +61,48 @@
 
   <body>
 
-    <h1 class="ui center aligned header">Value Function</h1>
-
-    <h2 class="ui center aligned header">{{ function_name }}</h2>
-
-
     <div class="ui two column stackable grid">
-      <div class="six wide column">
-
+      <div class="sixteen wide column">
 	<div class="ui segment">
-	  <ul>
-	    <li><a href="/logistic/">logistic</a></li>
-	    <li><a href="/gaussian/">gaussian</a></li>
-	    <li><a href="/wf/">Webber-Feshner</a></li>	    
-	  </ul>
+	  <table>
+	    <tr>
+	      <td align="center">
+		<a href="/logistic/" class="item">
+		  <img src="/static/logistic_icon.png" width="170px" /><br>logistic</a>
+	      </td>
+	      <td align="center">
+		<a href="/gaussian/" class="item">
+		  <img src="/static/gaussian_icon.png" width="170px" /><br>gaussian</a>
+	      </td>
+	      <td align="center">
+		<a href="/wf/" class="item">
+		  <img src="/static/wf_icon.png" width="170px" /><br>Webber-Feshner</a>
+	      </td>
+	      
+	    </tr>
+	  </table>
+	</div>
+      </div>
+    </div>
+    
+    <div class="ui two column stackable grid">
+      <div class="four wide column">
+	<div class="ui segment">
+	  <div class="ui form">
+	    <div class="field">
+	      <label>Layer</label>
+	      <select class="ui search dropdown"
+		      onchange="update_to(this.value);"
+		      id="select_layer">
+		{% for layer in layers %}
+		<option value="{{ layer.url }}">{{ layer.name }}</option>
+		{% endfor %}
+	      </select>
+	    </div>
+	  </div>
 	</div>
 
+	
 	<div class="ui segment">
 	  {% block form %}
 	  {% endblock %}
@@ -107,23 +133,9 @@
       </div>
 
       <!-- open layers map -->
-      <div class="ten wide column">
+      <div class="twelve wide column">
 	<div class="ui segment">
-	  <div class="ui form">
-	    <div class="field">
-	      <label>Layer</label>
-	      <select class="ui search dropdown"
-		      onchange="update_to(this.value);"
-		      id="select_layer">
-		{% for layer in layers %}
-		<option value="{{ layer.url }}">{{ layer.name }}</option>
-		{% endfor %}
-	      </select>
-	    </div>
-	  </div>
-	</div>
-	<div class="ui segment">
-	  <div id="map" style="width: 100%; height=100%;"></div>
+	  <div id="map"></div>
 	</div>
       </div>
     </div>
