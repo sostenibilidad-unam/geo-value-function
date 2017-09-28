@@ -43,10 +43,10 @@ function to_percent(x) {
 }
 
 function logistic_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2);
-    k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min'])
+    var center = range['min'] + ((range['max'] - range['min']) / 2),
+	k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
     $('#k').val(k.toFixed(4));
-    $('#center').val(center.toFixed(4);
+    $('#center').val(center.toFixed(4));
 }
 
 function resize_bar(){

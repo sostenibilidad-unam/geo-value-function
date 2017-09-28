@@ -43,4 +43,21 @@ function update_to(url) {
     gaussian_plot();
 }
 
+function latex_equation() {
+
+    var a = $('#a').val(),
+	center = $('#center').val();
+    
+    return `$$ fv(x)=e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}} $$`;
+}
+
+
+function update_equation() {
+    $('#MathExample').text(latex_equation());
+    var math = document.getElementById("MathExample");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+}
+
 update_to(layer_url);
+update_equation();
+
