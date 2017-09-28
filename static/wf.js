@@ -75,6 +75,7 @@ function update_to(url) {
     set_layer(url);
     range = get_range();
     wf_args_from_range();
+    apply_wf();
     wf_plot();
 }
 

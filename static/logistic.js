@@ -75,6 +75,7 @@ function update_to(url) {
     set_layer(url);
     range = get_range();
     logistic_args_from_range();
+    apply_logistic();
     logistic_plot();
 }
 

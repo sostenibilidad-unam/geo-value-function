@@ -40,6 +40,7 @@ function update_to(url) {
     set_layer(url);
     range = get_range();
     gaussian_args_from_range();
+    apply_gaussian();
     gaussian_plot();
 }
 
