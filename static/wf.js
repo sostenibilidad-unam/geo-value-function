@@ -2,18 +2,10 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 
 function wf_plot() {
 
-    var x1 = $('#x1').val(),
-	x2 = $('#x2').val(),
-	x3 = $('#x3').val(),
-	x4 = $('#x4').val(),
-	fp = $('#fp').val();
+    var fp = $('#fp').val();
 
     // update plot
-    document.getElementById("plot").src="/wf/plot/?x1=" + x1
-	+ "&x2=" + x2
-	+ "&x3=" + x3
-	+ "&x4=" + x4
-	+ "&fp=" + fp
+    document.getElementById("plot").src="/wf/plot/?fp=" + fp
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
 }
@@ -31,8 +23,8 @@ function apply_wf(){
 
 function bojorquezSerrano(fp) {
     var categories = 5,
-	maximum = 1,
-	minimum = 0,
+	maximum = range['max'],
+	minimum = range['min'],
 	the_sum = 0;
 
     for (i=0; i<categories; i++) {
@@ -52,37 +44,29 @@ function bojorquezSerrano(fp) {
 }
 
 function wf(x){
-
-    var x1 = $('#x1').val(),
-	x2 = $('#x2').val(),
-	x3 = $('#x3').val(),
-	x4 = $('#x4').val(),
-	fp = $('#fp').val(),
-	wf_cuts = bojorquezSerrano(fp);
+    fp = $('#fp').val();    
+    cuts = bojorquezSerrano(fp);
+    
+    var x1 = cuts[1],
+	x2 = cuts[2],
+	x3 = cuts[3],
+	x4 = cuts[4];
 
     if (x < x1) {
-	return wf_cuts[1]
+	return 0.2
     } else if (x >= x1 && x < x2) {
-	return wf_cuts[2]
+	return 0.4
     } else if (x >= x2 && x < x3) {
-	return wf_cuts[3]
+	return 0.6
     } else if (x >= x3 && x < x4) {
-	return wf_cuts[4]
+	return 0.8
     } else if (x >= x4) {
-	return wf_cuts[5]
+	return 1.0
     }
 }
 
 
 function wf_args_from_range() {
-
-    diff = range['max'] - range['min']
-
-    $('#x1').val(range['min'] + 0.1 * diff);
-    $('#x2').val(range['min'] + 0.3 * diff);
-    $('#x3').val(range['min'] + 0.7 * diff);
-    $('#x4').val(range['min'] + 0.9 * diff);
-
     $('#fp').val(2);
 }
 
@@ -94,4 +78,23 @@ function update_to(url) {
     wf_plot();
 }
 
+
+function latex_equation() {
+    var fp = $('#fp').val();
+
+    var a = $('#a').val(),
+	center = $('#center').val();
+    
+    return `$$ fv(x)=e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}} $$`;
+}
+
+
+function update_equation() {
+    $('#MathExample').text(latex_equation());
+    var math = document.getElementById("MathExample");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+}
+
 update_to(layer_url);
+update_equation();
+
