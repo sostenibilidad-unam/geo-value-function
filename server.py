@@ -130,24 +130,33 @@ def logistic_latex(L, k, center):
     return "$$ \\frac{%s}{1+e^{-%s(t-%s)}} $$" % (L, k, center)
 
 
-@app.route("/logistic/")
-def logistic_form():
+@app.route("/<layer>/logistic/")
+def logistic_form(layer):
     template = env.get_template('logistic.html')
+    print get_layers()
     return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
                            function_name='Logistic',
                            equation=logistic_latex(1, 1, 1))
 
 
-@app.route("/gaussian/")
-def gaussian_form():
+@app.route("/<layer>/gaussian/")
+def gaussian_form(layer):
     template = env.get_template('gaussian.html')
-    return template.render(layers=get_layers(), function_name='Gaussian')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='Gaussian')
 
 
-@app.route("/wf/")
-def wf_form():
+@app.route("/<layer>/wf/")
+def wf_form(layer):
     template = env.get_template('wf.html')
-    return template.render(layers=get_layers(), function_name='Webber-Feshner')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='Webber-Feshner')
 
 
 def get_layers():

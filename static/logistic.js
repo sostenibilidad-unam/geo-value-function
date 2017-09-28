@@ -1,3 +1,6 @@
+var layer_url = document.currentScript.getAttribute('layer_url');
+
+
 function logistic_plot() {
     var L = $('#L').val(),
 	k = $('#k').val(),
@@ -75,4 +78,7 @@ function update_to(url) {
     logistic_plot();
 }
 
-update_to($("#select_layer").val());
+update_to(layer_url);
+
+
+

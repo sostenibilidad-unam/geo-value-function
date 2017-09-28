@@ -1,3 +1,5 @@
+var layer_url = document.currentScript.getAttribute('layer_url');
+
 function gaussian_plot() {
     var a = $('#a').val(),
 	center = $('#center').val();
@@ -41,4 +43,4 @@ function update_to(url) {
     gaussian_plot();
 }
 
-update_to($("#select_layer").val());
+update_to(layer_url);

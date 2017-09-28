@@ -1,3 +1,5 @@
+var layer_url = document.currentScript.getAttribute('layer_url');
+
 function wf_plot() {
 
     var x1 = $('#x1').val(),
@@ -92,4 +94,4 @@ function update_to(url) {
     wf_plot();
 }
 
-update_to($("#select_layer").val());
+update_to(layer_url);
