@@ -45,8 +45,9 @@ function linear_args_from_range() {
 
     var m = 1 / (range['max'] - range['min']);
     var b = 1 + (range['max'] / (range['max'] - range['min']));
-    $('#b').val(b);
-    $('#m').val(m);
+
+    $('#m').val(m.toFixed(4));
+    $('#b').val(b.toFixed(4));    
 }
 
 function resize_bar(){
@@ -60,4 +61,20 @@ function update_to(url) {
     linear_plot();
 }
 
+
+function latex_equation() {
+    var m = $('#m').val(),
+	b = $('#b').val();
+    
+    return `$$ y=${m}x+${b} $$`;
+}
+
+
+function update_equation() {
+    $('#MathExample').text(latex_equation());
+    var math = document.getElementById("MathExample");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+}
+
 update_to(layer_url);
+update_equation();
