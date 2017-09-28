@@ -155,11 +155,6 @@ def linear_plot():
     return response
 
 
-def logistic_latex(L, k, center):
-    # http://docs.mathjax.org/en/latest/advanced/typeset.html#manipulating-individual-math-elements
-    return "$$ \\frac{%s}{1+e^{-%s(t-%s)}} $$" % (L, k, center)
-
-
 @app.route("/<layer>/logistic/")
 def logistic_form(layer):
     template = env.get_template('logistic.html')
@@ -167,8 +162,7 @@ def logistic_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
-                           function_name='Logistic',
-                           equation=logistic_latex(1, 1, 1))
+                           function_name='Logistic')
 
 
 @app.route("/<layer>/gaussian/")

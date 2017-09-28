@@ -45,8 +45,8 @@ function to_percent(x) {
 function logistic_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2);
     k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min'])
-    $('#k').val(k);
-    $('#center').val(center);
+    $('#k').val(k.toFixed(4));
+    $('#center').val(center.toFixed(4);
 }
 
 function resize_bar(){
@@ -78,7 +78,24 @@ function update_to(url) {
     logistic_plot();
 }
 
-update_to(layer_url);
+function latex_equation() {
 
+    var L = $('#L').val(),
+	k = $('#k').val(),
+	center = $('#center').val();
+    
+    return `$$ fv(x) = \\frac${L}{1+e^{-${k}(t-${center})}} $$`
+}
+
+
+function update_equation() {
+    $('#MathExample').text(latex_equation());
+    var math = document.getElementById("MathExample");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+}
+
+
+update_to(layer_url);
+update_equation();
 
 
