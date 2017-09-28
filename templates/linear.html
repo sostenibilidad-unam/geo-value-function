@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block form %}
+<div class="ui form" id="args">
+  <div class="field">
+    <label>m</label>
+    <div class="ui left icon input">
+      <input placeholder="1" id="m" value="1">
+    </div>
+  </div>
+  
+  <div class="field">
+    <label>b</label>
+    <div class="ui left icon input">
+      <input placeholder="0.0" id="b" value="0.0">
+    </div>
+  </div>
+  <div class="ui blue primary button" onclick="apply_linear(); linear_plot();">Plot</div>
+</div>
+{% endblock %}
+
+
+{% block plot %}
+<img src="/linear/plot/" id="plot" width="100%" >
+{% endblock %}
+
+
+{% block scripts %}
+<script src="/static/linear.js" layer_url="{{ layer_url }}"></script>
+{% endblock %}

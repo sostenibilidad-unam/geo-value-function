@@ -67,6 +67,10 @@
 	  <table>
 	    <tr>
 	      <td align="center">
+		<a href="/{{ layer }}/linear/" class="item">
+		  <img src="/static/linear_icon.png" width="170px" /><br>linear</a>
+	      </td>	      
+	      <td align="center">
 		<a href="/{{ layer }}/logistic/" class="item">
 		  <img src="/static/logistic_icon.png" width="170px" /><br>logistic</a>
 	      </td>
@@ -90,7 +94,7 @@
 	<div class="ui segment">
 	  <ul>
 	    {% for layer in layers %}
-	    <li><a href="/{{ layer.name }}/logistic/">{{ layer.name }}</a></li>
+	    <li><a href="/{{ layer.name }}/linear/">{{ layer.name }}</a></li>
 	    {% endfor %}
 	  </ul>
 	</div>

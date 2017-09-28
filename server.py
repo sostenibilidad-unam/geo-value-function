@@ -51,6 +51,10 @@ def wf(t, x_cuts, fp):
         return wf_cuts[5]
 
 
+def linear(x, m, b):
+    return (m * x) + b
+
+
 @app.route("/gaussian/plot/")
 def gaussian_plot():
     a = float(request.args.get('a', 0.5))
@@ -125,6 +129,32 @@ def wf_plot():
     return response
 
 
+@app.route("/linear/plot/")
+def linear_plot():
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+
+    m = float(request.args.get('m',
+                               1 / (max_v - min_v)))
+    b = float(request.args.get('b',
+                               1 + (max_v / (max_v - min_v))))
+
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [linear(t, m, b) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(y, x)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+
 def logistic_latex(L, k, center):
     # http://docs.mathjax.org/en/latest/advanced/typeset.html#manipulating-individual-math-elements
     return "$$ \\frac{%s}{1+e^{-%s(t-%s)}} $$" % (L, k, center)
@@ -157,6 +187,15 @@ def wf_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Webber-Feshner')
+
+
+@app.route("/<layer>/linear/")
+def linear_form(layer):
+    template = env.get_template('linear.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='Linear')
 
 
 def get_layers():
