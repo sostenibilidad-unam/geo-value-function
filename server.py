@@ -129,18 +129,18 @@ def linear_plot():
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-
+    print "min= " + str(min_v) + ",max= " + str(max_v)
     m = float(request.args.get('m',
                                1 / (max_v - min_v)))
     b = float(request.args.get('b',
-                               1 + (max_v / (max_v - min_v))))
+                               0 - (min_v / (max_v - min_v))))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [linear(t, m, b) for t in x]
 
     fig = Figure()
     ax = fig.add_subplot(111)
-    ax.plot(y, x)
+    ax.plot(x, y)
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()

@@ -7,7 +7,7 @@ function linear_plot() {
     
     // update plot
     document.getElementById("plot").src="/linear/plot/?m=" + m
-	+ "&b=" + b,
+	+ "&b=" + b
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
 }
@@ -27,7 +27,7 @@ function apply_linear(){
 function linear(x) {
     var m = $('#m').val(),
 	b = $('#b').val();
-    return (m * x) + b;
+    return  eval((m * x) + b);
 }
 
 // function inverted_linear(y) {
@@ -44,7 +44,7 @@ function linear(x) {
 function linear_args_from_range() {
 
     var m = 1 / (range['max'] - range['min']);
-    var b = 1 + (range['max'] / (range['max'] - range['min']));
+    var b = 0 - ( (range['min']) / (range['max'] - range['min']) );
 
     $('#m').val(m.toFixed(4));
     $('#b').val(b.toFixed(4));    
