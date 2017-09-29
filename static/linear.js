@@ -27,7 +27,10 @@ function apply_linear(){
 function linear(x) {
     var m = $('#m').val(),
 	b = $('#b').val();
-    return  eval((m * x) + b);
+    
+    y = parseFloat(m * x)+parseFloat(b);
+    
+    return y;
 }
 
 // function inverted_linear(y) {
@@ -66,8 +69,13 @@ function update_to(url) {
 function latex_equation() {
     var m = $('#m').val(),
 	b = $('#b').val();
+    if (b < 0){
+	babs = Math.abs(b);
+	return `$$ y=${m}x-${babs} $$`;
+    }else{
+        return `$$ y=${m}x+${b} $$`;
+    }
     
-    return `$$ y=${m}x+${b} $$`;
 }
 
 
@@ -79,3 +87,4 @@ function update_equation() {
 
 update_to(layer_url);
 update_equation();
+
