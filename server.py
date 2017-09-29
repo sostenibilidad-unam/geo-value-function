@@ -51,6 +51,21 @@ def wf(t, fp, min_v, max_v):
         return 1.0
 
 
+def wf2(t, fp, min_v, max_v):
+    x_cuts = bojorquezSerrano(fp, minimum=min_v, maximum=max_v)
+    y_cuts = bojorquezSerrano(fp, minimum=0, maximum=1)
+    if t < x_cuts[1]:
+        return y_cuts[1];
+    elif t >= x_cuts[1] and t < x_cuts[2]:
+        return y_cuts[2];
+    elif t >= x_cuts[2] and t < x_cuts[3]:
+        return y_cuts[3];
+    elif t >= x_cuts[3] and t < x_cuts[4]:
+        return y_cuts[4];
+    elif t >= x_cuts[4]:
+        return 1.0
+
+
 def linear(x, m, b):
     return (m * x) + b
 
@@ -123,6 +138,27 @@ def wf_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+@app.route("/wf2/plot/")
+def wf2_plot():
+
+    fp = float(request.args.get('fp', 2))
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [wf2(t, fp, min_v=min_v, max_v=max_v) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
 
 @app.route("/linear/plot/")
 def linear_plot():
@@ -167,6 +203,14 @@ def gaussian_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Gaussian')
+
+@app.route("/<layer>/wf2/")
+def wf2_form(layer):
+    template = env.get_template('wf2.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='Webber-Feshner-2')
 
 
 @app.route("/<layer>/wf/")

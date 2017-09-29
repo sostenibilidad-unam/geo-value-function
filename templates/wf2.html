@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block form %}
+<div class="ui form" id="args">
+  
+  <div class="field">
+    <label>FP</label>
+    <div class="ui left icon input">
+      <input type="number" id="fp" value="2">
+    </div>
+  </div>
+  <div class="ui blue primary button" onclick="apply_wf2(); wf2_plot(); update_equation();">Plot</div>
+</div>
+{% endblock %}
+
+
+{% block plot %}
+<img src="/wf2/plot/" id="plot" width="100%" >
+{% endblock %}
+
+
+{% block scripts %}
+<script src="/static/wf2.js" layer_url="{{ layer_url }}"></script>
+{% endblock %}
