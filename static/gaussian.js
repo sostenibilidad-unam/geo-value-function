@@ -66,6 +66,11 @@ function sync_center() {
     $('#center').val($("#center_slider").slider("option", "value"));
 }
 
+function sync_center_slider() {
+    $("#center_slider").slider("option", "value",
+			       $('#center').val());
+}
+
 function sync_a() {
     $('#a').val($("#a_slider").slider("option", "value"));
 }
@@ -74,7 +79,6 @@ function sync_a_slider() {
     $("#a_slider").slider("option", "value",
 			  $('#a').val());
 }
-
 
 function sync_plot() {
     apply_gaussian();
