@@ -37,6 +37,21 @@ def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
     return cuts
 
 
+def concava_decreciente(x,gama,xmax,xmin):
+    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
+
+def concava_creciente(x,gama,xmax,xmin):
+    return ((math.exp(gama * x)) - math.exp(gama * xmin)) / (math.exp(gama * xmax) - math.exp(gama * xmin))
+
+def convexa_decreciente(x,gama,xmax,xmin):
+    return (1-(math.exp((x-10)/gama)) - (1-(math.exp((xmax-10)/gama)))) / (1-(math.exp((xmin-10)/gama)) - (1-(math.exp((xmax-10)/gama))))
+
+def convexa_creciente(x,gama,xmax,xmin):
+    return (1-(math.exp((0.0 - x) * gama)) - (1-(math.exp((0.0 - xmin) * gama)))) / (1-(math.exp((0.0 - xmax) * gama)) - (1-(math.exp((0.0 - xmin) * gama))))
+
+
+
+
 def wf(t, fp, min_v, max_v):
     x_cuts = bojorquezSerrano(fp, minimum=min_v, maximum=max_v)
     if t < x_cuts[1]:
@@ -68,6 +83,90 @@ def wf2(t, fp, min_v, max_v):
 
 def linear(x, m, b):
     return (m * x) + b
+
+@app.route("/concava_creciente/plot/")
+def concava_creciente_plot():
+    gama = float(request.args.get('gama', 0.5))
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [concava_creciente(t, gama, max_v, min_v) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+@app.route("/concava_decreciente/plot/")
+def concava_decreciente_plot():
+    gama = float(request.args.get('gama', 0.5))
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [concava_decreciente(t, gama, max_v, min_v) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+@app.route("/convexa_decreciente/plot/")
+def convexa_decreciente_plot():
+    gama = float(request.args.get('gama', 0.5))
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [convexa_decreciente(t, gama, max_v, min_v) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+@app.route("/convexa_creciente/plot/")
+def convexa_creciente_plot():
+    gama = float(request.args.get('gama', 0.5))
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [convexa_creciente(t, gama, max_v, min_v) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
 
 
 @app.route("/gaussian/plot/")
@@ -229,6 +328,38 @@ def linear_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Linear')
+    
+@app.route("/<layer>/concava_decreciente/")
+def concava_decreciente_form(layer):
+    template = env.get_template('concava_decreciente.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='concava_decreciente')
+    
+@app.route("/<layer>/concava_creciente/")
+def concava_creciente_form(layer):
+    template = env.get_template('concava_creciente.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='concava_creciente')
+    
+@app.route("/<layer>/convexa_decreciente/")
+def convexa_decreciente_form(layer):
+    template = env.get_template('convexa_decreciente.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='convexa_decreciente')
+    
+@app.route("/<layer>/convexa_creciente/")
+def convexa_creciente_form(layer):
+    template = env.get_template('convexa_creciente.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='convexa_creciente')
 
 
 def get_layers():

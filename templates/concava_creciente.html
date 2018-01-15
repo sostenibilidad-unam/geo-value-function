@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block form %}
+<div class="ui form" id="args">
+  <div class="field">
+    <label>gama</label>
+    <div class="ui left icon input">
+      <input placeholder="0.25" id="gama" value="0.25">
+    </div>
+  </div>
+  
+  
+  
+  <div class="ui blue primary button" onclick="apply_concava_creciente(); concava_creciente_plot(); update_equation();">Plot</div>
+</div>
+{% endblock %}
+
+
+{% block plot %}
+<img src="/concava_creciente/plot/" id="plot" width="100%" >
+{% endblock %}
+
+
+
+{% block scripts %}
+<script src="/static/concava_creciente.js" layer_url="{{ layer_url }}"></script>
+{% endblock %}
