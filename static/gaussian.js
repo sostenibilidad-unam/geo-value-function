@@ -30,6 +30,8 @@ function gaussian(x) {
 
 function gaussian_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2);
+    center_max = center * 3.0;
+    center_min = 0;
     a =  (range['max'] - range['min']) / 4.0;
     a_max = a * 3.0;
     a_min = a / 10.0;
@@ -47,8 +49,22 @@ function gaussian_args_from_range() {
 			    });
 
 
+    $( "#center_slider" ).slider({max: center_max,
+				  min: center_min,
+				  value: center,
+				  step: (center_max - center_min) / 100.0,
+				  change: function( event, ui ) {
+				      sync_center();
+				      sync_plot();
+				  }
+				 });
+
+
 }
 
+function sync_center() {
+    $('#center').val($("#center_slider").slider("option", "value"));
+}
 
 function sync_a() {
     $('#a').val($("#a_slider").slider("option", "value"));
