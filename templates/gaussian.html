@@ -5,11 +5,13 @@
   <div class="field">
     <label>a</label>
     <div class="ui left icon input">
-      <input placeholder="1" id="a" value="1">
+      <input placeholder="1" id="a" value="1"
+	     onchange="sync_a_slider(); sync_plot();">
     </div>
+    <div id="a_slider" style="margin-top: 1em;"></div>
   </div>
-  
-  
+
+
   <div class="field">
     <label>center</label>
     <div class="ui left icon input">

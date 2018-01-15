@@ -33,7 +33,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
-    
+
+    <script
+       src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+       integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+       crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <style type="text/css">
       body {
       margin: 3em;
@@ -69,7 +76,7 @@
 	      <td align="center">
 		<a href="/{{ layer }}/linear/" class="item">
 		  <img src="/static/linear_icon.png" width="170px" /><br>linear</a>
-	      </td>	      
+	      </td>
 	      <td align="center">
 		<a href="/{{ layer }}/logistic/" class="item">
 		  <img src="/static/logistic_icon.png" width="170px" /><br>logistic</a>
@@ -89,7 +96,7 @@
 	      <td align="center">
 		<a href="/{{ layer }}/concava_decreciente/" class="item">
 		  <img src="/static/concava_decreciente_icon.png" width="170px" /><br>Concava Decreciente</a>
-	      </td>	  
+	      </td>
 	      <td align="center">
 		<a href="/{{ layer }}/concava_creciente/" class="item">
 		  <img src="/static/concava_creciente_icon.png" width="170px" /><br>Concava Creciente</a>
@@ -107,7 +114,7 @@
 	</div>
       </div>
     </div>
-    
+
     <div class="ui two column stackable grid">
       <div class="four wide column">
 	<div class="ui segment">
@@ -118,12 +125,12 @@
 	  </ul>
 	</div>
 
-	
+
 	<div class="ui segment">
 	  {% block form %}
 	  {% endblock %}
 	</div>
-	
+
 	<div class="ui segment">
 	  <div id="MathExample">
 	  </div>
@@ -134,7 +141,7 @@
 	  {% endblock %}
 	</div>
 	<div class="ui segment", id="colred_bar">
-	  <div style="position: absolute; left: 18%; top: 0%; width:66%;"> 
+	  <div style="position: absolute; left: 18%; top: 0%; width:66%;">
 	    <div style="position: absolute; left: 0%; top: 0; width:20%; height:20px;", id="c1">
 	    </div>
 	    <div style="position: absolute; left: 20%; top: 0; width:20%; height:20px;", id="c2">

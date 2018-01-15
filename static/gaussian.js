@@ -3,7 +3,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 function gaussian_plot() {
     var a = $('#a').val(),
 	center = $('#center').val();
-    
+
     // update plot
     document.getElementById("plot").src="/gaussian/plot/?a=" + a
 	+ "&center=" + center
@@ -31,10 +31,39 @@ function gaussian(x) {
 function gaussian_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2);
     a =  (range['max'] - range['min']) / 4.0;
+    a_max = a * 3.0;
+    a_min = a / 10.0;
     $('#a').val(a);
     $('#center').val(center);
+
+    $( "#a_slider" ).slider({max: a_max,
+			     min: a_min,
+			     value: a,
+			     change: function( event, ui ) {
+				 sync_a();
+				 sync_plot();
+			     }
+			    });
+
+
 }
 
+
+function sync_a() {
+    $('#a').val($("#a_slider").slider("option", "value"));
+}
+
+function sync_a_slider() {
+    $("#a_slider").slider("option", "value",
+			  $('#a').val());
+}
+
+
+function sync_plot() {
+    apply_gaussian();
+    gaussian_plot();
+    update_equation();
+}
 
 function update_to(url) {
     set_layer(url);
@@ -48,7 +77,7 @@ function latex_equation() {
 
     var a = $('#a').val(),
 	center = $('#center').val();
-    
+
     return `$$ fv(x)=e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}} $$`;
 }
 
@@ -61,4 +90,3 @@ function update_equation() {
 
 update_to(layer_url);
 update_equation();
-
