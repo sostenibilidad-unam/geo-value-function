@@ -39,6 +39,7 @@ function gaussian_args_from_range() {
     $( "#a_slider" ).slider({max: a_max,
 			     min: a_min,
 			     value: a,
+			     step: (a_max - a_min) / 100.0,
 			     change: function( event, ui ) {
 				 sync_a();
 				 sync_plot();
