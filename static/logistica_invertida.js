@@ -140,7 +140,7 @@ function latex_equation() {
 	k = $('#k').val(),
 	center = $('#center').val();
     
-    return `$$ fv(x) = 1 - \\frac${L}{1+e^{-${k}(t-${center})}} $$`
+    return `$$ fv(x) = 1 - \\frac${L}{1+e^{-${k}(x-${center})}} $$`
 }
 
 
