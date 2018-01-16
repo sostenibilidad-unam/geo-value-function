@@ -7,7 +7,7 @@ from os import listdir
 
 from jinja2 import Environment, FileSystemLoader
 
-from flask import Flask, make_response, request, send_from_directory
+from flask import Flask, make_response, request, send_from_directory, redirect
 app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('templates'))
@@ -20,8 +20,10 @@ def logistic(t, L, k, center):
 def logistica_invertida(t, L, k, center):
     return 1 - (L / (1.0 + math.exp(-k * (t - center))))
 
+
 def gaussian(t, a, center):
     return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+
 
 def campana_invertida(t, a, center):
     return 1 - math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
@@ -43,19 +45,26 @@ def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
     return cuts
 
 
-def concava_decreciente(x,gama,xmax,xmin):
-    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
-
-def concava_creciente(x,gama,xmax,xmin):
-    return ((math.exp(gama * x)) - math.exp(gama * xmin)) / (math.exp(gama * xmax) - math.exp(gama * xmin))
-
-def convexa_decreciente(x,gama,xmax,xmin):
-    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
-
-def convexa_creciente(x,gama,xmax,xmin):
-    return (1-(math.exp((0.0 - x) * gama)) - (1-(math.exp((0.0 - xmin) * gama)))) / (1-(math.exp((0.0 - xmax) * gama)) - (1-(math.exp((0.0 - xmin) * gama))))
+def concava_decreciente(x, gama, xmax, xmin):
+    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) \
+        / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
 
 
+def concava_creciente(x, gama, xmax, xmin):
+    return ((math.exp(gama * x)) - math.exp(gama * xmin)) \
+        / (math.exp(gama * xmax) - math.exp(gama * xmin))
+
+
+def convexa_decreciente(x, gama, xmax, xmin):
+    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) \
+        / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
+
+
+def convexa_creciente(x, gama, xmax, xmin):
+    return (1 - (math.exp((0.0 - x) * gama))
+            - (1-(math.exp((0.0 - xmin) * gama)))) \
+        / (1 - (math.exp((0.0 - xmax) * gama))
+           - (1-(math.exp((0.0 - xmin) * gama))))
 
 
 def wf(t, fp, min_v, max_v):
@@ -76,13 +85,13 @@ def wf2(t, fp, min_v, max_v):
     x_cuts = bojorquezSerrano(fp, minimum=min_v, maximum=max_v)
     y_cuts = bojorquezSerrano(fp, minimum=0, maximum=1)
     if t < x_cuts[1]:
-        return y_cuts[1];
+        return y_cuts[1]
     elif t >= x_cuts[1] and t < x_cuts[2]:
-        return y_cuts[2];
+        return y_cuts[2]
     elif t >= x_cuts[2] and t < x_cuts[3]:
-        return y_cuts[3];
+        return y_cuts[3]
     elif t >= x_cuts[3] and t < x_cuts[4]:
-        return y_cuts[4];
+        return y_cuts[4]
     elif t >= x_cuts[4]:
         return 1.0
 
@@ -91,6 +100,9 @@ def linear(x, m, b):
     return (m * x) + b
 
 
+@app.route("/")
+def root():
+    return redirect('/elevacion/gaussian/', code=302)
 
 
 @app.route("/concava_creciente/plot/")
@@ -99,7 +111,7 @@ def concava_creciente_plot():
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
 
@@ -114,13 +126,14 @@ def concava_creciente_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/concava_decreciente/plot/")
 def concava_decreciente_plot():
     gama = float(request.args.get('gama', 0.5))
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_decreciente(t, gama, max_v, min_v) for t in x]
 
@@ -135,13 +148,14 @@ def concava_decreciente_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/convexa_decreciente/plot/")
 def convexa_decreciente_plot():
     gama = float(request.args.get('gama', 0.5))
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_decreciente(t, gama, max_v, min_v) for t in x]
 
@@ -156,13 +170,14 @@ def convexa_decreciente_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/convexa_creciente/plot/")
 def convexa_creciente_plot():
     gama = float(request.args.get('gama', 0.5))
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_creciente(t, gama, max_v, min_v) for t in x]
 
@@ -247,6 +262,7 @@ def logistic_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/logistica_invertida/plot/")
 def logistica_invertida_plot():
 
@@ -270,6 +286,7 @@ def logistica_invertida_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/wf/plot/")
 def wf_plot():
 
@@ -290,6 +307,7 @@ def wf_plot():
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
     return response
+
 
 @app.route("/wf2/plot/")
 def wf2_plot():
@@ -347,7 +365,8 @@ def logistic_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Logistic')
-    
+
+
 @app.route("/<layer>/logistica_invertida/")
 def logistica_invertida_form(layer):
     template = env.get_template('logistica_invertida.html')
@@ -365,7 +384,8 @@ def gaussian_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Gaussian')
-    
+
+
 @app.route("/<layer>/campana_invertida/")
 def campana_invertida_form(layer):
     template = env.get_template('campana_invertida.html')
@@ -373,6 +393,7 @@ def campana_invertida_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='campana_invertida')
+
 
 @app.route("/<layer>/wf2/")
 def wf2_form(layer):
@@ -399,7 +420,8 @@ def linear_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Linear')
-    
+
+
 @app.route("/<layer>/concava_decreciente/")
 def concava_decreciente_form(layer):
     template = env.get_template('concava_decreciente.html')
@@ -407,7 +429,8 @@ def concava_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='concava_decreciente')
-    
+
+
 @app.route("/<layer>/concava_creciente/")
 def concava_creciente_form(layer):
     template = env.get_template('concava_creciente.html')
@@ -415,7 +438,8 @@ def concava_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='concava_creciente')
-    
+
+
 @app.route("/<layer>/convexa_decreciente/")
 def convexa_decreciente_form(layer):
     template = env.get_template('convexa_decreciente.html')
@@ -423,7 +447,8 @@ def convexa_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='convexa_decreciente')
-    
+
+
 @app.route("/<layer>/convexa_creciente/")
 def convexa_creciente_form(layer):
     template = env.get_template('convexa_creciente.html')
