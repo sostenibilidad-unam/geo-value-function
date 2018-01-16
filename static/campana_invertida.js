@@ -1,34 +1,34 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
 
-function gaussian_plot() {
+function campana_invertida_plot() {
     var a = $('#a').val(),
 	center = $('#center').val();
 
     // update plot
-    document.getElementById("plot").src="/gaussian/plot/?a=" + a
+    document.getElementById("plot").src="/campana_invertida/plot/?a=" + a
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
 }
 
 
-function apply_gaussian(){
+function apply_campana_invertida(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: gaussian(feature.get("value"))
+	    fv: campana_invertida(feature.get("value"))
 	});
     });
     layer.setStyle(style_data_layer);
 }
 
 
-function gaussian(x) {
+function campana_invertida(x) {
     var a = $('#a').val(),
 	center = $('#center').val();
-    return Math.exp(0.0  - (((x - center)/a)*((x - center)/a)))
+    return 1 - (Math.exp(0.0  - (((x - center)/a)*((x - center)/a))))
 }
 
-function gaussian_args_from_range() {
+function campana_invertida_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2);
     center_max = range['max'];
     center_min = range['min'];
@@ -81,17 +81,17 @@ function sync_a_slider() {
 }
 
 function sync_plot() {
-    apply_gaussian();
-    gaussian_plot();
+    apply_campana_invertida();
+    campana_invertida_plot();
     update_equation();
 }
 
 function update_to(url) {
     set_layer(url);
     range = get_range();
-    gaussian_args_from_range();
-    apply_gaussian();
-    gaussian_plot();
+    campana_invertida_args_from_range();
+    apply_campana_invertida();
+    campana_invertida_plot();
 }
 
 function latex_equation() {
@@ -99,7 +99,7 @@ function latex_equation() {
     var a = $('#a').val(),
 	center = $('#center').val();
 
-    return `$$ fv(x)=e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}} $$`;
+    return `$$ fv(x)=1-e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}} $$`;
 }
 
 

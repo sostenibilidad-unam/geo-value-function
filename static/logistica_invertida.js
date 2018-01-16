@@ -1,13 +1,13 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
 
 
-function logistic_plot() {
+function logistica_invertida_plot() {
     var L = $('#L').val(),
 	k = $('#k').val(),
 	center = $('#center').val();
     
     // update plot
-    document.getElementById("plot").src="/logistic/plot/?L=" + L
+    document.getElementById("plot").src="/logistica_invertida/plot/?L=" + L
 	+ "&k=" + k
 	+ "&center=" + center
 	+ "&min=" + range['min']
@@ -15,10 +15,10 @@ function logistic_plot() {
 }
 
 
-function apply_logistic(){
+function apply_logistica_invertida(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: logistic(feature.get("value"))
+	    fv: logistica_invertida(feature.get("value"))
 	});
     });
     layer.setStyle(style_data_layer);
@@ -26,11 +26,11 @@ function apply_logistic(){
 }
 
 
-function logistic(x) {
+function logistica_invertida(x) {
     var L = $('#L').val(),
 	k = $('#k').val(),
 	center = $('#center').val();
-    return L / (1.0 + Math.exp(-k * (x - center)))
+    return 1 - (L / (1.0 + Math.exp(-k * (x - center))))
 }
 function inverted_logistic(y) {
     var L = $('#L').val(),
@@ -42,7 +42,7 @@ function to_percent(x) {
     return ((x - range['min']) / (range['max'] - range['min'])) * 100.0
 }
 
-function logistic_args_from_range() {
+function logistica_invertida_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2),
 	k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
     $('#k').val(k.toFixed(4));
@@ -98,8 +98,8 @@ function sync_k_slider() {
 }
 
 function sync_plot() {
-    apply_logistic();
-    logistic_plot();
+    apply_logistica_invertida();
+    logistica_invertida_plot();
     update_equation();
 }
 
@@ -129,9 +129,9 @@ function resize_bar(){
 function update_to(url) {
     set_layer(url);
     range = get_range();
-    logistic_args_from_range();
-    apply_logistic();
-    logistic_plot();
+    logistica_invertida_args_from_range();
+    apply_logistica_invertida();
+    logistica_invertida_plot();
 }
 
 function latex_equation() {
@@ -140,7 +140,7 @@ function latex_equation() {
 	k = $('#k').val(),
 	center = $('#center').val();
     
-    return `$$ fv(x) = \\frac${L}{1+e^{-${k}(t-${center})}} $$`
+    return `$$ fv(x) = 1 - \\frac${L}{1+e^{-${k}(t-${center})}} $$`
 }
 
 

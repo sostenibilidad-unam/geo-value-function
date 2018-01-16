@@ -36,12 +36,40 @@ function concava_decreciente_args_from_range() {
     }else{
         gama = (1.38 / center)
     }
+    
+    gama_max = gama * 5.0;
+    gama_min = gama / 10.0;
+    
         
-    //var gama = 1.38/center; //qui hay que hacer el algebra
+    //aqui hay que hacer el algebra
     $('#gama').val(gama);
+    $( "#gama_slider" ).slider({max: gama_max,
+			     min: gama_min,
+			     value: gama,
+			     step: (gama_max - gama_min) / 100.0,
+			     change: function( event, ui ) {
+				 sync_gama();
+				 sync_plot();
+			     }
+			    });
     
 }
+function sync_gama() {
+    $('#gama').val($("#gama_slider").slider("option", "value"));
+}
 
+function sync_gama_slider() {
+    $("#gama_slider").slider("option", "value",
+			       $('#gama').val());
+}
+
+
+
+function sync_plot() {
+    apply_concava_decreciente();
+    concava_decreciente_plot();
+    update_equation();
+}
 
 function update_to(url) {
     set_layer(url);
@@ -55,7 +83,10 @@ function latex_equation() {
 
     var gama = $('#gama').val();
     
-    return `$$ fv(x)=e^{-\\left(\\frac{x-${gama}}{${gama}}\\right)^{2}} $$`;
+    var restale = Math.exp((0.0 - gama) * range['max']);
+    var denominador = Math.exp((0.0 - gama) * range['min']) - Math.exp((0.0 - gama) * range['max'])
+    
+    return `$$ fv(x)=\\frac{e^{-(${gama}*x})-${restale}}{${denominador}} $$`;
 }
 
 

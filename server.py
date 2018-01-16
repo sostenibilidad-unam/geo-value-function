@@ -17,8 +17,14 @@ def logistic(t, L, k, center):
     return L / (1.0 + math.exp(-k * (t - center)))
 
 
+def logistica_invertida(t, L, k, center):
+    return 1 - (L / (1.0 + math.exp(-k * (t - center))))
+
 def gaussian(t, a, center):
     return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+
+def campana_invertida(t, a, center):
+    return 1 - math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
 
 
 def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
@@ -44,7 +50,7 @@ def concava_creciente(x,gama,xmax,xmin):
     return ((math.exp(gama * x)) - math.exp(gama * xmin)) / (math.exp(gama * xmax) - math.exp(gama * xmin))
 
 def convexa_decreciente(x,gama,xmax,xmin):
-    return (1-(math.exp((x-10)/gama)) - (1-(math.exp((xmax-10)/gama)))) / (1-(math.exp((xmin-10)/gama)) - (1-(math.exp((xmax-10)/gama))))
+    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
 
 def convexa_creciente(x,gama,xmax,xmin):
     return (1-(math.exp((0.0 - x) * gama)) - (1-(math.exp((0.0 - xmin) * gama)))) / (1-(math.exp((0.0 - xmax) * gama)) - (1-(math.exp((0.0 - xmin) * gama))))
@@ -83,6 +89,9 @@ def wf2(t, fp, min_v, max_v):
 
 def linear(x, m, b):
     return (m * x) + b
+
+
+
 
 @app.route("/concava_creciente/plot/")
 def concava_creciente_plot():
@@ -192,6 +201,29 @@ def gaussian_plot():
     return response
 
 
+@app.route("/campana_invertida/plot/")
+def campana_invertida_plot():
+    a = float(request.args.get('a', 0.5))
+
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
+
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [campana_invertida(t, a, center) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
+
+
 @app.route("/logistic/plot/")
 def logistic_plot():
 
@@ -215,6 +247,28 @@ def logistic_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+@app.route("/logistica_invertida/plot/")
+def logistica_invertida_plot():
+
+    L = float(request.args.get('L', 1))
+    k = float(request.args.get('k', 0.02))
+    min_v = float(request.args.get('min', 0))
+    max_v = float(request.args.get('max', 1))
+    center = float(request.args.get('center', (max_v - min_v) / 2.0))
+
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [logistica_invertida(t, L, k, center) for t in x]
+
+    fig = Figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x, y)
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
 
 @app.route("/wf/plot/")
 def wf_plot():
@@ -293,6 +347,15 @@ def logistic_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Logistic')
+    
+@app.route("/<layer>/logistica_invertida/")
+def logistica_invertida_form(layer):
+    template = env.get_template('logistica_invertida.html')
+    print get_layers()
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='Logistica Invertida')
 
 
 @app.route("/<layer>/gaussian/")
@@ -302,6 +365,14 @@ def gaussian_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='Gaussian')
+    
+@app.route("/<layer>/campana_invertida/")
+def campana_invertida_form(layer):
+    template = env.get_template('campana_invertida.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='campana_invertida')
 
 @app.route("/<layer>/wf2/")
 def wf2_form(layer):

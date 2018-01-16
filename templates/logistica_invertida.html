@@ -24,16 +24,16 @@
     </div>
     <div id="center_slider" style="margin-top: 1em;"></div>
   </div>
-  <div class="ui blue primary button" onclick="apply_logistic(); logistic_plot(); update_equation();">Plot</div>
+  <div class="ui blue primary button" onclick="apply_logistica_invertida(); logistica_invertida_plot(); update_equation();">Plot</div>
 </div>
 {% endblock %}
 
 
 {% block plot %}
-<img src="/logistic/plot/" id="plot" width="100%" >
+<img src="/logistica_invertida/plot/" id="plot" width="100%" >
 {% endblock %}
 
 
 {% block scripts %}
-<script src="/static/logistic.js" layer_url="{{ layer_url }}"></script>
+<script src="/static/logistica_invertida.js" layer_url="{{ layer_url }}"></script>
 {% endblock %}

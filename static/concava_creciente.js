@@ -37,11 +37,41 @@ function concava_creciente_args_from_range() {
         gama = (1.38 / center);
     }
         
-    //var gama = 1.38/center; //qui hay que hacer el algebra
+    //aqui hay que hacer el algebra
     $('#gama').val(gama);
+    gama_max = gama * 5.0;
+    gama_min = gama / 10.0;
+    
+        
+    //aqui hay que hacer el algebra
+    $('#gama').val(gama);
+    $( "#gama_slider" ).slider({max: gama_max,
+			     min: gama_min,
+			     value: gama,
+			     step: (gama_max - gama_min) / 100.0,
+			     change: function( event, ui ) {
+				 sync_gama();
+				 sync_plot();
+			     }
+			    });
     
 }
+function sync_gama() {
+    $('#gama').val($("#gama_slider").slider("option", "value"));
+}
 
+function sync_gama_slider() {
+    $("#gama_slider").slider("option", "value",
+			       $('#gama').val());
+}
+
+
+
+function sync_plot() {
+    apply_concava_creciente();
+    concava_creciente_plot();
+    update_equation();
+}
 
 function update_to(url) {
     set_layer(url);
@@ -54,8 +84,12 @@ function update_to(url) {
 function latex_equation() {
 
     var gama = $('#gama').val();
+    var restale = Math.exp((gama) * range['min']);
+    var denominador = Math.exp((gama) * range['max']) - Math.exp((gama) * range['min'])
     
-    return `$$ fv(x)=e^{-\\left(\\frac{x-${gama}}{${gama}}\\right)^{2}} $$`;
+    return `$$ fv(x)=\\frac{e^{${gama}*x}-${restale}}{${denominador}} $$`;
+    
+    
 }
 
 
