@@ -153,7 +153,7 @@ var map = new ol.Map({
     layers: [stamenLayer],
     target: 'map',
     view: new ol.View({
-	center: ol.proj.fromLonLat([-99.15,19.36]),
+	center: ol.proj.fromLonLat([-99.10,19.44]),
 	zoom: 11
     })
 });
