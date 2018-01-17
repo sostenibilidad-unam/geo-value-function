@@ -28,16 +28,23 @@ function gaussian(x) {
     return Math.exp(0.0  - (((x - center)/a)*((x - center)/a)))
 }
 
+var center_step = 0;
+var center_lstep = 0;
+var a_step = 0;
+var a_lstep = 0;
 
 function gaussian_args_from_range() {
     var center = range['min'] + ((range['max'] - range['min']) / 2);
     center_max = range['max'];
     center_min = range['min'];
 
+    center_step = (center_max - center_min) / 100.0;
+    center_lstep = (center_max - center_min) / 10.0;
 
     a =  (range['max'] - range['min']) / 4.0;
     a_max = a * 2.0;
     a_min = a / 10.0;
+
     $('#a').val(a);
     $('#center').val(center);
 
@@ -66,27 +73,8 @@ function gaussian_args_from_range() {
 }
 
 
-function forward(selector, sync_callback) {
-    delta = (parseFloat($(selector).slider("option", "max")) - parseFloat($(selector).slider("option", "min"))) / 100.0;
-    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) + delta);
-    sync_callback();
-    sync_plot();
-}
-function fforward(selector, sync_callback) {
-    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 10.0;
-    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) + delta);
-    sync_callback();
-    sync_plot();
-}
-function backward(selector, sync_callback) {
-    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 100.0;
-    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) - delta);
-    sync_callback();
-    sync_plot();
-}
-function fbackward(selector, sync_callback) {
-    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 10.0;
-    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) - delta);
+function step(selector, delta, sync_callback) {
+    $(selector).val(parseFloat($(selector).val()) + delta);
     sync_callback();
     sync_plot();
 }

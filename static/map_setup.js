@@ -213,7 +213,6 @@ map.on('pointermove', function(evt) {
   });
 map.getViewport().addEventListener('mouseout', function(evt){
 	vectorSource.clear();
-    vectorSource.addFeatures(estosFeatures);
-    pcz.unhighlight();
-    stats_div.innerHTML = "selected: "+ ageb_ids.length;
+    
+    stats_div.innerHTML = "";
 }, false);
