@@ -42,9 +42,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <style type="text/css">
-      body {
-      margin: 3em;
-      }
       #c1 {
       background-color: rgb(74,190,181);
       }
@@ -68,102 +65,102 @@
 
   <body>
 
-    <div class="ui two column stackable grid">
-      <div class="sixteen wide column">
-	<div class="ui segment">
-	  <table>
-	    <tr>
-	      <td align="center">
-		<a href="/{{ layer }}/linear/" class="item">
-		  <img src="/static/linear_icon.png" width="170px" /><br>linear</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/logistic/" class="item">
-		  <img src="/static/logistic_icon.png" width="170px" /><br>logistic</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/logistica_invertida/" class="item">
-		  <img src="/static/logistica_invertida_icon.png" width="170px" /><br>Logística Invertida</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/gaussian/" class="item">
-		  <img src="/static/gaussian_icon.png" width="170px" /><br>gaussian</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/campana_invertida/" class="item">
-		  <img src="/static/campana_invertida_icon.png" width="170px" /><br>Campana Invertida</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/concava_decreciente/" class="item">
-		  <img src="/static/concava_decreciente_icon.png" width="170px" /><br>Concava Decreciente</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/concava_creciente/" class="item">
-		  <img src="/static/concava_creciente_icon.png" width="170px" /><br>Concava Creciente</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/convexa_decreciente/" class="item">
-		  <img src="/static/convexa_decreciente_icon.png" width="170px" /><br>Convexa Decreciente</a>
-	      </td>
-	      <td align="center">
-		<a href="/{{ layer }}/convexa_creciente/" class="item">
-		  <img src="/static/convexa_creciente_icon.png" width="170px" /><br>Convexa Creciente</a>
-	      </td>
-	    </tr>
-	  </table>
-	</div>
-      </div>
+    <div class="ui left sidebar vertical menu">
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/linear/">
+	<img src="/static/linear_icon.png">
+      </a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/logistic/">
+	<img src="/static/logistic_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/logistica_invertida/">
+	<img src="/static/logistica_invertida_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/gaussian/">
+	<img src="/static/gaussian_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/campana_invertida/">
+	<img src="/static/campana_invertida_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/concava_decreciente/">
+	<img src="/static/concava_decreciente_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/concava_creciente/">
+	<img src="/static/concava_creciente_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/convexa_decreciente/">
+	<img src="/static/convexa_decreciente_icon.png"></a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/convexa_creciente/">
+	<img src="/static/convexa_creciente_icon.png"></a>
     </div>
 
-    <div class="ui two column stackable grid">
-      <div class="four wide column">
-	<div class="ui segment">
-	  <ul>
-	    {% for layer in layers %}
-	    <li><a href="/{{ layer.name }}/linear/">{{ layer.name }}</a></li>
-	    {% endfor %}
-	  </ul>
-	</div>
+    <div class="ui right sidebar vertical menu">
+      {% for layer in layers %}
+      <a class="item"
+	 href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
+      {% endfor %}
+    </div>
+
+<div class="ui top fixed menu">
+  <a class="item"  onclick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+    <i class="content layout icon"></i>
+  </a>
+  <div class="item">
+    {{ function_name }}
+  </div>
+  <div class="item">
+    {{ layer }}
+  </div>
+</div>
 
 
-	<div class="ui segment">
-	  {% block form %}
-	  {% endblock %}
-	</div>
 
-	<div class="ui segment">
-	  <div id="MathExample">
+
+
+    <div class="pusher">
+      <div class="ui two column stackable grid" style="margin-top: 2em;">
+	<div class="four wide column">
+
+	  <div class="ui segment">
+	    {% block form %}
+	    {% endblock %}
+	  </div>
+
+	  <div class="ui segment">
+	    <div id="MathExample">
+	    </div>
+	  </div>
+
+	  <div class="ui segment">
+	    {% block plot %}
+	    {% endblock %}
+	  </div>
+	  <div class="ui segment", id="colred_bar">
+	    <div style="position: absolute; left: 18%; top: 0%; width:66%;">
+	      <div style="position: absolute; left: 0%; top: 0; width:20%; height:20px;", id="c1">
+	      </div>
+	      <div style="position: absolute; left: 20%; top: 0; width:20%; height:20px;", id="c2">
+	      </div>
+	      <div style="position: absolute; left: 40%; top: 0; width:20%; height:20px;", id="c3">
+	      </div>
+	      <div style="position: absolute; left: 60%; top: 0; width:20%; height:20px;", id="c4">
+	      </div>
+	      <div style="position: absolute; left: 80%; top: 0; width:20%; height:20px;", id="c5">
+	      </div>
+	    </div>
 	  </div>
 	</div>
 
-	<div class="ui segment">
-	  {% block plot %}
-	  {% endblock %}
-	</div>
-	<div class="ui segment", id="colred_bar">
-	  <div style="position: absolute; left: 18%; top: 0%; width:66%;">
-	    <div style="position: absolute; left: 0%; top: 0; width:20%; height:20px;", id="c1">
-	    </div>
-	    <div style="position: absolute; left: 20%; top: 0; width:20%; height:20px;", id="c2">
-	    </div>
-	    <div style="position: absolute; left: 40%; top: 0; width:20%; height:20px;", id="c3">
-	    </div>
-	    <div style="position: absolute; left: 60%; top: 0; width:20%; height:20px;", id="c4">
-	    </div>
-	    <div style="position: absolute; left: 80%; top: 0; width:20%; height:20px;", id="c5">
-	    </div>
+	<!-- open layers map -->
+	<div class="twelve wide column">
+	  <div class="ui segment">
+	    <div id="map"></div>
 	  </div>
 	</div>
       </div>
-
-      <!-- open layers map -->
-      <div class="twelve wide column">
-	<div class="ui segment">
-	  <div id="map"></div>
-	</div>
-      </div>
     </div>
-
     <script src="/static/map_setup.js"></script>
     {% block scripts %}
     {% endblock %}
