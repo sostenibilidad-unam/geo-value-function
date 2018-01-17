@@ -147,13 +147,73 @@ var stamenLayer = new ol.layer.Tile({
 	layer: 'terrain'
     })
 });
-
+var polygon_style2 = new ol.style.Style({
+	  fill: new ol.style.Fill({color: 'rgba(250,163,1,1)'}),
+	  stroke: new ol.style.Stroke({color: 'rgba(250,163,1,1)',width: 1}),
+	  text: new ol.style.Text({
+		  	font: '12px Calibri,sans-serif',
+		  	fill: new ol.style.Fill({color: 'rgba(250,163,1,1)'}),
+	        stroke: new ol.style.Stroke({
+	        		color: 'rgba(100,100,100,1)',
+	        		width: 3
+	        })
+	  })
+});
+var vectorSource = new ol.source.Vector({projection: 'EPSG:4326'});
+var miVector = new ol.layer.Vector({
+    	source: vectorSource
+}); 
+miVector.setStyle(polygon_style2);
 var map = new ol.Map({
     projection:"EPSG:4326",
-    layers: [stamenLayer],
+    layers: [stamenLayer, miVector],
     target: 'map',
     view: new ol.View({
 	center: ol.proj.fromLonLat([-99.10,19.44]),
 	zoom: 11
     })
 });
+var highlightStyleCache = {};
+var highlight;
+var stats_div = document.getElementById('statistics');
+var displayFeatureInfo = function (pixel) {
+
+	var feature = map.forEachFeatureAtPixel(pixel, function (feature) {
+		    return feature;
+	});
+
+	if (feature) {
+		
+		stats_div.innerHTML = "value: " + feature.get("value") + "</br> normalized value: " + feature.get("fv") ;
+	}else{
+		vectorSource.clear();
+	    
+	    
+	}
+
+	if (feature !== highlight) {
+		vectorSource.clear();
+		//if (highlight) {
+			//featureOverlay.getSource().removeFeature(highlight);
+		//	vectorSource.removeFeature(highlight);
+		//}
+	    	if (feature) {
+			vectorSource.addFeature(feature);
+		}
+		highlight = feature;
+	}
+
+};
+map.on('pointermove', function(evt) {
+    if (evt.dragging) {
+      return;
+    }
+    var pixel = map.getEventPixel(evt.originalEvent);
+    displayFeatureInfo(pixel);
+  });
+map.getViewport().addEventListener('mouseout', function(evt){
+	vectorSource.clear();
+    vectorSource.addFeatures(estosFeatures);
+    pcz.unhighlight();
+    stats_div.innerHTML = "selected: "+ ageb_ids.length;
+}, false);
