@@ -2,29 +2,56 @@
 
 {% block form %}
 <div class="ui form" id="args">
-  <div class="field">
-    <label>L</label>
-    <div class="ui left icon input">
-      <input placeholder="1" id="L" value="1">
+  <label>k</label>
+  <div id="k_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
+
+  <div class="five fields">
+    <div class="field">
+      <div class="ui button" onclick="fbackward('#k_slider', sync_k_slider);">&lt;&lt;</div>
+    </div>
+    <div class="field">
+      <div class="ui button" onclick="backward('#k_slider', sync_k_slider);">&lt;</div>
+    </div>
+    <div class="field">
+      <div class="ui left icon input">
+	<input placeholder="1" id="k" value="0.02"
+	       onchange="sync_k_slider(); sync_plot();">
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui button" onclick="forward('#k_slider', sync_k_slider);">&gt;</div>
+    </div>
+    <div class="field">
+      <div class="ui button" onclick="fforward('#k_slider', sync_k_slider);">&gt;&gt;</div>
     </div>
   </div>
-  
-  <div class="field">
-    <label>k</label>
-    <div class="ui left icon input">
-      <input placeholder="0.02" id="k" value="0.02" onchange="sync_k_slider(); sync_plot();">
+
+  <label>center</label>
+  <div id="center_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
+  <div class="five fields">
+    <div class="field">
+      <div class="ui button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
     </div>
-    <div id="k_slider" style="margin-top: 1em;"></div>
-  </div>
-  
-  <div class="field">
-    <label>center</label>
-    <div class="ui left icon input">
-      <input placeholder="2600" type="number" id="center" value="2600" onchange="sync_center_slider(); sync_plot();">
+
+    <div class="field">
+      <div class="ui button" onclick="backward('#center_slider', sync_center_slider);">&lt;</div>
     </div>
-    <div id="center_slider" style="margin-top: 1em;"></div>
+
+    <div class="field">
+      <div class="ui left icon input">
+	<input placeholder="2600" id="center" value="2600"
+	       onchange="sync_center_slider(); sync_plot();">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="ui button" onclick="forward('#center_slider', sync_center_slider);">&gt;</div>
+    </div>
+
+    <div class="field">
+      <div class="ui button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
+    </div>
   </div>
-  <div class="ui blue primary button" onclick="apply_logistica_invertida(); logistica_invertida_plot(); update_equation();">Plot</div>
 </div>
 {% endblock %}
 

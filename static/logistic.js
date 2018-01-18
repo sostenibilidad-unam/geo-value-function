@@ -2,13 +2,11 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 
 
 function logistic_plot() {
-    var L = $('#L').val(),
-	k = $('#k').val(),
+    var k = $('#k').val(),
 	center = $('#center').val();
     
     // update plot
-    document.getElementById("plot").src="/logistic/plot/?L=" + L
-	+ "&k=" + k
+    document.getElementById("plot").src="/logistic/plot/?k=" + k
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
@@ -27,16 +25,14 @@ function apply_logistic(){
 
 
 function logistic(x) {
-    var L = $('#L').val(),
-	k = $('#k').val(),
+    var k = $('#k').val(),
 	center = $('#center').val();
-    return L / (1.0 + Math.exp(-k * (x - center)))
+    return 1.0 / (1.0 + Math.exp(-k * (x - center)))
 }
 function inverted_logistic(y) {
-    var L = $('#L').val(),
-	k = $('#k').val(),
+    var k = $('#k').val(),
 	center = parseFloat($('#center').val());
-    return (Math.log((L/y)-1.0) / (0.0 - k)) + center
+    return (Math.log((1.0/y)-1.0) / (0.0 - k)) + center
 }
 function to_percent(x) {
     return ((x - range['min']) / (range['max'] - range['min'])) * 100.0
@@ -136,11 +132,10 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var L = $('#L').val(),
-	k = $('#k').val(),
+    var k = $('#k').val(),
 	center = $('#center').val();
     
-    return `$$ fv(x) = \\frac${L}{1+e^{-${k}(x-${center})}} $$`
+    return `$$ fv(x) = \\frac{1}{1+e^{-${k}(x-${center})}} $$`
 }
 
 

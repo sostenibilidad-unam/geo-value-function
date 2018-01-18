@@ -2,17 +2,30 @@
 
 {% block form %}
 <div class="ui form" id="args">
-  <div class="field">
-    <label>gama</label>
-    <div class="ui left icon input">
-      <input placeholder="0.25" id="gama" value="0.25" onchange="sync_gama_slider(); sync_plot();">
+  <label>gama</label>
+  <div id="gama_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
+
+  <div class="five fields">
+    <div class="field">
+      <div class="ui button" onclick="fbackward('#gama_slider', sync_gama_slider);">&lt;&lt;</div>
     </div>
-    <div id="gama_slider" style="margin-top: 1em;"></div>
+    <div class="field">
+      <div class="ui button" onclick="backward('#gama_slider', sync_gama_slider);">&lt;</div>
+    </div>
+    <div class="field">
+      <div class="ui left icon input">
+	<input placeholder="1" id="gama" value="1"
+	       onchange="sync_gama_slider(); sync_plot();">
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui button" onclick="forward('#gama_slider', sync_gama_slider);">&gt;</div>
+    </div>
+    <div class="field">
+      <div class="ui button" onclick="fforward('#gama_slider', sync_gama_slider);">&gt;&gt;</div>
+    </div>
   </div>
   
-  
-  
-  <div class="ui blue primary button" onclick="apply_concava_decreciente(); concava_decreciente_plot(); update_equation();">Plot</div>
 </div>
 {% endblock %}
 
