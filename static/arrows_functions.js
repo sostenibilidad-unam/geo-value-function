@@ -66,7 +66,30 @@ function gaussian_args_from_range() {
 }
 
 
-
+function forward(selector, sync_callback) {
+    delta = (parseFloat($(selector).slider("option", "max")) - parseFloat($(selector).slider("option", "min"))) / 100.0;
+    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) + delta);
+    sync_callback();
+    sync_plot();
+}
+function fforward(selector, sync_callback) {
+    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 10.0;
+    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) + delta);
+    sync_callback();
+    sync_plot();
+}
+function backward(selector, sync_callback) {
+    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 100.0;
+    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) - delta);
+    sync_callback();
+    sync_plot();
+}
+function fbackward(selector, sync_callback) {
+    delta = ($(selector).slider("option", "max") - $(selector).slider("option", "min")) / 10.0;
+    $(selector).slider("option", "value", parseFloat($(selector).slider("option", "value")) - delta);
+    sync_callback();
+    sync_plot();
+}
 
 function sync_center() {
     $('#center').val($("#center_slider").slider("option", "value"));
