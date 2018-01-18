@@ -30,14 +30,37 @@ function convexa_creciente(x) {
 }
 
 function convexa_creciente_args_from_range() {
-    var gama = 2 * Math.pow(range['max'],1/1.5);
-   
+    var gama = 4.0 / range['max'];
+    gama_max = gama * 6.0;
+    gama_min = gama / 10.0;    
         
     //var gama = 1.38/center; //qui hay que hacer el algebra
     $('#gama').val(gama);
-    
+    $( "#gama_slider" ).slider({max: gama_max,
+			     min: gama_min,
+			     value: gama,
+			     step: (gama_max - gama_min) / 100.0,
+			     change: function( event, ui ) {
+				 sync_gama();
+				 sync_plot();
+			     }
+			    });
 }
 
+function sync_gama() {
+    $('#gama').val($("#gama_slider").slider("option", "value"));
+}
+
+function sync_gama_slider() {
+    $("#gama_slider").slider("option", "value",
+			       $('#gama').val());
+}
+
+function sync_plot() {
+    apply_convexa_creciente();
+    convexa_creciente_plot();
+    update_equation();
+}
 
 function update_to(url) {
     set_layer(url);

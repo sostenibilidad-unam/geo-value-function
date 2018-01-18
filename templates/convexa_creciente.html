@@ -4,27 +4,27 @@
 <div class="ui form" id="args">
   <label>gama</label>
   <div id="gama_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-
-  <div class="five fields">
-    <div class="field">
-      <div class="ui button" onclick="fbackward('#gama_slider', sync_gama_slider);">&lt;&lt;</div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="backward('#gama_slider', sync_gama_slider);">&lt;</div>
-    </div>
-    <div class="field">
-      <div class="ui left icon input">
-	<input placeholder="1" id="gama" value="1"
-	       onchange="sync_gama_slider(); sync_plot();">
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="forward('#gama_slider', sync_gama_slider);">&gt;</div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="fforward('#gama_slider', sync_gama_slider);">&gt;&gt;</div>
-    </div>
-  </div>
+  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="fbackward('#gama_slider', sync_gama_slider);">&lt;&lt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="backward('#gama_slider', sync_gama_slider);">&lt;</div>
+      </div> 
+      <div class="six wide column">
+         <div class="ui big input" style="width:100%">
+            	<input placeholder="1" id="gama" value="1" onchange="sync_gama_slider(); sync_plot();">
+          </div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="forward('#gama_slider', sync_gama_slider);">&gt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="fforward('#gama_slider', sync_gama_slider);">&gt;&gt;</div>
+      </div> 
+  </div>  
+  
+  
 </div>
 {% endblock %}
 

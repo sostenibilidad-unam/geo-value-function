@@ -2,56 +2,53 @@
 
 {% block form %}
 <div class="ui form" id="args">
+
   <label>k</label>
   <div id="k_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-
-  <div class="five fields">
-    <div class="field">
-      <div class="ui button" onclick="fbackward('#k_slider', sync_k_slider);">&lt;&lt;</div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="backward('#k_slider', sync_k_slider);">&lt;</div>
-    </div>
-    <div class="field">
-      <div class="ui left icon input">
-	<input placeholder="1" id="k" value="0.02"
-	       onchange="sync_k_slider(); sync_plot();">
-      </div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="forward('#k_slider', sync_k_slider);">&gt;</div>
-    </div>
-    <div class="field">
-      <div class="ui button" onclick="fforward('#k_slider', sync_k_slider);">&gt;&gt;</div>
-    </div>
-  </div>
-
+  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="fbackward('#k_slider', sync_k_slider);">&lt;&lt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="backward('#k_slider', sync_k_slider);">&lt;</div>
+      </div> 
+      <div class="six wide column">
+         <div class="ui big input" style="width:100%">
+            	<input placeholder="1" id="k" value="1" onchange="sync_k_slider(); sync_plot();">
+          </div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="forward('#k_slider', sync_k_slider);">&gt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="fforward('#k_slider', sync_k_slider);">&gt;&gt;</div>
+      </div> 
+  </div> 
+  
+   
   <label>center</label>
   <div id="center_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-  <div class="five fields">
-    <div class="field">
-      <div class="ui button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
-    </div>
-
-    <div class="field">
-      <div class="ui button" onclick="backward('#center_slider', sync_center_slider);">&lt;</div>
-    </div>
-
-    <div class="field">
-      <div class="ui left icon input">
-	<input placeholder="2600" id="center" value="2600"
-	       onchange="sync_center_slider(); sync_plot();">
-      </div>
-    </div>
-
-    <div class="field">
-      <div class="ui button" onclick="forward('#center_slider', sync_center_slider);">&gt;</div>
-    </div>
-
-    <div class="field">
-      <div class="ui button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
-    </div>
-  </div>
+  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big right floated button" onclick="backward('#center_slider', sync_center_slider);">&lt;</div>
+      </div> 
+      <div class="six wide column">
+         <div class="ui big input" style="width:100%">
+            	<input placeholder="1" id="center" value="1" onchange="sync_center_slider(); sync_plot();">
+          </div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="forward('#center_slider', sync_center_slider);">&gt;</div>
+      </div> 
+      <div class="two wide column">
+         <div class="ui big button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
+      </div> 
+  </div>  
+  
+  
   
   
 
