@@ -68,7 +68,7 @@
 
   <body>
 
-    <div class="ui left sidebar vertical menu">
+    <div class="ui massive left sidebar vertical menu" id="equations_sidebar">
       <a class="ui centered medium image item"
 	 href="/{{ layer }}/linear/">
 	<img src="/static/linear_icon.png">
@@ -99,23 +99,26 @@
 	<img src="/static/convexa_creciente_icon.png"></a>
     </div>
 
-    <div class="ui right sidebar vertical menu">
+    <div class="ui massive right sidebar vertical menu" id="layers_sidebar">
       {% for layer in layers %}
-      <a class="item"
+      <a class="massive item"
 	 href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
       {% endfor %}
     </div>
 
-<div class="ui top fixed menu">
-  <a class="item"  onclick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
-    <i class="content layout icon"></i>
+<div class="ui top massive fixed menu">
+  <a class="massive item"  onclick="$('#equations_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+    <i class="content big layout icon"></i>
   </a>
-  <div class="item">
+  <div class="massive item">
     {{ function_name }}
   </div>
-  <div class="item">
+  <div class="right massive item">
     {{ layer }}
   </div>
+  <a class="item"  onclick="$('#layers_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+    <i class="content big layout icon"></i>
+  </a>
 </div>
 
 
@@ -123,7 +126,7 @@
 
 
     <div class="pusher" style="height: 100%;">
-      <div class="ui two column stackable grid" style="margin-top: 2em; margin-left: 0.5em; height: 100%;">
+      <div class="ui two column stackable grid" style="margin-top: 3em; margin-left: 0.5em; height: 100%;">
       
             	<div class="six wide column">
             
