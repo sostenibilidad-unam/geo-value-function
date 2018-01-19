@@ -1,6 +1,7 @@
 import math
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 import StringIO
 import numpy
 from os import listdir
@@ -204,9 +205,18 @@ def gaussian_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [gaussian(t, a, center) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
+    # ax.figure()
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+    plt.subplots_adjust()
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
