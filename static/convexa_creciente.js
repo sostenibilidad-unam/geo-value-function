@@ -2,7 +2,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 
 function convexa_creciente_plot() {
     var gama = $('#gama').val();
-    
+
     // update plot
     document.getElementById("plot").src="/convexa_creciente/plot/?gama=" + gama
 	+ "&min=" + range['min']
@@ -26,14 +26,14 @@ function convexa_creciente(x) {
     var xmin = range['min'];
     return (1-(Math.exp((0.0 - x)*gama)) - (1-(Math.exp((0.0 - xmin)*gama)))) / (1-(Math.exp((0.0 - xmax)*gama)) - (1-(Math.exp((0.0 - xmin)*gama))))
 
-    
+
 }
 
 function convexa_creciente_args_from_range() {
     var gama = 4.0 / range['max'];
     gama_max = gama * 6.0;
-    gama_min = gama / 10.0;    
-        
+    gama_min = gama / 10.0;
+
     //var gama = 1.38/center; //qui hay que hacer el algebra
     $('#gama').val(gama);
     $( "#gama_slider" ).slider({max: gama_max,
@@ -73,17 +73,15 @@ function update_to(url) {
 function latex_equation() {
 
     var gama = $('#gama').val();
-    
-    return `$$ fv(x)=e^{-\\left(\\frac{x-${gama}}{${gama}}\\right)^{2}} $$`;
+
+    return `fv(x)=e^{-\\left(\\frac{x-${gama}}{${gama}}\\right)^{2}}`;
 }
 
 
 function update_equation() {
-    $('#MathExample').text(latex_equation());
-    var math = document.getElementById("MathExample");
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+    katex.render(latex_equation(), equation);
 }
+
 
 update_to(layer_url);
 update_equation();
-

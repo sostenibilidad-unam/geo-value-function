@@ -4,7 +4,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 function linear_plot() {
     var m = $('#m').val(),
 	b = $('#b').val();
-    
+
     // update plot
     document.getElementById("plot").src="/linear/plot/?m=" + m
 	+ "&b=" + b
@@ -27,16 +27,16 @@ function apply_linear(){
 function linear(x) {
     var m = $('#m').val(),
 	b = $('#b').val();
-    
+
     y = parseFloat(m * x)+parseFloat(b);
-    
+
     return y;
 }
 
 // function inverted_linear(y) {
 //     var L = $('#L').val(),
-// 	k = $('#k').val(),
-// 	center = parseFloat($('#center').val());
+//	k = $('#k').val(),
+//	center = parseFloat($('#center').val());
 //     return (Math.log((L/y)-1.0) / (0.0 - k)) + center
 // }
 
@@ -50,7 +50,7 @@ function linear_args_from_range() {
     var b = 0 - ( (range['min']) / (range['max'] - range['min']) );
 
     $('#m').val(m.toFixed(4));
-    $('#b').val(b.toFixed(4));    
+    $('#b').val(b.toFixed(4));
 }
 
 function resize_bar(){
@@ -71,20 +71,17 @@ function latex_equation() {
 	b = $('#b').val();
     if (b < 0){
 	babs = Math.abs(b);
-	return `$$ y=${m}x-${babs} $$`;
-    }else{
-        return `$$ y=${m}x+${b} $$`;
+	return `y=${m}x-${babs}`;
+    } else {
+	return `y=${m}x+${b}`;
     }
-    
-}
 
+}
 
 function update_equation() {
-    $('#MathExample').text(latex_equation());
-    var math = document.getElementById("MathExample");
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+    katex.render(latex_equation(), equation);
 }
+
 
 update_to(layer_url);
 update_equation();
-

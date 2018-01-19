@@ -4,7 +4,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 function logistica_invertida_plot() {
     var k = $('#k').val(),
 	center = $('#center').val();
-    
+
     // update plot
     document.getElementById("plot").src="/logistica_invertida/plot/?&k=" + k
 	+ "&center=" + center
@@ -43,13 +43,13 @@ function logistica_invertida_args_from_range() {
 	k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
     $('#k').val(k.toFixed(4));
     $('#center').val(center.toFixed(4));
-    
+
     center_max = range['max'];
     center_min = range['min'];
-    
+
     k_max = k * 2.0;
     k_min = k / 10.0;
-   
+
 
     $( "#k_slider" ).slider({max: k_max,
 			     min: k_min,
@@ -101,15 +101,15 @@ function sync_plot() {
 
 
 function resize_bar(){
-    
-   
-    
+
+
+
     c20 = to_percent(inverted_logistic(0.2));
     c40 = to_percent(inverted_logistic(0.4));
     c60 = to_percent(inverted_logistic(0.6));
     c80 = to_percent(inverted_logistic(0.8));
     c100 = to_percent(inverted_logistic(1.0));
-    
+
     document.getElementById("c1").style.width = c20 + "%";
     document.getElementById("c2").style.left = c20 + "%";
     document.getElementById("c2").style.width = (c40 - c20) + "%";
@@ -134,19 +134,15 @@ function latex_equation() {
 
     var k = $('#k').val(),
 	center = $('#center').val();
-    
-    return `$$ fv(x) = 1 - \\frac{1}{1+e^{-${k}(x-${center})}} $$`
-}
 
+    return `fv(x) = 1 - \\frac{1}{1+e^{-${k}(x-${center})}}`
+}
 
 function update_equation() {
-    $('#MathExample').text(latex_equation());
-    var math = document.getElementById("MathExample");
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+    katex.render(latex_equation(), equation);
 }
+
 
 
 update_to(layer_url);
 update_equation();
-
-

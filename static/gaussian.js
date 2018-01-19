@@ -111,7 +111,6 @@ function latex_equation() {
 
 function update_equation() {
     katex.render(latex_equation(), equation);
-
 }
 
 update_to(layer_url);
