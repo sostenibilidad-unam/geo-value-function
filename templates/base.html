@@ -31,10 +31,10 @@
 	    integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-beta/katex.min.css" integrity="sha384-L/SNYu0HM7XECWBeshTGLluQO9uVI1tvkCtunuoUbCHHoTH76cDyXty69Bb9I0qZ" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-beta/katex.min.js" integrity="sha384-ad+n9lzhJjYgO67lARKETJH6WuQVDDlRfj81AJJSswMyMkXTD49wBj5EP004WOY6" crossorigin="anonymous"></script>
 
-    <script
+     <script
        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
        crossorigin="anonymous"></script>
@@ -61,7 +61,7 @@
       background-color: rgb(16,0,90);
       }
 
-
+      .katex { font-size: 3em !important; }
     </style>
 
   </head>
@@ -140,7 +140,7 @@
 		    {% block plot %}
 		    {% endblock %}
 		  </div>
-		  <div id="statistics" class="ui segment"></div>
+
 		  <div class="ui segment", id="colred_bar">
 		    <div style="position: absolute; left: 18%; top: 0%; width:66%;">
 		      <div style="position: absolute; left: 0%; top: 0; width:20%; height:20px;", id="c1">
@@ -155,8 +155,9 @@
 		      </div>
 		    </div>
 		  </div>
+		  <div id="statistics" class="ui segment"></div>
 		  <div class="ui segment">
-		    <div id="MathExample">
+		    <div id="equation">
 		    </div>
 		  </div>
 
