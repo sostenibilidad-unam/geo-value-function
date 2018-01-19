@@ -14,12 +14,12 @@ app = Flask(__name__)
 env = Environment(loader=FileSystemLoader('templates'))
 
 
-def logistic(t, L, k, center):
-    return L / (1.0 + math.exp(-k * (t - center)))
+def logistic(t, k, center):
+    return 1 / (1.0 + math.exp(-k * (t - center)))
 
 
-def logistica_invertida(t, L, k, center):
-    return 1 - (L / (1.0 + math.exp(-k * (t - center))))
+def logistica_invertida(t, k, center):
+    return 1 - (1 / (1.0 + math.exp(-k * (t - center))))
 
 
 def gaussian(t, a, center):
@@ -116,9 +116,17 @@ def concava_creciente_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -138,9 +146,17 @@ def concava_decreciente_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_decreciente(t, gama, max_v, min_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -160,9 +176,17 @@ def convexa_decreciente_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_decreciente(t, gama, max_v, min_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -182,9 +206,17 @@ def convexa_creciente_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_creciente(t, gama, max_v, min_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -209,14 +241,13 @@ def gaussian_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    # ax.figure()
     ax.plot(x, y)
 
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-    plt.subplots_adjust()
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -237,9 +268,17 @@ def campana_invertida_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [campana_invertida(t, a, center) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -252,18 +291,24 @@ def campana_invertida_plot():
 @app.route("/logistic/plot/")
 def logistic_plot():
 
-    L = float(request.args.get('L', 1))
     k = float(request.args.get('k', 0.02))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
     center = float(request.args.get('center', (max_v - min_v) / 2.0))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [logistic(t, L, k, center) for t in x]
+    y = [logistic(t, k, center) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -276,18 +321,25 @@ def logistic_plot():
 @app.route("/logistica_invertida/plot/")
 def logistica_invertida_plot():
 
-    L = float(request.args.get('L', 1))
     k = float(request.args.get('k', 0.02))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
     center = float(request.args.get('center', (max_v - min_v) / 2.0))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [logistica_invertida(t, L, k, center) for t in x]
+    y = [logistica_invertida(t, k, center) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -307,9 +359,17 @@ def wf_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [wf(t, fp, min_v=min_v, max_v=max_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -329,9 +389,17 @@ def wf2_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [wf2(t, fp, min_v=min_v, max_v=max_v) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -355,9 +423,17 @@ def linear_plot():
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [linear(t, m, b) for t in x]
 
-    fig = Figure()
-    ax = fig.add_subplot(111)
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
+
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()

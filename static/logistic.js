@@ -10,6 +10,7 @@ function logistic_plot() {
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
+
 }
 
 
@@ -20,7 +21,6 @@ function apply_logistic(){
 	});
     });
     layer.setStyle(style_data_layer);
-    resize_bar();
 }
 
 
@@ -99,28 +99,6 @@ function sync_plot() {
     update_equation();
 }
 
-
-function resize_bar(){
-
-
-
-    c20 = to_percent(inverted_logistic(0.2));
-    c40 = to_percent(inverted_logistic(0.4));
-    c60 = to_percent(inverted_logistic(0.6));
-    c80 = to_percent(inverted_logistic(0.8));
-    c100 = to_percent(inverted_logistic(1.0));
-
-    document.getElementById("c1").style.width = c20 + "%";
-    document.getElementById("c2").style.left = c20 + "%";
-    document.getElementById("c2").style.width = (c40 - c20) + "%";
-    document.getElementById("c3").style.left = c40 + "%";
-    document.getElementById("c3").style.width = (c60 - c40) + "%";
-    document.getElementById("c4").style.left = c60 + "%";
-    document.getElementById("c4").style.width = (c80 - c60) + "%";
-    document.getElementById("c5").style.left = c80 + "%";
-    document.getElementById("c5").style.width = (100.0 - c80) + "%";
-
-}
 
 function update_to(url) {
     set_layer(url);
