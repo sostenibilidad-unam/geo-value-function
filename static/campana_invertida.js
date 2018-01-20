@@ -5,7 +5,7 @@ function campana_invertida_plot() {
 	center = $('#center').val();
 
     // update plot
-    document.getElementById("plot").src="/campana_invertida/plot/?a=" + a
+    document.getElementById("plot").src="/campana_invertida/plot/?n="+ n +"&a=" + a
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];

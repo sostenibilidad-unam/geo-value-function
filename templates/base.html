@@ -116,9 +116,16 @@
   <div class="massive item">
     {{ function_name }}
   </div>
+  
   <div class="right massive item">
     {{ layer }}
   </div>
+  <a class="item"  onclick="set_categories();">
+    <img src="/static/categories.png">
+  </a>
+  <a class="item"  onclick="set_continous();">
+    <img src="/static/continous.png">
+  </a>
   <a class="item"  onclick="$('#layers_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
     <i class="content big layout icon"></i>
   </a>

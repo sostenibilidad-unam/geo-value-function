@@ -6,7 +6,7 @@ function logistica_invertida_plot() {
 	center = $('#center').val();
 
     // update plot
-    document.getElementById("plot").src="/logistica_invertida/plot/?&k=" + k
+    document.getElementById("plot").src="/logistica_invertida/plot/?n="+ n +"&k=" + k
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];

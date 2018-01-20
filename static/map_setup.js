@@ -3,19 +3,33 @@ var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8
 var borde = 'rgba(255,255,255,0)';
 var styleCache_data_layer={};
 var styleCache_mi_paleta={};
-
+var n = 5;
+function set_continous(){
+    n = 100;
+    style_data_layer = style_100;
+    layer.setStyle(style_data_layer);
+    sync_plot();
+}
+function set_categories(){
+    n = 5;
+    style_data_layer = style_5;
+    layer.setStyle(style_data_layer);
+    sync_plot();
+}
 function hexToRGB(hex, alpha) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16);
     return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";   
-};	
+};
+
+	
 var colorscale = d3.scale.linear()
 .domain([0,1])
 .range(["#4ABEB5","#10005A"])
 .interpolate(d3.interpolateLab);
 
-var style_data_layer = function(feature, resolution){
+var style_100 = function(feature, resolution){
 	    var context = {
 			feature: feature,
 			variables: {}
@@ -23,7 +37,7 @@ var style_data_layer = function(feature, resolution){
 	    var value = feature.get("fv");
 	    
 	    var size = 0;
-	    var style = [ new ol.style.Style({
+	    var style_continuo = [ new ol.style.Style({
 		    	stroke: new ol.style.Stroke({
 			    		color: borde, 
 						lineDash: null,
@@ -54,12 +68,89 @@ var style_data_layer = function(feature, resolution){
 		    });
 		styleCache_mi_paleta[key] = new ol.style.Style({"text": text})
 	    }
-	    var allStyles = [styleCache_mi_paleta[key]];
-	    allStyles.push.apply(allStyles, style);
-	    return allStyles;
+	    var allStyles_mi_paleta = [styleCache_mi_paleta[key]];
+	    allStyles_mi_paleta.push.apply(allStyles_mi_paleta, style_continuo);
+	    return allStyles_mi_paleta;
 };
+var style_5 = function(feature, resolution) {
+    var ranges_data_layer = [[webber_cuts[0], webber_cuts[1], [ new ol.style.Style({
+	stroke: new ol.style.Stroke({color: borde, lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}),
+	fill: new ol.style.Fill({color: paleta[0]})})]],
+			[webber_cuts[1], webber_cuts[2], [ new ol.style.Style({
+			    stroke: new ol.style.Stroke({color: borde,
+							 lineDash: null,
+							 lineCap: 'butt',
+							 lineJoin: 'miter',
+							 width: 0}),
+			    fill: new ol.style.Fill({color: paleta[1]})})]],
+			[webber_cuts[2], webber_cuts[3], [ new ol.style.Style({
+			    stroke: new ol.style.Stroke({color: borde,
+							 lineDash: null,
+							 lineCap: 'butt',
+							 lineJoin: 'miter',
+							 width: 0}),
+			    fill: new ol.style.Fill({color: paleta[2]})})]],
+			[webber_cuts[3], webber_cuts[4], [ new ol.style.Style({
+			    stroke: new ol.style.Stroke({color: borde,
+							 lineDash: null,
+							 lineCap: 'butt',
+							 lineJoin: 'miter',
+							 width: 0}),
+			    fill: new ol.style.Fill({color: paleta[3]})})]],
+			[webber_cuts[4], webber_cuts[5], [ new ol.style.Style({
+			    stroke: new ol.style.Stroke({color: borde,
+							 lineDash: null,
+							 lineCap: 'butt',
+							 lineJoin: 'miter',
+							 width: 0}),
+			    fill: new ol.style.Fill({color: paleta[4]})
+			})]]];
+    var context = {
+	feature: feature,
+	variables: {}
+    };
+    var value = feature.get("fv");
+    var style = ranges_data_layer[0][2];
+    for (i = 0; i < ranges_data_layer.length; i++){
+	var range = ranges_data_layer[i];
+	if (value > range[0] && value<=range[1]){
 
+	    style =  range[2];
 
+	}
+    };
+
+    var labelText = "";
+    var key = "";
+    size = 0;
+    var textAlign = "left";
+    var offsetX = 8;
+    var offsetY = 3;
+    if ("" !== null) {
+	labelText = String("");
+    } else {
+	labelText = ""
+    }
+
+    if (!styleCache_data_layer[key]){
+	var text = new ol.style.Text({
+	    font: '14.3px \'Ubuntu\', sans-serif',
+	    text: labelText,
+	    textBaseline: "center",
+	    textAlign: "left",
+	    offsetX: 5,
+	    offsetY: 3,
+	    fill: new ol.style.Fill({
+		color: 'rgba(0, 0, 0, 255)'
+	    }),
+	});
+	styleCache_data_layer[key] = new ol.style.Style({"text": text})
+    }
+    var allStyles = [styleCache_data_layer[key]];
+    allStyles.push.apply(allStyles, style);
+    return allStyles;
+};
+var style_data_layer = style_5;
 function get_features(url) {
     var data_layer = {};
 
@@ -111,12 +202,6 @@ function get_range() {
 }
 
 
-function setIntervals(cuts){
-    webber_cuts = cuts;
-    layer.setStyle(style_data_layer);
-    layer.redraw();
-
-}
 
 var stamenLayer = new ol.layer.Tile({
     source: new ol.source.Stamen({

@@ -110,7 +110,7 @@ def root():
 @app.route("/concava_creciente/plot/")
 def concava_creciente_plot():
     gama = float(request.args.get('gama', 0.5))
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
 
@@ -122,7 +122,7 @@ def concava_creciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -140,7 +140,7 @@ def concava_creciente_plot():
 @app.route("/concava_decreciente/plot/")
 def concava_decreciente_plot():
     gama = float(request.args.get('gama', 0.5))
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
 
@@ -152,7 +152,7 @@ def concava_decreciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -170,7 +170,7 @@ def concava_decreciente_plot():
 @app.route("/convexa_decreciente/plot/")
 def convexa_decreciente_plot():
     gama = float(request.args.get('gama', 0.5))
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
 
@@ -182,7 +182,7 @@ def convexa_decreciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -200,7 +200,7 @@ def convexa_decreciente_plot():
 @app.route("/convexa_creciente/plot/")
 def convexa_creciente_plot():
     gama = float(request.args.get('gama', 0.5))
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
 
@@ -212,7 +212,7 @@ def convexa_creciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -230,6 +230,7 @@ def convexa_creciente_plot():
 @app.route("/gaussian/plot/")
 def gaussian_plot():
     a = float(request.args.get('a', 0.5))
+    n = float(request.args.get('n', 0.5))
 
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
@@ -245,7 +246,7 @@ def gaussian_plot():
     ax.plot(x, y)
     #var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
     ax = fig.add_subplot(grid[9:, 0])
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
@@ -262,7 +263,7 @@ def gaussian_plot():
 @app.route("/campana_invertida/plot/")
 def campana_invertida_plot():
     a = float(request.args.get('a', 0.5))
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
     center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
@@ -275,7 +276,7 @@ def campana_invertida_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -292,7 +293,7 @@ def campana_invertida_plot():
 
 @app.route("/logistic/plot/")
 def logistic_plot():
-
+    n = float(request.args.get('n', 0.5))
     k = float(request.args.get('k', 0.02))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
@@ -306,7 +307,7 @@ def logistic_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -322,7 +323,7 @@ def logistic_plot():
 
 @app.route("/logistica_invertida/plot/")
 def logistica_invertida_plot():
-
+    n = float(request.args.get('n', 0.5))
     k = float(request.args.get('k', 0.02))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
@@ -336,7 +337,7 @@ def logistica_invertida_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -413,7 +414,7 @@ def wf2_plot():
 
 @app.route("/linear/plot/")
 def linear_plot():
-
+    n = float(request.args.get('n', 0.5))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
     print "min= " + str(min_v) + ",max= " + str(max_v)
@@ -430,7 +431,7 @@ def linear_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)

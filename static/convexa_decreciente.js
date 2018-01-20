@@ -4,7 +4,7 @@ function convexa_decreciente_plot() {
     var gama = $('#gama').val();
 
     // update plot
-    document.getElementById("plot").src="/convexa_decreciente/plot/?gama=" + gama
+    document.getElementById("plot").src="/convexa_decreciente/plot/?n="+ n +"&gama=" + gama
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
 }

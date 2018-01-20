@@ -6,7 +6,7 @@ function linear_plot() {
 	b = $('#b').val();
 
     // update plot
-    document.getElementById("plot").src="/linear/plot/?m=" + m
+    document.getElementById("plot").src="/linear/plot/?n="+ n + "&m=" + m
 	+ "&b=" + b
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
@@ -55,6 +55,12 @@ function linear_args_from_range() {
 
 function resize_bar(){
     console.log('juatever');
+}
+
+function sync_plot() {
+    apply_linear();
+    linear_plot();
+    update_equation();
 }
 
 function update_to(url) {

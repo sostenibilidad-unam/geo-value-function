@@ -6,7 +6,7 @@ function logistic_plot() {
 	center = $('#center').val();
 
     // update plot
-    document.getElementById("plot").src="/logistic/plot/?k=" + k
+    document.getElementById("plot").src="/logistic/plot/?n="+ n +"&k=" + k
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];

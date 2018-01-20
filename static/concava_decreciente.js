@@ -4,7 +4,7 @@ function concava_decreciente_plot() {
     var gama = $('#gama').val();
 
     // update plot
-    document.getElementById("plot").src="/concava_decreciente/plot/?gama=" + gama
+    document.getElementById("plot").src="/concava_decreciente/plot/?n="+ n +"&gama=" + gama
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
 }

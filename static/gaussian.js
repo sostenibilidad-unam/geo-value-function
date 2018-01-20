@@ -5,7 +5,7 @@ function gaussian_plot() {
 	center = $('#center').val();
 
     // update plot
-    document.getElementById("plot").src="/gaussian/plot/?a=" + a
+    document.getElementById("plot").src="/gaussian/plot/?n="+ n +"&a=" + a
 	+ "&center=" + center
 	+ "&min=" + range['min']
 	+ "&max=" + range['max'];
