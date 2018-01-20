@@ -2,86 +2,62 @@ var webber_cuts = [0.0,0.2,0.4,0.6,0.8,1.0];
 var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
 var borde = 'rgba(255,255,255,0)';
 var styleCache_data_layer={};
+var styleCache_mi_paleta={};
 
-var style_data_layer = function(feature, resolution) {
-    var ranges_data_layer = [[webber_cuts[0], webber_cuts[1], [ new ol.style.Style({
-	stroke: new ol.style.Stroke({color: borde, lineDash: null, lineCap: 'butt', lineJoin: 'miter', width: 0}),
-	fill: new ol.style.Fill({color: paleta[0]})})]],
-			[webber_cuts[1], webber_cuts[2], [ new ol.style.Style({
-			    stroke: new ol.style.Stroke({color: borde,
-							 lineDash: null,
-							 lineCap: 'butt',
-							 lineJoin: 'miter',
-							 width: 0}),
-			    fill: new ol.style.Fill({color: paleta[1]})})]],
-			[webber_cuts[2], webber_cuts[3], [ new ol.style.Style({
-			    stroke: new ol.style.Stroke({color: borde,
-							 lineDash: null,
-							 lineCap: 'butt',
-							 lineJoin: 'miter',
-							 width: 0}),
-			    fill: new ol.style.Fill({color: paleta[2]})})]],
-			[webber_cuts[3], webber_cuts[4], [ new ol.style.Style({
-			    stroke: new ol.style.Stroke({color: borde,
-							 lineDash: null,
-							 lineCap: 'butt',
-							 lineJoin: 'miter',
-							 width: 0}),
-			    fill: new ol.style.Fill({color: paleta[3]})})]],
-			[webber_cuts[4], webber_cuts[5], [ new ol.style.Style({
-			    stroke: new ol.style.Stroke({color: borde,
-							 lineDash: null,
-							 lineCap: 'butt',
-							 lineJoin: 'miter',
-							 width: 0}),
-			    fill: new ol.style.Fill({color: paleta[4]})
-			})]]];
-    var context = {
-	feature: feature,
-	variables: {}
-    };
-    var value = feature.get("fv");
-    var style = ranges_data_layer[0][2];
-    for (i = 0; i < ranges_data_layer.length; i++){
-	var range = ranges_data_layer[i];
-	if (value > range[0] && value<=range[1]){
+function hexToRGB(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";   
+};	
+var colorscale = d3.scale.linear()
+.domain([0,1])
+.range(["#4ABEB5","#10005A"])
+.interpolate(d3.interpolateLab);
 
-	    style =  range[2];
+var style_data_layer = function(feature, resolution){
+	    var context = {
+			feature: feature,
+			variables: {}
+	    };
+	    var value = feature.get("fv");
+	    
+	    var size = 0;
+	    var style = [ new ol.style.Style({
+		    	stroke: new ol.style.Stroke({
+			    		color: borde, 
+						lineDash: null,
+						lineCap: 'butt',
+						lineJoin: 'miter',
+						width: 0}),
+				fill: new ol.style.Fill({color: hexToRGB(colorscale(value),0.85)})
+	    //colorscale(normalize(value))
+		})];
+	    if ("" !== null) {
+		var labelText = String("");
+	    } else {
+		var labelText = ""
+	    }
+	    var key = value + "_" + labelText
 
-	}
-    };
-
-    var labelText = "";
-    var key = "";
-    size = 0;
-    var textAlign = "left";
-    var offsetX = 8;
-    var offsetY = 3;
-    if ("" !== null) {
-	labelText = String("");
-    } else {
-	labelText = ""
-    }
-
-    if (!styleCache_data_layer[key]){
-	var text = new ol.style.Text({
-	    font: '14.3px \'Ubuntu\', sans-serif',
-	    text: labelText,
-	    textBaseline: "center",
-	    textAlign: "left",
-	    offsetX: 5,
-	    offsetY: 3,
-	    fill: new ol.style.Fill({
-		color: 'rgba(0, 0, 0, 255)'
-	    }),
-	});
-	styleCache_data_layer[key] = new ol.style.Style({"text": text})
-    }
-    var allStyles = [styleCache_data_layer[key]];
-    allStyles.push.apply(allStyles, style);
-    return allStyles;
+	    if (!styleCache_mi_paleta[key]){
+		var text = new ol.style.Text({
+		      font: '14.3px \'Ubuntu\', sans-serif',
+		      text: labelText,
+		      textBaseline: "center",
+		      textAlign: "left",
+		      offsetX: 5,
+		      offsetY: 3,
+		      fill: new ol.style.Fill({
+		        color: 'rgba(0, 0, 0, 255)'
+		      }),
+		    });
+		styleCache_mi_paleta[key] = new ol.style.Style({"text": text})
+	    }
+	    var allStyles = [styleCache_mi_paleta[key]];
+	    allStyles.push.apply(allStyles, style);
+	    return allStyles;
 };
-
 
 
 function get_features(url) {
@@ -106,8 +82,8 @@ function get_features(url) {
 
 var jsonSource_data_layer = new ol.source.Vector();
 var layer = new ol.layer.Vector();
-var range = {'min': 10000000,
-	     'max': 0}
+var range = {'min': 100000000,
+	     'max': -100000000}
 
 
 function set_layer(url) {
@@ -125,7 +101,7 @@ function set_layer(url) {
 
 
 function get_range() {
-    var max = 0, min = 1000000000;    
+    var max = -100000000, min = 100000000;    
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	max = Math.max(max, feature.get("value"));
 	min = Math.min(min, feature.get("value"));	

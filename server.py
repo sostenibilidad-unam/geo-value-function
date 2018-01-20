@@ -2,6 +2,7 @@ import math
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
+from matplotlib import colors
 import StringIO
 import numpy
 from os import listdir
@@ -121,9 +122,9 @@ def concava_creciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -151,9 +152,9 @@ def concava_decreciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -181,9 +182,9 @@ def convexa_decreciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -211,9 +212,9 @@ def convexa_creciente_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -242,9 +243,10 @@ def gaussian_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    #var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -273,9 +275,9 @@ def campana_invertida_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -304,9 +306,9 @@ def logistic_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -334,9 +336,9 @@ def logistica_invertida_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
@@ -428,9 +430,9 @@ def linear_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     ax.plot(x, y)
-
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"])
     ax = fig.add_subplot(grid[9:, 0])
-    ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
