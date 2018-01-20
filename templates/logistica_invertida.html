@@ -4,9 +4,9 @@
 <div class="ui form" id="args">
 
 
-  <label>k</label>
-  <div id="k_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+  <center><label><font size="5">k</font></label></center>
+  
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
       <div class="two wide column">
          <div class="ui big right floated button" onclick="fbackward('#k_slider', sync_k_slider);">&lt;&lt;</div>
       </div> 
@@ -25,11 +25,14 @@
          <div class="ui big button" onclick="fforward('#k_slider', sync_k_slider);">&gt;&gt;</div>
       </div> 
   </div> 
-  
+  <div id="k_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
+  </br>
+  </br>
+  </br>
    
-  <label>center</label>
-  <div id="center_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+  <center><label><font size="5">centro</font></label></center>
+  
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
       <div class="two wide column">
          <div class="ui big right floated button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
       </div> 
@@ -48,7 +51,7 @@
          <div class="ui big button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
       </div> 
   </div>  
-  
+  <div id="center_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
   
 </div>
 {% endblock %}

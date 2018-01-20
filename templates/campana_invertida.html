@@ -3,9 +3,9 @@
 {% block form %}
 <div class="ui form" id="args">
 
-  <label>a</label>
-  <div id="a_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+  <center><label><font size="5">amplitud</font></label></center>
+  
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
       <div class="two wide column">
          <div class="ui big right floated button" onclick="fbackward('#a_slider', sync_a_slider);">&lt;&lt;</div>
       </div> 
@@ -23,12 +23,14 @@
       <div class="two wide column">
          <div class="ui big button" onclick="fforward('#a_slider', sync_a_slider);">&gt;&gt;</div>
       </div> 
-  </div> 
+  </div>
+  <div id="a_slider" style="margin-top: 2em; margin-bottom: 1em;"></div> 
+  </br>
+  </br>
+  </br>
+  <center><label><font size="5">centro</font></label></center>
   
-   
-  <label>center</label>
-  <div id="center_slider" style="margin-top: 1em; margin-bottom: 1em;"></div>
-  <div class="ui five column grid" style="margin-top: 2em; margin-left: 3em;"> 
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
       <div class="two wide column">
          <div class="ui big right floated button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
       </div> 
@@ -47,7 +49,7 @@
          <div class="ui big button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
       </div> 
   </div>  
-
+  <div id="center_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
   
 
 </div>
