@@ -8,12 +8,16 @@ function set_continous(){
     n = 100;
     style_data_layer = style_100;
     layer.setStyle(style_data_layer);
+    document.getElementById("legend_categorias").style.display = "none";
+    document.getElementById("legend_continua").style.display = "block";
     sync_plot();
 }
 function set_categories(){
     n = 5;
     style_data_layer = style_5;
     layer.setStyle(style_data_layer);
+    document.getElementById("legend_continua").style.display = "none";
+    document.getElementById("legend_categorias").style.display = "block";
     sync_plot();
 }
 function hexToRGB(hex, alpha) {

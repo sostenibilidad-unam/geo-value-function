@@ -65,6 +65,15 @@
       }
 
       .katex { font-size: 3em !important; }
+      
+      #legend_continua, #legend_categorias {
+              width: 50px;
+              height: 80px;
+              position: absolute;
+              bottom: 400px;
+              right: 200px;
+              z-index: 20;
+      }
     </style>
 
   </head>
@@ -108,7 +117,7 @@
 	 href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
       {% endfor %}
     </div>
-
+    
 <div class="ui top massive fixed menu">
   <a class="massive item"  onclick="$('#equations_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
     <i class="content big layout icon"></i>
@@ -163,11 +172,18 @@
 		<div class="twelve wide column">
 
 		    <div id="map" style="height: 100%;"></div>
+		    <div id="legend_continua">
+                <img id="leyend_continua_image" src="/static/leyenda_continua.png">
+            </div>
+            <div id="legend_categorias">
+                <img id="leyend_categorias_image" src="/static/leyenda_categorias.png">
+            </div>
 
 		</div>
 
       </div>
     </div>
+    
     <script src="/static/map_setup.js"></script>
     <script src="/static/arrows_functions.js"></script>
     {% block scripts %}
