@@ -65,7 +65,7 @@ function sync_plot() {
 
 function update_to(url) {
     set_layer(url);
-    range = get_range();
+    range = get_range("value");
     linear_args_from_range();
     apply_linear();
     linear_plot();

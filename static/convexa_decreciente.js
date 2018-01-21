@@ -67,7 +67,7 @@ function sync_plot() {
 
 function update_to(url) {
     set_layer(url);
-    range = get_range();
+    range = get_range("value");
     convexa_decreciente_args_from_range();
     apply_convexa_decreciente();
     convexa_decreciente_plot();

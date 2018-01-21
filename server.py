@@ -101,6 +101,16 @@ def wf2(t, fp, min_v, max_v):
 def linear(x, m, b):
     return (m * x) + b
 
+def normalize_max_min(y, maxy, miny):
+    return (y - miny)/(maxy - miny)
+    
+
+def normalize01(y):
+    maxy = max(y)
+    miny = min(y)
+    y_prima = [normalize_max_min(t, maxy, miny) for t in y]
+    return y_prima
+
 
 @app.route("/")
 def root():
@@ -116,7 +126,7 @@ def concava_creciente_plot():
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
-
+    
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 
@@ -237,8 +247,8 @@ def gaussian_plot():
     center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [gaussian(t, a, center) for t in x]
-
+    yrow = [gaussian(t, a, center) for t in x]
+    y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 
@@ -269,8 +279,8 @@ def campana_invertida_plot():
     center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [campana_invertida(t, a, center) for t in x]
-
+    yrow = [campana_invertida(t, a, center) for t in x]
+    y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 
@@ -300,8 +310,8 @@ def logistic_plot():
     center = float(request.args.get('center', (max_v - min_v) / 2.0))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [logistic(t, k, center) for t in x]
-
+    yrow = [logistic(t, k, center) for t in x]
+    y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 
@@ -330,8 +340,8 @@ def logistica_invertida_plot():
     center = float(request.args.get('center', (max_v - min_v) / 2.0))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    y = [logistica_invertida(t, k, center) for t in x]
-
+    yrow = [logistica_invertida(t, k, center) for t in x]
+    y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 

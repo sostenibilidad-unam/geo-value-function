@@ -193,13 +193,16 @@ function set_layer(url) {
     });
     map.addLayer(layer);
 }
+function normalize_min_max(y, miny, maxy){
+    return (y - miny)/(maxy - miny);
 
+}
 
-function get_range() {
+function get_range(field) {
     var max = -100000000, min = 100000000;    
     jsonSource_data_layer.getFeatures().forEach(function(feature){
-	max = Math.max(max, feature.get("value"));
-	min = Math.min(min, feature.get("value"));	
+	max = Math.max(max, feature.get(field));
+	min = Math.min(min, feature.get(field));	
     });
     return {'max': max,
 	    'min': min}

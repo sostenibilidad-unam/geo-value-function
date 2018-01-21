@@ -19,6 +19,12 @@ function apply_logistica_invertida(){
 	    fv: logistica_invertida(feature.get("value"))
 	});
     });
+    var range_y = get_range("fv");
+    jsonSource_data_layer.getFeatures().forEach(function(feature){
+	feature.setProperties({
+	    fv: normalize_min_max(feature.get("fv"), range_y['min'], range_y['max'])
+	});
+    });
     layer.setStyle(style_data_layer);
 }
 
@@ -101,7 +107,7 @@ function sync_plot() {
 
 function update_to(url) {
     set_layer(url);
-    range = get_range();
+    range = get_range("value");
     logistica_invertida_args_from_range();
     apply_logistica_invertida();
     logistica_invertida_plot();
