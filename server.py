@@ -126,7 +126,7 @@ def concava_creciente_plot():
     max_v = float(params[3])
     
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
     
@@ -163,7 +163,7 @@ def concava_decreciente_plot():
     max_v = float(params[3])
     
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_decreciente(t, gama, max_v, min_v) for t in x]
@@ -201,7 +201,7 @@ def convexa_decreciente_plot():
     max_v = float(params[3])
     
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_decreciente(t, gama, max_v, min_v) for t in x]
@@ -239,7 +239,7 @@ def convexa_creciente_plot():
     max_v = float(params[3])
     
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_creciente(t, gama, max_v, min_v) for t in x]
@@ -279,7 +279,7 @@ def gaussian_plot():
     max_v = float(params[4])
     
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     
     
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
@@ -320,7 +320,7 @@ def campana_invertida_plot():
     min_v = float(params[3])
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
@@ -359,7 +359,7 @@ def logistic_plot():
     min_v = float(params[3])
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
   
     
  
@@ -399,7 +399,7 @@ def logistica_invertida_plot():
     min_v = float(params[3])
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [logistica_invertida(t, k, center) for t in x]
@@ -435,7 +435,7 @@ def wf_plot():
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [wf(t, fp, min_v=min_v, max_v=max_v) for t in x]
 
@@ -506,7 +506,7 @@ def linear_plot():
     min_v = float(params[3])
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
-    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [linear(t, m, b) for t in x]
