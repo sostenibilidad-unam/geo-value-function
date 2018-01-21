@@ -1,14 +1,15 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "gaussian";
 function gaussian_plot() {
     var a = $('#a').val(),
 	center = $('#center').val();
-
+    params = n + "," + a + "," + center + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/gaussian/plot/?n="+ n +"&a=" + a
-	+ "&center=" + center
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/gaussian/plot/?params="+ params
+    //document.getElementById("plot").src="/gaussian/plot/?n="+ n +"&a=" + a
+	//+ "&center=" + center
+	//+ "&min=" + range['min']
+	//+ "&max=" + range['max'];
 }
 
 

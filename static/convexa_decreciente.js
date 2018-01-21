@@ -1,12 +1,11 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "convexa_decreciente";
 function convexa_decreciente_plot() {
     var gama = $('#gama').val();
-
+    params = n + "," + gama + "," + range['min'] + "," + range['max']
+    
     // update plot
-    document.getElementById("plot").src="/convexa_decreciente/plot/?n="+ n +"&gama=" + gama
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/convexa_decreciente/plot/?params=" + params ;
 }
 
 

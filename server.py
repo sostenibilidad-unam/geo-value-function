@@ -119,11 +119,14 @@ def root():
 
 @app.route("/concava_creciente/plot/")
 def concava_creciente_plot():
-    gama = float(request.args.get('gama', 0.5))
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    gama = float(params[1])
+    min_v = float(params[2])
+    max_v = float(params[3])
+    
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
     
@@ -131,7 +134,11 @@ def concava_creciente_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -149,10 +156,14 @@ def concava_creciente_plot():
 
 @app.route("/concava_decreciente/plot/")
 def concava_decreciente_plot():
-    gama = float(request.args.get('gama', 0.5))
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    gama = float(params[1])
+    min_v = float(params[2])
+    max_v = float(params[3])
+    
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_decreciente(t, gama, max_v, min_v) for t in x]
@@ -161,7 +172,11 @@ def concava_decreciente_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -179,10 +194,14 @@ def concava_decreciente_plot():
 
 @app.route("/convexa_decreciente/plot/")
 def convexa_decreciente_plot():
-    gama = float(request.args.get('gama', 0.5))
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    gama = float(params[1])
+    min_v = float(params[2])
+    max_v = float(params[3])
+    
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_decreciente(t, gama, max_v, min_v) for t in x]
@@ -191,7 +210,11 @@ def convexa_decreciente_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -209,10 +232,14 @@ def convexa_decreciente_plot():
 
 @app.route("/convexa_creciente/plot/")
 def convexa_creciente_plot():
-    gama = float(request.args.get('gama', 0.5))
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    gama = float(params[1])
+    min_v = float(params[2])
+    max_v = float(params[3])
+    
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [convexa_creciente(t, gama, max_v, min_v) for t in x]
@@ -221,7 +248,11 @@ def convexa_creciente_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -239,13 +270,18 @@ def convexa_creciente_plot():
 
 @app.route("/gaussian/plot/")
 def gaussian_plot():
-    a = float(request.args.get('a', 0.5))
-    n = float(request.args.get('n', 0.5))
-
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
-
+    
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    a = float(params[1])
+    center = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    
+    
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [gaussian(t, a, center) for t in x]
     y = normalize01(yrow)
@@ -253,7 +289,12 @@ def gaussian_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     #var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
     ax = fig.add_subplot(grid[9:, 0])
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
@@ -272,11 +313,15 @@ def gaussian_plot():
 
 @app.route("/campana_invertida/plot/")
 def campana_invertida_plot():
-    a = float(request.args.get('a', 0.5))
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', min_v + ((max_v - min_v) / 2.0)))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    a = float(params[1])
+    center = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [campana_invertida(t, a, center) for t in x]
@@ -285,7 +330,11 @@ def campana_invertida_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -303,11 +352,17 @@ def campana_invertida_plot():
 
 @app.route("/logistic/plot/")
 def logistic_plot():
-    n = float(request.args.get('n', 0.5))
-    k = float(request.args.get('k', 0.02))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', (max_v - min_v) / 2.0))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    k = float(params[1])
+    center = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+  
+    
+ 
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [logistic(t, k, center) for t in x]
@@ -316,7 +371,11 @@ def logistic_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -333,11 +392,14 @@ def logistic_plot():
 
 @app.route("/logistica_invertida/plot/")
 def logistica_invertida_plot():
-    n = float(request.args.get('n', 0.5))
-    k = float(request.args.get('k', 0.02))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-    center = float(request.args.get('center', (max_v - min_v) / 2.0))
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    k = float(params[1])
+    center = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [logistica_invertida(t, k, center) for t in x]
@@ -346,7 +408,11 @@ def logistica_invertida_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
@@ -368,7 +434,8 @@ def wf_plot():
     fp = float(request.args.get('fp', 2))
     min_v = float(request.args.get('min', 0))
     max_v = float(request.args.get('max', 1))
-
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [wf(t, fp, min_v=min_v, max_v=max_v) for t in x]
 
@@ -376,7 +443,11 @@ def wf_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
 
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
@@ -406,7 +477,11 @@ def wf2_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
 
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap="GnBu", extent=[0, 100, 0, 8])
@@ -424,15 +499,15 @@ def wf2_plot():
 
 @app.route("/linear/plot/")
 def linear_plot():
-    n = float(request.args.get('n', 0.5))
-    min_v = float(request.args.get('min', 0))
-    max_v = float(request.args.get('max', 1))
-    print "min= " + str(min_v) + ",max= " + str(max_v)
-    m = float(request.args.get('m',
-                               1 / (max_v - min_v)))
-    b = float(request.args.get('b',
-                               0 - (min_v / (max_v - min_v))))
-
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    m = float(params[1])
+    b = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    value = float(request.args.get('value', -1))
+    value_index = int(100 * ((value - min_v)/(max_v - min_v)))
+    
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [linear(t, m, b) for t in x]
 
@@ -440,7 +515,11 @@ def linear_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    ax.plot(x, y)
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
     cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])

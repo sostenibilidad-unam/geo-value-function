@@ -1,15 +1,12 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "logistic";
 
 function logistic_plot() {
     var k = $('#k').val(),
 	center = $('#center').val();
-
+    params = n + "," + k + "," + center + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/logistic/plot/?n="+ n +"&k=" + k
-	+ "&center=" + center
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/logistic/plot/?params=" + params ;
 
 }
 

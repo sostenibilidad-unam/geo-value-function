@@ -1,14 +1,11 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "campana_invertida";
 function campana_invertida_plot() {
     var a = $('#a').val(),
 	center = $('#center').val();
-
+    params = n + "," + a + "," + center + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/campana_invertida/plot/?n="+ n +"&a=" + a
-	+ "&center=" + center
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/campana_invertida/plot/?params=" + params ;
 }
 
 

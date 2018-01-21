@@ -1,15 +1,12 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "logistica_invertida";
 
 function logistica_invertida_plot() {
     var k = $('#k').val(),
 	center = $('#center').val();
-
+    params = n + "," + k + "," + center + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/logistica_invertida/plot/?n="+ n +"&k=" + k
-	+ "&center=" + center
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/logistica_invertida/plot/?params=" + params ;
 }
 
 

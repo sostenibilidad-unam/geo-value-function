@@ -1,15 +1,12 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "linear";
 
 function linear_plot() {
     var m = $('#m').val(),
 	b = $('#b').val();
-
+    params = n + "," + m + "," + b + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/linear/plot/?n="+ n + "&m=" + m
-	+ "&b=" + b
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/linear/plot/?params=" + params ;
 }
 
 

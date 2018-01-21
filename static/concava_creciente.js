@@ -1,12 +1,10 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
-
+function_name = "concava_creciente";
 function concava_creciente_plot() {
     var gama = $('#gama').val();
-
+    params = n + "," + gama + "," + range['min'] + "," + range['max']
     // update plot
-    document.getElementById("plot").src="/concava_creciente/plot/?n="+ n +"&gama=" + gama
-	+ "&min=" + range['min']
-	+ "&max=" + range['max'];
+    document.getElementById("plot").src="/concava_creciente/plot/?params=" + params ;
 }
 
 

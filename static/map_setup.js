@@ -4,6 +4,7 @@ var borde = 'rgba(255,255,255,0)';
 var styleCache_data_layer={};
 var styleCache_mi_paleta={};
 var n = 5;
+var function_name = "linear";
 function set_continous(){
     n = 100;
     style_data_layer = style_100;
@@ -267,6 +268,14 @@ var displayFeatureInfo = function (pixel) {
 		//}
 	    	if (feature) {
 			vectorSource.addFeature(feature);
+			
+			//esto tiene que ser general osea no para la gausian sino para la funcion que se este usando///////////////////////////////
+        		var a = $('#a').val(),
+                center = $('#center').val();
+
+                // update plot
+            document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params +"&value=" + feature.get("value");
+        		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		}
 		highlight = feature;
 	}
