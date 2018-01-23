@@ -64,7 +64,7 @@
       background-color: rgb(16,0,90);
       }
 
-      .katex { font-size: 3em !important; }
+      .katex { font-size: 2em !important; }
       
       #legend_continua, #legend_categorias {
               width: 50px;
@@ -72,6 +72,15 @@
               position: absolute;
               bottom: 400px;
               right: 200px;
+              z-index: 20;
+      }
+      #statistics {
+              font-size: 2em !important;
+              width: 800px;
+              height: 30px;
+              position: absolute;
+              bottom: 60px;
+              left: 150px;
               z-index: 20;
       }
     </style>
@@ -84,6 +93,10 @@
       <a class="ui centered medium image item"
 	 href="/{{ layer }}/linear/">
 	<img src="/static/linear_icon.png">
+      </a>
+      <a class="ui centered medium image item"
+	 href="/{{ layer }}/lineal_decreciente/">
+	<img src="/static/lineal_decreciente_icon.png">
       </a>
       <a class="ui centered medium image item"
 	 href="/{{ layer }}/logistic/">
@@ -147,7 +160,7 @@
     <div class="pusher" style="height: 100%;">
       <div class="ui two column stackable grid" style="margin-top: 4em; margin-left: 0.5em; height: 100%;">
 
-		<div class="four wide column">
+		<div class="six wide column">
 
 		  <div class="ui clearing segment">
 		    {% block form %}
@@ -160,16 +173,24 @@
 		    {% endblock %}
 		  </div>
 
-		  <div id="statistics" class="ui segment"></div>
+		<!--   
 		  <div class="ui segment">
-		    <div id="equation">
+		    <div id="equation_1">
+		    </div>
+		    <div id="equation_2">
+		    </div>
+		    <div id="equation_3">
+		    </div>
+		    <div id="equation_4">
+		    </div>
+		    <div id="equation_5">
 		    </div>
 		  </div>
 
-		</div>
-
+		-->
+         </div>
 		<!-- open layers map -->
-		<div class="twelve wide column">
+		<div class="ten wide column">
 
 		    <div id="map" style="height: 100%;"></div>
 		    <div id="legend_continua">
@@ -178,6 +199,7 @@
             <div id="legend_categorias">
                 <img id="leyend_categorias_image" src="/static/leyenda_categorias.png">
             </div>
+            <div id="statistics"></div>
 
 		</div>
 

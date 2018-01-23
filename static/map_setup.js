@@ -253,10 +253,15 @@ var displayFeatureInfo = function (pixel) {
 
 	if (feature) {
 		
-		stats_div.innerHTML = "value: " + feature.get("value") + "</br> normalized value: " + feature.get("fv") ;
+		stats_div.innerHTML = "value: " + feature.get("value") + "  normalized value: " + feature.get("fv").toFixed(4) ;
 	}else{
-		vectorSource.clear();
-	    
+         vectorSource.clear();
+	    var a = $('#a').val(),
+            center = $('#center').val();
+
+                // update plot
+         document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params;
+         stats_div.innerHTML = "";
 	    
 	}
 
@@ -290,6 +295,10 @@ map.on('pointermove', function(evt) {
   });
 map.getViewport().addEventListener('mouseout', function(evt){
 	vectorSource.clear();
-    
+    var a = $('#a').val(),
+            center = $('#center').val();
+
+                // update plot
+         document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params;
     stats_div.innerHTML = "";
 }, false);

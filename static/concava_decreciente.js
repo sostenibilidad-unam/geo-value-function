@@ -67,7 +67,7 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_concava_decreciente();
     concava_decreciente_plot();
-    update_equation();
+    //update_equation();
 }
 
 function update_to(url) {
@@ -90,8 +90,8 @@ function latex_equation() {
 
 
 function update_equation() {
-    katex.render(latex_equation(), equation);
+    katex.render(latex_equation(), equation_1);
 }
 
 update_to(layer_url);
-update_equation();
+//update_equation();

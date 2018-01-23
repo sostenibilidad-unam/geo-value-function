@@ -1,6 +1,6 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
 function_name = "logistic";
-
+var range_y = [];
 function logistic_plot() {
     var k = $('#k').val(),
 	center = $('#center').val();
@@ -17,7 +17,7 @@ function apply_logistic(){
 	    fv: logistic(feature.get("value"))
 	});
     });
-    var range_y = get_range("fv");
+    range_y = get_range("fv");
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
 	    fv: normalize_min_max(feature.get("fv"), range_y['min'], range_y['max'])
@@ -32,20 +32,12 @@ function logistic(x) {
 	center = $('#center').val();
     return 1.0 / (1.0 + Math.exp(-k * (x - center)))
 }
-function inverted_logistic(y) {
-    var k = $('#k').val(),
-	center = parseFloat($('#center').val());
-    return (Math.log((1.0/y)-1.0) / (0.0 - k)) + center
-}
-function to_percent(x) {
-    return ((x - range['min']) / (range['max'] - range['min'])) * 100.0
-}
 
 function logistic_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2),
+    var center = range['min'] + ((range['max'] - range['min']) / 2.0),
 	k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
-    $('#k').val(k.toFixed(4));
-    $('#center').val(center.toFixed(4));
+    $('#k').val(k);
+    $('#center').val(center);
 
     center_max = range['max'];
     center_min = range['min'];
@@ -99,7 +91,7 @@ function sync_k_slider() {
 function sync_plot() {
     apply_logistic();
     logistic_plot();
-    update_equation();
+    //update_equation();
 }
 
 
@@ -121,9 +113,19 @@ function latex_equation() {
 
 
 function update_equation() {
-    katex.render(latex_equation(), equation);
+    var k = $('#k').val(),
+	center = $('#center').val();
+    ymax = range_y['max']
+    ymin = range_y['min']
+    katex.render("fv(x) = \\frac{\\frac{1}{1+e^{-k(x-center)}}-ymin}{ymax-ymin}", equation_1);
+    katex.render(`k=${k}`, equation_2);
+    katex.render(`center=${center}`, equation_3);
+    katex.render(`ymin=${ymin}`, equation_4);
+    katex.render(`ymax=${ymax}`, equation_5);
+    
+    
 }
 
 
 update_to(layer_url);
-update_equation();
+//update_equation();

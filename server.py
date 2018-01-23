@@ -101,6 +101,10 @@ def wf2(t, fp, min_v, max_v):
 def linear(x, m, b):
     return (m * x) + b
 
+def lineal_decreciente(x, m, b):
+    return (m * x) + b
+
+
 def normalize_max_min(y, maxy, miny):
     return (y - miny)/(maxy - miny)
     
@@ -534,6 +538,42 @@ def linear_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+@app.route("/lineal_decreciente/plot/")
+def lineal_decreciente_plot():
+    params = request.args.get('params', "").split(",")
+    n = int(params[0])
+    m = float(params[1])
+    b = float(params[2])
+    min_v = float(params[3])
+    max_v = float(params[4])
+    value = float(request.args.get('value', -1))
+    value_index = int(99 * ((value - min_v)/(max_v - min_v)))
+    
+    x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
+    y = [lineal_decreciente(t, m, b) for t in x]
+
+    fig = Figure(figsize=(6, 6))
+    grid = plt.GridSpec(10, 1, hspace=0)
+
+    ax = fig.add_subplot(grid[0:7, 0])
+    markers_on = []
+    if value > -1:
+        markers_on.append(value_index)
+
+    ax.plot(x, y, '-bD', markevery=markers_on)
+    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    ax = fig.add_subplot(grid[9:, 0])
+    ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+
+    canvas = FigureCanvas(fig)
+    png_output = StringIO.StringIO()
+    canvas.print_png(png_output)
+    response = make_response(png_output.getvalue())
+    response.headers['Content-Type'] = 'image/png'
+    return response
 
 @app.route("/<layer>/logistic/")
 def logistic_form(layer):
@@ -591,6 +631,15 @@ def wf_form(layer):
                            function_name='Webber-Feshner')
 
 
+@app.route("/<layer>/lineal_decreciente/")
+def lineal_decreciente_form(layer):
+    template = env.get_template('lineal_decreciente.html')
+    return template.render(layers=get_layers(),
+                           layer_url="/static/layers/%s.json" % layer,
+                           layer=layer,
+                           function_name='lineal_decreciente')
+    
+    
 @app.route("/<layer>/linear/")
 def linear_form(layer):
     template = env.get_template('linear.html')

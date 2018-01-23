@@ -58,7 +58,7 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_convexa_creciente();
     convexa_creciente_plot();
-    update_equation();
+    //update_equation();
 }
 
 function update_to(url) {
@@ -73,14 +73,14 @@ function latex_equation() {
 
     var gama = $('#gama').val();
 
-    return `fv(x)=e^{-\\left(\\frac{x-${gama}}{${gama}}\\right)^{2}}`;
+    return `fv(x)= \\frac{1-e^{-gama x}-ymin}{ymax-ymin}`;
 }
 
 
 function update_equation() {
-    katex.render(latex_equation(), equation);
+    katex.render(latex_equation(), equation_1);
 }
 
 
 update_to(layer_url);
-update_equation();
+//update_equation();
