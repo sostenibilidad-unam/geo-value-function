@@ -38,8 +38,8 @@
        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
        crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
 		integrity="sha256-dsOXGNHAo/syFnazt+KTBsCQeRmlcW1XKL0bCK4Baec=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -65,23 +65,22 @@
       }
 
       .katex { font-size: 2em !important; }
-      
+
       #legend_continua, #legend_categorias {
-              width: 50px;
-              height: 80px;
-              position: absolute;
-              bottom: 400px;
-              right: 200px;
-              z-index: 20;
+	      height: 20%;
+	      position: absolute;
+	      bottom: 10%;
+	      left: 85%;
+	      z-index: 20;
       }
       #statistics {
-              font-size: 2em !important;
-              width: 800px;
-              height: 30px;
-              position: absolute;
-              bottom: 60px;
-              left: 150px;
-              z-index: 20;
+	      font-size: 2em !important;
+	      width: 800px;
+	      height: 30px;
+	      position: absolute;
+	      bottom: 60px;
+	      left: 150px;
+	      z-index: 20;
       }
     </style>
 
@@ -130,7 +129,7 @@
 	 href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
       {% endfor %}
     </div>
-    
+
 <div class="ui top massive fixed menu">
   <a class="massive item"  onclick="$('#equations_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
     <i class="content big layout icon"></i>
@@ -138,7 +137,7 @@
   <div class="massive item">
     {{ function_name }}
   </div>
-  
+
   <div class="right massive item">
     {{ layer }}
   </div>
@@ -173,7 +172,7 @@
 		    {% endblock %}
 		  </div>
 
-		<!--   
+		<!--
 		  <div class="ui segment">
 		    <div id="equation_1">
 		    </div>
@@ -188,24 +187,28 @@
 		  </div>
 
 		-->
-         </div>
+	 </div>
 		<!-- open layers map -->
 		<div class="ten wide column">
 
-		    <div id="map" style="height: 100%;"></div>
-		    <div id="legend_continua">
-                <img id="leyend_continua_image" src="/static/leyenda_continua.png">
-            </div>
-            <div id="legend_categorias">
-                <img id="leyend_categorias_image" src="/static/leyenda_categorias.png">
-            </div>
-            <div id="statistics"></div>
+		  <div id="map" style="height: 100%;">
+		  <div id="legend_continua">
+		    <img id="leyend_continua_image" src="/static/leyenda_continua.png" height="100%">
+		  </div>
+
+		  <div id="legend_categorias">
+		    <img id="leyend_categorias_image" src="/static/leyenda_categorias.png" height="100%">
+		  </div>
+
+		  </div>
+
+		  <div id="statistics"></div>
 
 		</div>
 
       </div>
     </div>
-    
+
     <script src="/static/map_setup.js"></script>
     <script src="/static/arrows_functions.js"></script>
     {% block scripts %}
