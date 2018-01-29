@@ -28,13 +28,18 @@ function concava_decreciente(x) {
 }
 
 function concava_decreciente_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2);
-    var gama = 0;
-    if (range['min'] > 0){
-	gama = (1.38 / center) * (1 + (Math.log(range['min']) / 2))
-    }else{
-	gama = (1.38 / center)
+    if ($('#gama').val() == 'nan') {
+        var center = range['min'] + ((range['max'] - range['min']) / 2);
+        var gama = 0;
+        if (range['min'] > 0){
+            	gama = (1.38 / center) * (1 + (Math.log(range['min']) / 2));
+        }else{
+            	gama = (1.38 / center);
+        }
+    } else {
+        	 gama = parseFloat($('#gama').val());
     }
+
 
     gama_max = gama * 5.0;
     gama_min = gama / 10.0;
@@ -67,6 +72,9 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_concava_decreciente();
     concava_decreciente_plot();
+    
+    gama = parseFloat($('#gama').val());
+    window.history.replaceState({}, "", `?gama=${gama}`);
     //update_equation();
 }
 

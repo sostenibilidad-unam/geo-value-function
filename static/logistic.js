@@ -100,7 +100,7 @@ function sync_plot() {
 
     center = parseFloat($('#center').val());
     k = parseFloat($('#k').val());
-    window.history.replaceState({}, "", `?center=${center}&k=${k}`)
+    window.history.replaceState({}, "", `?center=${center}&k=${k}`);
     //update_equation();
 }
 

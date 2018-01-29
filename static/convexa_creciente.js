@@ -29,7 +29,12 @@ function convexa_creciente(x) {
 }
 
 function convexa_creciente_args_from_range() {
-    var gama = 4.0 / range['max'];
+    if ($('#gama').val() == 'nan') {
+        gama = 4.0 / range['max'];
+    } else {
+        gama = parseFloat($('#gama').val());
+    }
+    
     gama_max = gama * 6.0;
     gama_min = gama / 10.0;
 
@@ -58,6 +63,9 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_convexa_creciente();
     convexa_creciente_plot();
+    
+    gama = parseFloat($('#gama').val());
+    window.history.replaceState({}, "", `?gama=${gama}`);
     //update_equation();
 }
 
