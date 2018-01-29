@@ -43,6 +43,7 @@ function linear(x) {
 
 function linear_args_from_range() {
 
+
     var m = 1 / (range['max'] - range['min']);
     var b = 0 - ( (range['min']) / (range['max'] - range['min']) );
 

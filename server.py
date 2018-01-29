@@ -636,7 +636,8 @@ def lineal_decreciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
-                           gama=request.args.get('gama', 'nan'),
+                           m=request.args.get('m', 'nan'),
+                           b=request.args.get('b', 'nan'),
                            function_name='lineal_decreciente')
 
 
@@ -646,7 +647,8 @@ def linear_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
-                           gama=request.args.get('gama', 'nan'),
+                           m=request.args.get('m', 'nan'),
+                           b=request.args.get('b', 'nan'),
                            function_name='Linear')
 
 
