@@ -52,7 +52,6 @@ function gaussian_args_from_range() {
     center_max = range['max'];
     center_min = range['min'];
 
-
     a_max = a * 2.0;
     a_min = a / 10.0;
 

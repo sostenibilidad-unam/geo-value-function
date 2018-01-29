@@ -51,7 +51,6 @@ function logistic_args_from_range() {
     k_max = k * 2.0;
     k_min = k / 10.0;
 
-
     $( "#k_slider" ).slider({max: k_max,
 			     min: k_min,
 			     value: k,
@@ -62,7 +61,6 @@ function logistic_args_from_range() {
 			     }
 			    });
 
-
     $( "#center_slider" ).slider({max: center_max,
 				  min: center_min,
 				  value: center,
@@ -72,8 +70,6 @@ function logistic_args_from_range() {
 				      sync_plot();
 				  }
 				 });
-
-
 }
 
 function sync_center() {
@@ -100,7 +96,7 @@ function sync_plot() {
 
     center = parseFloat($('#center').val());
     k = parseFloat($('#k').val());
-    window.history.replaceState({}, "", `?center=${center}&k=${k}`)
+    window.history.replaceState({}, "", `?center=${center}&k=${k}`);
     //update_equation();
 }
 
