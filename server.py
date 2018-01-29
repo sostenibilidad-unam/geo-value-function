@@ -585,6 +585,8 @@ def logistica_invertida_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           k=request.args.get('k', 'nan'),
+                           center=request.args.get('center', 'nan'),
                            function_name='Logistica Invertida')
 
 
@@ -594,6 +596,8 @@ def gaussian_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           a=request.args.get('a', 'nan'),
+                           center=request.args.get('center', 'nan'),
                            function_name='Gaussian')
 
 
@@ -603,6 +607,8 @@ def campana_invertida_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           a=request.args.get('a', 'nan'),
+                           center=request.args.get('center', 'nan'),
                            function_name='campana_invertida')
 
 
@@ -630,6 +636,7 @@ def lineal_decreciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='lineal_decreciente')
 
 
@@ -639,6 +646,7 @@ def linear_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='Linear')
 
 
@@ -648,6 +656,7 @@ def concava_decreciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='concava_decreciente')
 
 
@@ -657,6 +666,7 @@ def concava_creciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='concava_creciente')
 
 
@@ -666,6 +676,7 @@ def convexa_decreciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='convexa_decreciente')
 
 
@@ -675,6 +686,7 @@ def convexa_creciente_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           gama=request.args.get('gama', 'nan'),
                            function_name='convexa_creciente')
 
 
