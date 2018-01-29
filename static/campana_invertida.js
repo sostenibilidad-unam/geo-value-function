@@ -32,14 +32,23 @@ function campana_invertida(x) {
 }
 
 function campana_invertida_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2);
-    center_max = range['max'];
-    center_min = range['min'];
-    a =  (range['max'] - range['min']) / 4.0;
-    a_max = a * 2.0;
-    a_min = a / 10.0;
+    // if no arguments suplied on URL, calculate values from layerc
+    if ($('#a').val() == 'nan' | $('#center').val() == 'nan') {
+	var center = range['min'] + ((range['max'] - range['min']) / 2);
+	a =  (range['max'] - range['min']) / 4.0;
+    } else {
+	a = parseFloat($('#a').val());
+	center = parseFloat($('#center').val());
+    }
+
     $('#a').val(a);
     $('#center').val(center);
+
+    center_max = range['max'];
+    center_min = range['min'];
+
+    a_max = a * 2.0;
+    a_min = a / 10.0;
 
     $( "#a_slider" ).slider({max: a_max,
 			     min: a_min,
@@ -86,6 +95,9 @@ function sync_a_slider() {
 function sync_plot() {
     apply_campana_invertida();
     campana_invertida_plot();
+    center = parseFloat($('#center').val());
+    a = parseFloat($('#a').val());
+    window.history.replaceState({}, "", `?center=${center}&a=${a}`)
     //update_equation();
 }
 
