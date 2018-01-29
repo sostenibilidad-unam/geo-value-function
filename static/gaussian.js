@@ -37,16 +37,24 @@ function gaussian(x) {
 
 
 function gaussian_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2);
+    // if no arguments suplied on URL, calculate values from layerc
+    if ($('#a').val() == 'nan' | $('#center').val() == 'nan') {
+	var center = range['min'] + ((range['max'] - range['min']) / 2);
+	a =  (range['max'] - range['min']) / 4.0;
+    } else {
+	a = parseFloat($('#a').val());
+	center = parseFloat($('#center').val());
+    }
+
+    $('#a').val(a);
+    $('#center').val(center);
+
     center_max = range['max'];
     center_min = range['min'];
 
 
-    a =  (range['max'] - range['min']) / 4.0;
     a_max = a * 2.0;
     a_min = a / 10.0;
-    $('#a').val(a);
-    $('#center').val(center);
 
     $( "#a_slider" ).slider({max: a_max,
 			     min: a_min,
@@ -58,7 +66,6 @@ function gaussian_args_from_range() {
 			     }
 			    });
 
-
     $( "#center_slider" ).slider({max: center_max,
 				  min: center_min,
 				  value: center,
@@ -68,7 +75,6 @@ function gaussian_args_from_range() {
 				      sync_plot();
 				  }
 				 });
-
 
 }
 
@@ -96,6 +102,9 @@ function sync_a_slider() {
 function sync_plot() {
     apply_gaussian();
     gaussian_plot();
+    center = parseFloat($('#center').val());
+    a = parseFloat($('#a').val());
+    window.history.replaceState({}, "", `?center=${center}&a=${a}`)
     //update_equation();
 }
 
