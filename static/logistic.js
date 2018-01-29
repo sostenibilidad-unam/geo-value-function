@@ -34,10 +34,16 @@ function logistic(x) {
 }
 
 function logistic_args_from_range() {
-    var center = range['min'] + ((range['max'] - range['min']) / 2.0),
-	k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
-    $('#k').val(k);
-    $('#center').val(center);
+    // if no arguments suplied on URL, calculate values from layer
+    if ($('#k').val() == 'nan' | $('#center').val() == 'nan') {
+	var center = range['min'] + ((range['max'] - range['min']) / 2.0),
+	    k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
+	$('#k').val(k);
+	$('#center').val(center);
+    } else {
+	center = parseFloat($('#center').val());
+	k = parseFloat($('#k').val());
+    }
 
     center_max = range['max'];
     center_min = range['min'];
@@ -91,6 +97,10 @@ function sync_k_slider() {
 function sync_plot() {
     apply_logistic();
     logistic_plot();
+
+    center = parseFloat($('#center').val());
+    k = parseFloat($('#k').val());
+    window.history.replaceState({}, "", `?center=${center}&k=${k}`)
     //update_equation();
 }
 
@@ -122,8 +132,8 @@ function update_equation() {
     katex.render(`center=${center}`, equation_3);
     katex.render(`ymin=${ymin}`, equation_4);
     katex.render(`ymax=${ymax}`, equation_5);
-    
-    
+
+
 }
 
 

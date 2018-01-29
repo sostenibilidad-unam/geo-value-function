@@ -107,7 +107,7 @@ def lineal_decreciente(x, m, b):
 
 def normalize_max_min(y, maxy, miny):
     return (y - miny)/(maxy - miny)
-    
+
 
 def normalize01(y):
     maxy = max(y)
@@ -128,12 +128,12 @@ def concava_creciente_plot():
     gama = float(params[1])
     min_v = float(params[2])
     max_v = float(params[3])
-    
+
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [concava_creciente(t, gama, max_v, min_v) for t in x]
-    
+
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
 
@@ -165,7 +165,7 @@ def concava_decreciente_plot():
     gama = float(params[1])
     min_v = float(params[2])
     max_v = float(params[3])
-    
+
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
@@ -187,7 +187,6 @@ def concava_decreciente_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -203,7 +202,7 @@ def convexa_decreciente_plot():
     gama = float(params[1])
     min_v = float(params[2])
     max_v = float(params[3])
-    
+
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
@@ -225,7 +224,6 @@ def convexa_decreciente_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -241,7 +239,7 @@ def convexa_creciente_plot():
     gama = float(params[1])
     min_v = float(params[2])
     max_v = float(params[3])
-    
+
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
@@ -274,18 +272,17 @@ def convexa_creciente_plot():
 
 @app.route("/gaussian/plot/")
 def gaussian_plot():
-    
+
     params = request.args.get('params', "").split(",")
     n = int(params[0])
     a = float(params[1])
     center = float(params[2])
     min_v = float(params[3])
     max_v = float(params[4])
-    
+
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
-    
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [gaussian(t, a, center) for t in x]
     y = normalize01(yrow)
@@ -293,7 +290,7 @@ def gaussian_plot():
     grid = plt.GridSpec(10, 1, hspace=0)
 
     ax = fig.add_subplot(grid[0:7, 0])
-    
+
     markers_on = []
     if value > -1:
         markers_on.append(value_index)
@@ -325,7 +322,7 @@ def campana_invertida_plot():
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
-    
+
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [campana_invertida(t, a, center) for t in x]
@@ -345,7 +342,6 @@ def campana_invertida_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -364,9 +360,6 @@ def logistic_plot():
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
-  
-    
- 
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [logistic(t, k, center) for t in x]
@@ -417,12 +410,13 @@ def logistica_invertida_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -458,7 +452,6 @@ def wf_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -492,7 +485,6 @@ def wf2_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -511,7 +503,7 @@ def linear_plot():
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [linear(t, m, b) for t in x]
 
@@ -530,13 +522,13 @@ def linear_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
     return response
+
 
 @app.route("/lineal_decreciente/plot/")
 def lineal_decreciente_plot():
@@ -548,7 +540,7 @@ def lineal_decreciente_plot():
     max_v = float(params[4])
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
-    
+
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     y = [lineal_decreciente(t, m, b) for t in x]
 
@@ -567,7 +559,6 @@ def lineal_decreciente_plot():
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
 
-
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
     canvas.print_png(png_output)
@@ -575,20 +566,22 @@ def lineal_decreciente_plot():
     response.headers['Content-Type'] = 'image/png'
     return response
 
+
 @app.route("/<layer>/logistic/")
 def logistic_form(layer):
+
     template = env.get_template('logistic.html')
-    print get_layers()
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           k=request.args.get('k', 'nan'),
+                           center=request.args.get('center', 'nan'),
                            function_name='Logistic')
 
 
 @app.route("/<layer>/logistica_invertida/")
 def logistica_invertida_form(layer):
     template = env.get_template('logistica_invertida.html')
-    print get_layers()
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
@@ -638,8 +631,8 @@ def lineal_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            function_name='lineal_decreciente')
-    
-    
+
+
 @app.route("/<layer>/linear/")
 def linear_form(layer):
     template = env.get_template('linear.html')
