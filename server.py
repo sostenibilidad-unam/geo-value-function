@@ -6,10 +6,11 @@ from matplotlib import colors
 import StringIO
 import numpy
 from os import listdir
+import json
 
 from jinja2 import Environment, FileSystemLoader
 
-from flask import Flask, make_response, request, send_from_directory, redirect
+from flask import Flask, make_response, request, send_from_directory, redirect, Response
 app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('templates'))
@@ -690,19 +691,22 @@ def convexa_creciente_form(layer):
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
                            function_name='convexa_creciente')
-    
 
-@app.route("/<layer>/<function_name>/json/")
-def json(layer, function_name):
+
+@app.route("/json/<layer>/<function_name>/")
+def to_json(layer, function_name):
     params = request.url.split("?")[1].split("&")
-    
+
     vf_dict = {"layer": layer, "function_name": function_name}
     for param_pair in params:
         key = param_pair.split("=")[0]
         value = param_pair.split("=")[1]
         vf_dict.update({key: value})
-    return str(vf_dict)
-    
+
+    return Response(json.dumps(vf_dict),
+                    mimetype='application/json',
+                    headers={'Content-Disposition':'attachment;filename=%s.json'
+                             % layer})
 
 
 def get_layers():

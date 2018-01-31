@@ -77,14 +77,14 @@
 	      font-size: 2em !important;
 	      width: 600px;
 	      height: 40px;
-          line-height: 35px;
+	  line-height: 35px;
 	      position: absolute;
 	      bottom: 60px;
 	      left: 150px;
 	      background-color: white;
 	      border-style: solid;
-           border-width: medium;
-           text-align: center;
+	   border-width: medium;
+	   text-align: center;
 	      z-index: 20;
       }
     </style>
@@ -142,8 +142,18 @@
   <div class="massive item">
     {{ function_name }}
   </div>
-  
-  <a class="item"  onclick="save_vf();">
+
+  <script>
+    function download_json() {
+    host = window.location.host;
+    href = window.location.href;
+    href = href.replace(host, host + "/json");
+    document.getElementById("dwjson").href=href;
+    }
+  </script>
+
+
+  <a id="dwjson" class="item" href="#" onClick="download_json()">
     <i class="save big layout icon"></i>
   </a>
 
