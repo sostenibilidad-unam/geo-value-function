@@ -690,6 +690,19 @@ def convexa_creciente_form(layer):
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
                            function_name='convexa_creciente')
+    
+
+@app.route("/<layer>/<function_name>/json/")
+def json(layer, function_name):
+    params = request.url.split("?")[1].split("&")
+    
+    vf_dict = {"layer": layer, "function_name": function_name}
+    for param_pair in params:
+        key = param_pair.split("=")[0]
+        value = param_pair.split("=")[1]
+        vf_dict.update({key: value})
+    return str(vf_dict)
+    
 
 
 def get_layers():
