@@ -253,7 +253,7 @@ var displayFeatureInfo = function (pixel) {
 
 	if (feature) {
 		
-		stats_div.innerHTML = "value: " + feature.get("value") + "  normalized value: " + feature.get("fv").toFixed(4) ;
+		stats_div.innerHTML = "valor original: " + feature.get("value") + "</br>valor normalizado: " + feature.get("fv").toFixed(4) ;
 	}else{
          vectorSource.clear();
 	    var a = $('#a').val(),
