@@ -577,7 +577,7 @@ def logistic_form(layer):
                            layer=layer,
                            k=request.args.get('k', 'nan'),
                            center=request.args.get('center', 'nan'),
-                           function_name='Logistic')
+                           function_name='Logistica')
 
 
 @app.route("/<layer>/logistica_invertida/")
@@ -599,7 +599,7 @@ def gaussian_form(layer):
                            layer=layer,
                            a=request.args.get('a', 'nan'),
                            center=request.args.get('center', 'nan'),
-                           function_name='Gaussian')
+                           function_name='Campana')
 
 
 @app.route("/<layer>/campana_invertida/")
@@ -610,7 +610,7 @@ def campana_invertida_form(layer):
                            layer=layer,
                            a=request.args.get('a', 'nan'),
                            center=request.args.get('center', 'nan'),
-                           function_name='campana_invertida')
+                           function_name='Campana invertida')
 
 
 @app.route("/<layer>/wf2/")
@@ -639,7 +639,7 @@ def lineal_decreciente_form(layer):
                            layer=layer,
                            m=request.args.get('m', 'nan'),
                            b=request.args.get('b', 'nan'),
-                           function_name='lineal_decreciente')
+                           function_name='Lineal decreciente')
 
 
 @app.route("/<layer>/linear/")
@@ -650,7 +650,7 @@ def linear_form(layer):
                            layer=layer,
                            m=request.args.get('m', 'nan'),
                            b=request.args.get('b', 'nan'),
-                           function_name='Linear')
+                           function_name='Lineal')
 
 
 @app.route("/<layer>/concava_decreciente/")
@@ -660,7 +660,7 @@ def concava_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           function_name='concava_decreciente')
+                           function_name='Concava decreciente')
 
 
 @app.route("/<layer>/concava_creciente/")
@@ -670,7 +670,7 @@ def concava_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           function_name='concava_creciente')
+                           function_name='Concava creciente')
 
 
 @app.route("/<layer>/convexa_decreciente/")
@@ -680,7 +680,7 @@ def convexa_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           function_name='convexa_decreciente')
+                           function_name='Convexa decreciente')
 
 
 @app.route("/<layer>/convexa_creciente/")
@@ -690,7 +690,7 @@ def convexa_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           function_name='convexa_creciente')
+                           function_name='Convexa creciente')
 
 
 @app.route("/json/<layer>/<function_name>/")

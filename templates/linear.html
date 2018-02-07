@@ -3,19 +3,20 @@
 {% block form %}
 <div class="ui form" id="args">
   <div class="field">
-    <label>m</label>
-    <div class="ui left icon input">
+  <center><label><font size="5">Pendiente</font></label></center>
+    
+    <div class="ui big input" style="width:100%">
       <input placeholder="1" id="m" value="{{ m }}">
     </div>
   </div>
   
   <div class="field">
-    <label>b</label>
-    <div class="ui left icon input">
+    <center><label><font size="5">Ordenada al origen</font></label></center>
+    <div class="ui big input" style="width:100%">
       <input placeholder="0.0" id="b" value="{{ b }}">
     </div>
   </div>
-  <div class="ui blue primary button" onclick="apply_linear(); linear_plot(); update_equation();">Plot</div>
+  
 </div>
 {% endblock %}
 
