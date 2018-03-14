@@ -1,0 +1,187 @@
+{% extends "root.html" %}
+
+{% block body %}
+<form action="." method="POST">
+<div class="ui raised segment">
+  <div class="ui four column grid">
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/linear_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="linear" checked="checked" />
+	    <label>linear</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/logistic_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="logistic" />
+	    <label>logistic</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/convexa_creciente_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="convexa_creciente" />
+	    <label>convexa_creciente</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/concava_creciente_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="concava_creciente" />
+	    <label>concava_creciente</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<div class="ui raised segment">
+
+  <div class="ui four column grid">
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/lineal_decreciente_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="lineal_decreciente" />
+	    <label>lineal_decreciente</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/logistica_invertida_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="logistica_invertida" />
+	    <label>logistica_invertida</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/convexa_decreciente_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="convexa_decreciente" />
+	    <label>convexa_decreciente</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/concava_decreciente_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="concava_decreciente" />
+	    <label>concava_decreciente</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="ui raised segment">
+  <div class="ui four column grid">
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/gaussian_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="gaussian" />
+	    <label>gaussian</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="ui card">
+	<div class="image">
+	  <img src="/static/campana_invertida_icon.png">
+	</div>
+	<div class="content">
+	  <div class="ui radio checkbox">
+	    <input type="radio" name="function" value="campana_invertida" />
+	    <label>campana_invertida</label>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="ui raised segment">
+
+
+  <select class="ui dropdown" name="layer">
+    {% for l in layers %}
+    <option value="{{ l.name }}">{{ l.name }}</option>
+    {% endfor %}
+  </select>
+
+  <button class="ui right labeled icon button">
+    <i class="right arrow icon"></i>
+    continuar
+  </button>
+
+</div>
+</form>
+
+
+
+{% endblock %}

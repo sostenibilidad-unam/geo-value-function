@@ -102,6 +102,7 @@ def wf2(t, fp, min_v, max_v):
 def linear(x, m, b):
     return (m * x) + b
 
+
 def lineal_decreciente(x, m, b):
     return (m * x) + b
 
@@ -119,7 +120,22 @@ def normalize01(y):
 
 @app.route("/")
 def root():
-    return redirect('/elevacion/gaussian/', code=302)
+    return redirect('/setup/', code=302)
+
+
+from pprint import pprint
+@app.route("/setup/", methods=["GET", "POST"])
+def setup():
+    print "hola"
+    if request.method == 'GET':
+        template = env.get_template('setup.html')
+        return template.render(layers=get_layers())
+    else:
+       f = request.values.get('function')
+       l = request.values.get('layer')
+       pprint(request.values)
+       return redirect('/%s/%s' % (l, f),
+                       code=302)
 
 
 @app.route("/concava_creciente/plot/")
