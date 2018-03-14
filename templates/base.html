@@ -24,47 +24,47 @@
 
 
 {% block body %}
-    <div class="ui massive left sidebar vertical menu" id="equations_sidebar">
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/linear/">
-	<img src="/static/linear_icon.png">
-      </a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/lineal_decreciente/">
-	<img src="/static/lineal_decreciente_icon.png">
-      </a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/logistic/">
-	<img src="/static/logistic_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/logistica_invertida/">
-	<img src="/static/logistica_invertida_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/gaussian/">
-	<img src="/static/gaussian_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/campana_invertida/">
-	<img src="/static/campana_invertida_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/concava_decreciente/">
-	<img src="/static/concava_decreciente_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/concava_creciente/">
-	<img src="/static/concava_creciente_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/convexa_decreciente/">
-	<img src="/static/convexa_decreciente_icon.png"></a>
-      <a class="ui centered medium image item"
-	 href="/{{ layer }}/convexa_creciente/">
-	<img src="/static/convexa_creciente_icon.png"></a>
-    </div>
+<div class="ui massive left sidebar vertical menu" id="equations_sidebar">
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/linear/">
+    <img src="/static/linear_icon.png">
+  </a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/lineal_decreciente/">
+    <img src="/static/lineal_decreciente_icon.png">
+  </a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/logistic/">
+    <img src="/static/logistic_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/logistica_invertida/">
+    <img src="/static/logistica_invertida_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/gaussian/">
+    <img src="/static/gaussian_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/campana_invertida/">
+    <img src="/static/campana_invertida_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/concava_decreciente/">
+    <img src="/static/concava_decreciente_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/concava_creciente/">
+    <img src="/static/concava_creciente_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/convexa_decreciente/">
+    <img src="/static/convexa_decreciente_icon.png"></a>
+  <a class="ui centered medium image item"
+     href="/{{ layer }}/convexa_creciente/">
+    <img src="/static/convexa_creciente_icon.png"></a>
+</div>
 
-    <div class="ui massive right sidebar vertical menu" id="layers_sidebar">
-      {% for layer in layers %}
-      <a class="massive item"
-	 href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
-      {% endfor %}
-    </div>
+<div class="ui massive right sidebar vertical menu" id="layers_sidebar">
+  {% for layer in layers %}
+  <a class="massive item"
+     href="/{{ layer.name }}/linear/">{{ layer.name }}</a>
+  {% endfor %}
+</div>
 
 <div class="ui top massive fixed menu">
   <a class="massive item"  onclick="$('#equations_sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
@@ -106,62 +106,26 @@
 
 
 
-    <div class="pusher" style="height: 100%;">
-      <div class="ui two column stackable grid" style="margin-top: 4em; margin-left: 0.5em; height: 100%;">
-
-		<div class="five wide column">
-
-		  <div class="ui clearing segment">
-		    {% block form %}
-		    {% endblock %}
-		  </div>
-
-
-		  <div class="ui segment">
-		    {% block plot %}
-		    {% endblock %}
-		  </div>
-
-		<!--
-		  <div class="ui segment">
-		    <div id="equation_1">
-		    </div>
-		    <div id="equation_2">
-		    </div>
-		    <div id="equation_3">
-		    </div>
-		    <div id="equation_4">
-		    </div>
-		    <div id="equation_5">
-		    </div>
-		  </div>
-
-		-->
-	 </div>
-		<!-- open layers map -->
-		<div class="eleven wide column">
-
-		  <div id="map" style="height: 100%;">
-		  <div id="legend_continua">
-		    <img id="leyend_continua_image" src="/static/leyenda_continua.png" height="100%">
-		  </div>
-
-		  <div id="legend_categorias">
-		    <img id="leyend_categorias_image" src="/static/leyenda_categorias.png" height="100%">
-		  </div>
-
-		  </div>
-
-		  <div id="statistics"></div>
-
-		</div>
-
+<div class="pusher" style="height: 100%;">
+  <div class="ui two column stackable grid" style="margin-top: 4em; margin-left: 0.5em; height: 100%;">
+    <div class="five wide column">
+      <div class="ui clearing segment">
+	{% block form %}
+	{% endblock %}
       </div>
     </div>
 
-    <script src="/static/map_setup.js"></script>
-    <script src="/static/arrows_functions.js"></script>
-    {% block scripts %}
-    {% endblock %}
+    <div class="eleven wide column">
+      <div class="ui segment">
+	{% block plot %}
+	{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/map_setup.js"></script>
+<script src="/static/arrows_functions.js"></script>
+{% block scripts %}
+{% endblock %}
 
 {% endblock %}

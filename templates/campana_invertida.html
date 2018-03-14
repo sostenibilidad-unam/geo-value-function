@@ -1,56 +1,60 @@
+{% if show_map %}
+{% extends 'base_map.html' %}
+{% else %}
 {% extends 'base.html' %}
+{% endif %}
 
 {% block form %}
 <div class="ui form" id="args">
 
   <center><label><font size="5">Amplitud</font></label></center>
-  
-  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
+
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;">
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="fbackward('#a_slider', sync_a_slider);">&lt;&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="fbackward('#a_slider', sync_a_slider);">&lt;&lt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="backward('#a_slider', sync_a_slider);">&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="backward('#a_slider', sync_a_slider);">&lt;</div>
+      </div>
       <div class="six wide column">
-         <div class="ui big input" style="width:100%">
-            	<input placeholder="1" id="a" value="{{ a }}" onchange="sync_a_slider(); sync_plot();">
-          </div>
-      </div> 
+	 <div class="ui big input" style="width:100%">
+		<input placeholder="1" id="a" value="{{ a }}" onchange="sync_a_slider(); sync_plot();">
+	  </div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="forward('#a_slider', sync_a_slider);">&gt;</div>
-      </div> 
+	 <div class="ui big button" onclick="forward('#a_slider', sync_a_slider);">&gt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="fforward('#a_slider', sync_a_slider);">&gt;&gt;</div>
-      </div> 
+	 <div class="ui big button" onclick="fforward('#a_slider', sync_a_slider);">&gt;&gt;</div>
+      </div>
   </div>
-  <div id="a_slider" style="margin-top: 2em; margin-bottom: 1em;"></div> 
+  <div id="a_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
   </br>
   </br>
   </br>
   <center><label><font size="5">Mínimo</font></label></center>
-  
-  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
+
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;">
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="fbackward('#center_slider', sync_center_slider);">&lt;&lt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="backward('#center_slider', sync_center_slider);">&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="backward('#center_slider', sync_center_slider);">&lt;</div>
+      </div>
       <div class="six wide column">
-         <div class="ui big input" style="width:100%">
-            	<input placeholder="1" id="center" value="{{ center }}" onchange="sync_center_slider(); sync_plot();">
-          </div>
-      </div> 
+	 <div class="ui big input" style="width:100%">
+		<input placeholder="1" id="center" value="{{ center }}" onchange="sync_center_slider(); sync_plot();">
+	  </div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="forward('#center_slider', sync_center_slider);">&gt;</div>
-      </div> 
+	 <div class="ui big button" onclick="forward('#center_slider', sync_center_slider);">&gt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
-      </div> 
-  </div>  
+	 <div class="ui big button" onclick="fforward('#center_slider', sync_center_slider);">&gt;&gt;</div>
+      </div>
+  </div>
   <div id="center_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
-  
+
 
 </div>
 {% endblock %}

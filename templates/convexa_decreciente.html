@@ -1,29 +1,33 @@
+{% if show_map %}
+{% extends 'base_map.html' %}
+{% else %}
 {% extends 'base.html' %}
+{% endif %}
 
 {% block form %}
 <div class="ui form" id="args">
   <center><label><font size="5">Saturación</font></label></center>
-  
 
-  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;"> 
+
+  <div class="ui five column grid" style="margin-top: 0.5em; margin-left: 3em;">
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="fbackward('#gama_slider', sync_gama_slider);">&lt;&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="fbackward('#gama_slider', sync_gama_slider);">&lt;&lt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big right floated button" onclick="backward('#gama_slider', sync_gama_slider);">&lt;</div>
-      </div> 
+	 <div class="ui big right floated button" onclick="backward('#gama_slider', sync_gama_slider);">&lt;</div>
+      </div>
       <div class="six wide column">
-         <div class="ui big input" style="width:100%">
-            	<input placeholder="1" id="gama" value="{{ gama }}" onchange="sync_gama_slider(); sync_plot();">
-          </div>
-      </div> 
+	 <div class="ui big input" style="width:100%">
+		<input placeholder="1" id="gama" value="{{ gama }}" onchange="sync_gama_slider(); sync_plot();">
+	  </div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="forward('#gama_slider', sync_gama_slider);">&gt;</div>
-      </div> 
+	 <div class="ui big button" onclick="forward('#gama_slider', sync_gama_slider);">&gt;</div>
+      </div>
       <div class="two wide column">
-         <div class="ui big button" onclick="fforward('#gama_slider', sync_gama_slider);">&gt;&gt;</div>
-      </div> 
-  </div>  
+	 <div class="ui big button" onclick="fforward('#gama_slider', sync_gama_slider);">&gt;&gt;</div>
+      </div>
+  </div>
   <div id="gama_slider" style="margin-top: 2em; margin-bottom: 1em;"></div>
 </div>
 {% endblock %}

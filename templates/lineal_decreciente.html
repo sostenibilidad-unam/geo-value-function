@@ -1,4 +1,8 @@
+{% if show_map %}
+{% extends 'base_map.html' %}
+{% else %}
 {% extends 'base.html' %}
+{% endif %}
 
 {% block form %}
 <div class="ui form" id="args">
@@ -8,14 +12,14 @@
       <input placeholder="1" id="m" value="{{ m }}">
     </div>
   </div>
-  
+
   <div class="field">
     <center><label><font size="5">Ordenada al origen</font></label></center>
     <div class="ui big input" style="width:100%">
       <input placeholder="0.0" id="b" value="{{ b }}">
     </div>
   </div>
-  
+
 </div>
 {% endblock %}
 

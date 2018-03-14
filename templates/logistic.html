@@ -1,4 +1,8 @@
+{% if show_map %}
+{% extends 'base_map.html' %}
+{% else %}
 {% extends 'base.html' %}
+{% endif %}
 
 {% block form %}
 <div class="ui form" id="args">

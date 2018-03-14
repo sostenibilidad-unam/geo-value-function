@@ -593,6 +593,7 @@ def logistic_form(layer):
                            layer=layer,
                            k=request.args.get('k', 'nan'),
                            center=request.args.get('center', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Logistica')
 
 
@@ -604,6 +605,7 @@ def logistica_invertida_form(layer):
                            layer=layer,
                            k=request.args.get('k', 'nan'),
                            center=request.args.get('center', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Logistica Invertida')
 
 
@@ -615,6 +617,7 @@ def gaussian_form(layer):
                            layer=layer,
                            a=request.args.get('a', 'nan'),
                            center=request.args.get('center', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Campana')
 
 
@@ -626,6 +629,7 @@ def campana_invertida_form(layer):
                            layer=layer,
                            a=request.args.get('a', 'nan'),
                            center=request.args.get('center', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Campana invertida')
 
 
@@ -635,6 +639,7 @@ def wf2_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           show_map=request.args.get('show_map', False),
                            function_name='Webber-Feshner-2')
 
 
@@ -644,6 +649,7 @@ def wf_form(layer):
     return template.render(layers=get_layers(),
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
+                           show_map=request.args.get('show_map', False),
                            function_name='Webber-Feshner')
 
 
@@ -655,6 +661,7 @@ def lineal_decreciente_form(layer):
                            layer=layer,
                            m=request.args.get('m', 'nan'),
                            b=request.args.get('b', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Lineal decreciente')
 
 
@@ -666,6 +673,7 @@ def linear_form(layer):
                            layer=layer,
                            m=request.args.get('m', 'nan'),
                            b=request.args.get('b', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Lineal')
 
 
@@ -676,6 +684,7 @@ def concava_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Concava decreciente')
 
 
@@ -686,6 +695,7 @@ def concava_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Concava creciente')
 
 
@@ -696,6 +706,7 @@ def convexa_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Convexa decreciente')
 
 
@@ -706,6 +717,7 @@ def convexa_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           show_map=request.args.get('show_map', False),
                            function_name='Convexa creciente')
 
 
