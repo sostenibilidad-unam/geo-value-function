@@ -55,6 +55,7 @@ function lineal_decreciente_args_from_range() {
 function sync_plot() {
     apply_lineal_decreciente();
     lineal_decreciente_plot();
+    window.history.replaceState({}, "", `?show_map=${show_map}`);
     //update_equation();
 }
 

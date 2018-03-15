@@ -59,6 +59,7 @@ function resize_bar(){
 function sync_plot() {
     apply_linear();
     linear_plot();
+    window.history.replaceState({}, "", `?show_map=${show_map}`);
     //update_equation();
 }
 
@@ -79,6 +80,7 @@ function latex_equation() {
     
  
 }
+
 
 function update_equation() {
     var m = $('#m').val(),
