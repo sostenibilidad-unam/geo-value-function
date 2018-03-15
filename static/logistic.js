@@ -39,7 +39,8 @@ function logistic_args_from_range() {
     // if no arguments suplied on URL, calculate values from layer
     if ($('#k').val() == 'nan' | $('#center').val() == 'nan') {
 	var center = range['min'] + ((range['max'] - range['min']) / 2.0),
-	    k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
+	   // k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
+	   k = 0.1;
 	$('#k').val(k);
 	$('#center').val(center);
     } else {
@@ -50,7 +51,7 @@ function logistic_args_from_range() {
     center_max = range['max'];
     center_min = range['min'];
 
-    k_max = k * 2.0;
+    k_max = k * 5.0;
     k_min = k / 10.0;
 
     $( "#k_slider" ).slider({max: k_max,

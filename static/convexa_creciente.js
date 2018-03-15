@@ -31,7 +31,8 @@ function convexa_creciente(x) {
 
 function convexa_creciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
-        gama = 4.0 / range['max'];
+        //gama = 4.0 / range['max'];
+        var gama = 0.05;
     } else {
         gama = parseFloat($('#gama').val());
     }

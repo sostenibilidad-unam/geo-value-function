@@ -15,18 +15,21 @@ app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('templates'))
 
-
-def logistic(t, k, center):
-    return 1 / (1.0 + math.exp(-k * (t - center)))
-
-
-def logistica_invertida(t, k, center):
-    return 1 - (1 / (1.0 + math.exp(-k * (t - center))))
+def logistic(x, k, center, xmax, xmin):
+#def logistic(t, k, center):
+    #return 1 / (1.0 + math.exp(-k * (t - center)))
+    return 1 / (1.0 + math.exp(-k * (   (100 * ( x - xmin )/( xmax - xmin ) )  - ( 100 * ( center - xmin )/( xmax - xmin ) ) )) )
 
 
-def gaussian(t, a, center):
-    return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+#def logistica_invertida(t, k, center):
+def logistica_invertida(x, k, center, xmax, xmin):   
+    return 1.0 - logistic(x, k, center, xmax, xmin)
 
+
+#def gaussian(t, a, center):
+def gaussian(x, a, center, xmax, xmin):
+    #return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+    return math.exp(0.0 - (((   (100 * ( x - xmin )/( xmax - xmin ) )   - ( 100 * ( center - xmin )/( xmax - xmin ) )) / a )*((   (100 * ( x - xmin )/( xmax - xmin ) )   - ( 100 * ( center - xmin )/( xmax - xmin ) )) / a )))
 
 def campana_invertida(t, a, center):
     return 1 - math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
@@ -49,25 +52,29 @@ def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
 
 
 def concava_decreciente(x, gama, xmax, xmin):
-    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) \
-        / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
+#    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) \
+#        / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
+    return ( ( math.exp(gama * (100.0 - (100.0*(x - xmin)/(xmax - xmin) ) ) ) ) - 1 )  / ( math.exp(gama * 100) -1 )
 
 
 def concava_creciente(x, gama, xmax, xmin):
-    return ((math.exp(gama * x)) - math.exp(gama * xmin)) \
-        / (math.exp(gama * xmax) - math.exp(gama * xmin))
+#    return ((math.exp(gama * x)) - math.exp(gama * xmin)) \
+#        / (math.exp(gama * xmax) - math.exp(gama * xmin))
+    return ((math.exp(gama * (100*(x - xmin)/(xmax - xmin) ) ) ) - 1) / ( math.exp(gama * 100) -1 )
 
 
 def convexa_decreciente(x, gama, xmax, xmin):
-    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) \
-        / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
+#    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) \
+#        / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
+    return 1.0 - concava_creciente ( x, gama, xmax, xmin )
 
 
 def convexa_creciente(x, gama, xmax, xmin):
-    return (1 - (math.exp((0.0 - x) * gama))
-            - (1-(math.exp((0.0 - xmin) * gama)))) \
-        / (1 - (math.exp((0.0 - xmax) * gama))
-           - (1-(math.exp((0.0 - xmin) * gama))))
+#    return (1 - (math.exp((0.0 - x) * gama))
+#            - (1-(math.exp((0.0 - xmin) * gama)))) \
+#        / (1 - (math.exp((0.0 - xmax) * gama))
+#           - (1-(math.exp((0.0 - xmin) * gama))))
+    return 1.0 - concava_decreciente ( x, gama, xmax, xmin )
 
 
 def wf(t, fp, min_v, max_v):
@@ -301,7 +308,7 @@ def gaussian_plot():
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    yrow = [gaussian(t, a, center) for t in x]
+    yrow = [gaussian(t, a, center, max_v, min_v) for t in x]
     y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
@@ -379,7 +386,7 @@ def logistic_plot():
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    yrow = [logistic(t, k, center) for t in x]
+    yrow = [logistic(t, k, center, max_v, min_v) for t in x]
     y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
@@ -416,7 +423,7 @@ def logistica_invertida_plot():
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    yrow = [logistica_invertida(t, k, center) for t in x]
+    yrow = [logistica_invertida(t, k, center, max_v, min_v) for t in x]
     y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)

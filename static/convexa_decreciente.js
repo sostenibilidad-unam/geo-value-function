@@ -31,7 +31,8 @@ function convexa_decreciente(x) {
 
 function convexa_decreciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
-        gama = 2 * Math.pow(range['max'],1/1.5);
+        //gama = 2 * Math.pow(range['max'],1/1.5);
+        var gama = 0.05;
     } else {
         gama = parseFloat($('#gama').val());
     }

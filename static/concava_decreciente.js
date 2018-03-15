@@ -31,12 +31,13 @@ function concava_decreciente(x) {
 function concava_decreciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
         var center = range['min'] + ((range['max'] - range['min']) / 2);
-        var gama = 0;
-        if (range['min'] > 0){
-            	gama = (1.38 / center) * (1 + (Math.log(range['min']) / 2));
-        }else{
-            	gama = (1.38 / center);
-        }
+        var gama = 0.05;
+        //var gama = 0;
+        //if (range['min'] > 0){
+        //    	gama = (1.38 / center) * (1 + (Math.log(range['min']) / 2));
+        //}else{
+        //    	gama = (1.38 / center);
+        //}
     } else {
         	 gama = parseFloat($('#gama').val());
     }
