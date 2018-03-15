@@ -1,4 +1,6 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var show_map =  document.currentScript.getAttribute('show_map');
+
 function_name = "campana_invertida";
 function campana_invertida_plot() {
     var a = $('#a').val(),
@@ -97,7 +99,7 @@ function sync_plot() {
     campana_invertida_plot();
     center = parseFloat($('#center').val());
     a = parseFloat($('#a').val());
-    window.history.replaceState({}, "", `?center=${center}&a=${a}`)
+    window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}`)
     //update_equation();
 }
 

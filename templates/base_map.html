@@ -88,6 +88,16 @@
     <i class="save big layout icon"></i>
   </a>
 
+  <div class="massive item">
+    <div class="ui toggle checkbox checked">
+      <input type="checkbox" checked=""
+	     onClick="show_map = 'False';
+		      sync_plot();
+		      window.history.go();">
+      <label>mapa</label>
+    </div>
+  </div>
+
   <div class="right massive item">
     {{ layer }}
   </div>
