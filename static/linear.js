@@ -1,4 +1,5 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "linear";
 
 function linear_plot() {

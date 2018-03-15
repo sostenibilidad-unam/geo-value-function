@@ -1,4 +1,5 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "concava_creciente";
 function concava_creciente_plot() {
     var gama = $('#gama').val();
@@ -74,7 +75,7 @@ function sync_plot() {
     concava_creciente_plot();
     
     gama = parseFloat($('#gama').val());
-    window.history.replaceState({}, "", `?gama=${gama}`);
+    window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}`);
     //update_equation();
 }
 

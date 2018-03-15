@@ -1,4 +1,4 @@
-{% if show_map %}
+{% if show_map == 'True' %}
 {% extends 'base_map.html' %}
 {% else %}
 {% extends 'base.html' %}
@@ -69,5 +69,5 @@
 
 
 {% block scripts %}
-<script src="/static/logistic.js" layer_url="{{ layer_url }}"></script>
+<script src="/static/logistic.js" layer_url="{{ layer_url }}" show_map="{{ show_map }}"></script>
 {% endblock %}

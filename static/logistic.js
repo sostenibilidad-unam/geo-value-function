@@ -1,4 +1,6 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var show_map =  document.currentScript.getAttribute('show_map');
+
 function_name = "logistic";
 var range_y = [];
 function logistic_plot() {
@@ -96,7 +98,7 @@ function sync_plot() {
 
     center = parseFloat($('#center').val());
     k = parseFloat($('#k').val());
-    window.history.replaceState({}, "", `?center=${center}&k=${k}`);
+    window.history.replaceState({}, "", `?center=${center}&k=${k}&show_map=${show_map}`);
     //update_equation();
 }
 
