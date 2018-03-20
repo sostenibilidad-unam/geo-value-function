@@ -193,6 +193,8 @@ function set_layer(url) {
 	opacity: 0.85
     });
     map.addLayer(layer);
+    //var extent = layer.getSource().getExtent();
+    //map.getView().fit(extent, map.getSize());
 }
 function normalize_min_max(y, miny, maxy){
     return (y - miny)/(maxy - miny);
@@ -238,10 +240,11 @@ var map = new ol.Map({
     layers: [stamenLayer, miVector],
     target: 'map',
     view: new ol.View({
-	center: ol.proj.fromLonLat([-99.10,19.44]),
+	center: ol.proj.fromLonLat([-99.10,19.35]),
 	zoom: 11
     })
 });
+
 var highlightStyleCache = {};
 var highlight;
 var stats_div = document.getElementById('statistics');
