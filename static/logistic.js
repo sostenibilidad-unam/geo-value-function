@@ -4,8 +4,9 @@ var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "logistic";
 var range_y = [];
 function logistic_plot() {
-    var k = $('#k').val(),
-	center = $('#center').val();
+    var k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 );
+    
+    var center = $('#center').val();
     params = n + "," + k + "," + center + "," + range['min'] + "," + range['max']
     // update plot
     document.getElementById("plot").src="/logistic/plot/?params=" + params ;
@@ -27,12 +28,21 @@ function apply_logistic(){
     });
     layer.setStyle(style_data_layer);
 }
+function normalize100(x){
+    xmax = range['max'];
+    xmin = range['min'];
+    return (100.0 * ( x - xmin )/( xmax - xmin ) )
 
+}
 
 function logistic(x) {
-    var k = $('#k').val(),
+    var k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 ),
 	center = $('#center').val();
-    return 1.0 / (1.0 + Math.exp(-k * (x - center)))
+    //return 1.0 / (1.0 + Math.exp(-k * (x - center)))
+    xmax = range['max'];
+    xmin = range['min'];
+    return 1.0 / (1.0 + Math.exp(-k * (   normalize100(x)  - normalize100(center) ) ) )
+
 }
 
 function logistic_args_from_range() {
@@ -40,24 +50,23 @@ function logistic_args_from_range() {
     if ($('#k').val() == 'nan' | $('#center').val() == 'nan') {
 	var center = range['min'] + ((range['max'] - range['min']) / 2.0),
 	   // k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
-	   k = 0.1;
-	$('#k').val(k);
-	$('#center').val(center);
+	   saturacion = 3;
+	
     } else {
-	center = parseFloat($('#center').val());
-	k = parseFloat($('#k').val());
+        	center = parseFloat($('#center').val());
+        	saturacion = parseInt($('#k').val());
     }
 
     center_max = range['max'];
     center_min = range['min'];
 
-    k_max = k * 5.0;
-    k_min = k / 10.0;
+    $('#k').val(saturacion);
+	$('#center').val(center);
 
-    $( "#k_slider" ).slider({max: k_max,
-			     min: k_min,
-			     value: k,
-			     step: (k_max - k_min) / 100.0,
+    $( "#k_slider" ).slider({max: 20,
+			     min: 0,
+			     value: saturacion,
+			     step: 1,
 			     change: function( event, ui ) {
 				 sync_k();
 				 sync_plot();
@@ -98,7 +107,7 @@ function sync_plot() {
     logistic_plot();
 
     center = parseFloat($('#center').val());
-    k = parseFloat($('#k').val());
+    k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 );
     window.history.replaceState({}, "", `?center=${center}&k=${k}&show_map=${show_map}`);
     //update_equation();
 }
@@ -114,7 +123,7 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var k = $('#k').val(),
+    var k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 ),
 	center = $('#center').val();
 
     return `fv(x) = \\frac{1}{1+e^{-${k}(x-${center})}}`
@@ -122,7 +131,7 @@ function latex_equation() {
 
 
 function update_equation() {
-    var k = $('#k').val(),
+    var k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 ),
 	center = $('#center').val();
     ymax = range_y['max']
     ymin = range_y['min']

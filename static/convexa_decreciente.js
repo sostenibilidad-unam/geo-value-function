@@ -2,7 +2,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "convexa_decreciente";
 function convexa_decreciente_plot() {
-    var gama = $('#gama').val();
+    var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     params = n + "," + gama + "," + range['min'] + "," + range['max']
     
     // update plot
@@ -21,31 +21,32 @@ function apply_convexa_decreciente(){
 
 
 function convexa_decreciente(x) {
-    var gama = $('#gama').val();
+    var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     var xmax = range['max'];
     var xmin = range['min'];
-    return (1-(Math.exp((x-30)/gama)) - (1-(Math.exp((xmax-30)/gama)))) / (1-(Math.exp((xmin-30)/gama)) - (1-(Math.exp((xmax-30)/gama))))
-
+    //return (1-(Math.exp((x-30)/gama)) - (1-(Math.exp((xmax-30)/gama)))) / (1-(Math.exp((xmin-30)/gama)) - (1-(Math.exp((xmax-30)/gama))))
+    return 1.0 - ((Math.exp(gama * (100*(x - xmin)/(xmax - xmin) ) ) ) - 1) / ( Math.exp(gama * 100) -1 )
+    
 
 }
 
 function convexa_decreciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
         //gama = 2 * Math.pow(range['max'],1/1.5);
-        var gama = 0.05;
+        var saturacion = 1;
     } else {
-        gama = parseFloat($('#gama').val());
+        saturacion = parseInt($('#gama').val());
     }
 
 
     gama_max = gama * 3.0;
     gama_min = gama / 10.0;
     //aqui hay que hacer el algebra
-    $('#gama').val(gama);
-    $( "#gama_slider" ).slider({max: gama_max,
-			     min: gama_min,
-			     value: gama,
-			     step: (gama_max - gama_min) / 100.0,
+    $('#gama').val(saturacion);
+    $( "#gama_slider" ).slider({max: 20,
+			     min: 0,
+			     value: saturacion,
+			     step: 1,
 			     change: function( event, ui ) {
 				 sync_gama();
 				 sync_plot();
@@ -69,7 +70,7 @@ function sync_plot() {
     apply_convexa_decreciente();
     convexa_decreciente_plot();
     
-    gama = parseFloat($('#gama').val());
+    gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}`);
     //update_equation();
 }
@@ -84,7 +85,7 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var gama = $('#gama').val();
+    var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
 
     var restale = 1-(Math.exp((range['max']-30)/gama));
     var denominador = (1-(Math.exp((range['min']-30)/gama)) - (1-(Math.exp((range['max']-30)/gama))));

@@ -5,6 +5,7 @@
 {% endif %}
 
 {% block form %}
+
 <div class="ui form" id="args">
   <center><label><font size="5">Saturación</font></label></center>
 
@@ -17,7 +18,7 @@
       </div>
       <div class="six wide column">
 	 <div class="ui big input" style="width:100%">
-		<input placeholder="1" id="gama" value="{{ gama }}" onchange="sync_gama_slider(); sync_plot();">
+		<input placeholder="1" id="gama" value="{{ saturacion }}" onchange="sync_gama_slider(); sync_plot();">
 	  </div>
       </div>
       <div class="two wide column">

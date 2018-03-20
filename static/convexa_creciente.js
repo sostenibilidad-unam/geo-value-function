@@ -2,7 +2,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "convexa_creciente";
 function convexa_creciente_plot() {
-    var gama = $('#gama').val();
+    var gama = 0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     params = n + "," + gama + "," + range['min'] + "," + range['max']
     
     // update plot
@@ -21,10 +21,12 @@ function apply_convexa_creciente(){
 
 
 function convexa_creciente(x) {
-    var gama = $('#gama').val();
+    var gama =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
+    //var gama =  parseFloat($('#gama').val())
     var xmax = range['max'];
     var xmin = range['min'];
-    return (1-(Math.exp((0.0 - x)*gama)) - (1-(Math.exp((0.0 - xmin)*gama)))) / (1-(Math.exp((0.0 - xmax)*gama)) - (1-(Math.exp((0.0 - xmin)*gama))))
+    //return (1-(Math.exp((0.0 - x)*gama)) - (1-(Math.exp((0.0 - xmin)*gama)))) / (1-(Math.exp((0.0 - xmax)*gama)) - (1-(Math.exp((0.0 - xmin)*gama))))
+    return 1.0 - ( ( Math.exp(gama * (100.0 - (100.0*(x - xmin)/(xmax - xmin) ) ) ) ) - 1 )  / ( Math.exp(gama * 100) -1 )
 
 
 }
@@ -32,20 +34,17 @@ function convexa_creciente(x) {
 function convexa_creciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
         //gama = 4.0 / range['max'];
-        var gama = 0.05;
+        saturacion = 1;
     } else {
-        gama = parseFloat($('#gama').val());
+        saturacion  =  parseInt($('#gama').val());
     }
     
-    gama_max = gama * 6.0;
-    gama_min = gama / 10.0;
-
-    //var gama = 1.38/center; //qui hay que hacer el algebra
-    $('#gama').val(gama);
-    $( "#gama_slider" ).slider({max: gama_max,
-			     min: gama_min,
-			     value: gama,
-			     step: (gama_max - gama_min) / 100.0,
+    
+    $('#gama').val(saturacion);
+    $( "#gama_slider" ).slider({max: 20,
+			     min: 0,
+			     value: saturacion,
+			     step: 1,
 			     change: function( event, ui ) {
 				 sync_gama();
 				 sync_plot();
@@ -66,7 +65,7 @@ function sync_plot() {
     apply_convexa_creciente();
     convexa_creciente_plot();
     
-    gama = parseFloat($('#gama').val());
+    gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}`);
     //update_equation();
 }
@@ -81,7 +80,7 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var gama = $('#gama').val();
+    var gama = 0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
 
     return `fv(x)= \\frac{1-e^{-gama x}-ymin}{ymax-ymin}`;
 }

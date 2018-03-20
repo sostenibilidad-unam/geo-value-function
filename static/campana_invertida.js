@@ -3,7 +3,7 @@ var show_map =  document.currentScript.getAttribute('show_map');
 
 function_name = "campana_invertida";
 function campana_invertida_plot() {
-    var a = $('#a').val(),
+    var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
     params = n + "," + a + "," + center + "," + range['min'] + "," + range['max']
     // update plot
@@ -25,25 +25,34 @@ function apply_campana_invertida(){
     });
     layer.setStyle(style_data_layer);
 }
+function normalize100(x){
+    xmax = range['max'];
+    xmin = range['min'];
+    return (100.0 * ( x - xmin )/( xmax - xmin ) )
 
+}
 
 function campana_invertida(x) {
-    var a = $('#a').val(),
+    var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
-    return 1 - (Math.exp(0.0  - (((x - center)/a)*((x - center)/a))))
+    xmax = range['max'];
+    xmin = range['min'];
+    return 1.0 - Math.exp(0.0 - ((( normalize100(x) - normalize100(center)) / ( a ) )**2))
+
+    //return 1 - (Math.exp(0.0  - (((x - center)/a)*((x - center)/a))))
 }
 
 function campana_invertida_args_from_range() {
     // if no arguments suplied on URL, calculate values from layerc
     if ($('#a').val() == 'nan' | $('#center').val() == 'nan') {
 	var center = range['min'] + ((range['max'] - range['min']) / 2);
-	a =  (range['max'] - range['min']) / 4.0;
+	var amplitud = 3;
     } else {
-	a = parseFloat($('#a').val());
+	amplitud = parseFloat($('#a').val());
 	center = parseFloat($('#center').val());
     }
 
-    $('#a').val(a);
+    $('#a').val(amplitud);
     $('#center').val(center);
 
     center_max = range['max'];
@@ -52,10 +61,10 @@ function campana_invertida_args_from_range() {
     a_max = a * 2.0;
     a_min = a / 10.0;
 
-    $( "#a_slider" ).slider({max: a_max,
-			     min: a_min,
-			     value: a,
-			     step: (a_max - a_min) / 100.0,
+    $( "#a_slider" ).slider({max: 20,
+			     min: 1,
+			     value: amplitud,
+			     step: 1,
 			     change: function( event, ui ) {
 				 sync_a();
 				 sync_plot();
@@ -98,7 +107,7 @@ function sync_plot() {
     apply_campana_invertida();
     campana_invertida_plot();
     center = parseFloat($('#center').val());
-    a = parseFloat($('#a').val());
+    a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 );
     window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}`)
     //update_equation();
 }
@@ -113,7 +122,7 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var a = $('#a').val(),
+    var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
 
     return `fv(x)=1-e^{-\\left(\\frac{x-${center}}{${a}}\\right)^{2}}`;

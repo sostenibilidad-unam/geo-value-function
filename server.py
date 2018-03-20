@@ -15,6 +15,9 @@ app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('templates'))
 
+def normalize100(x, xmax, xmin):
+    return (100.0 * ( x - xmin )/( xmax - xmin ) )
+
 def logistic(x, k, center, xmax, xmin):
 #def logistic(t, k, center):
     #return 1 / (1.0 + math.exp(-k * (t - center)))
@@ -29,10 +32,10 @@ def logistica_invertida(x, k, center, xmax, xmin):
 #def gaussian(t, a, center):
 def gaussian(x, a, center, xmax, xmin):
     #return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
-    return math.exp(0.0 - (((   (100 * ( x - xmin )/( xmax - xmin ) )   - ( 100 * ( center - xmin )/( xmax - xmin ) )) / a )*((   (100 * ( x - xmin )/( xmax - xmin ) )   - ( 100 * ( center - xmin )/( xmax - xmin ) )) / a )))
+    return math.exp(0.0 - ((( normalize100(x, xmax, xmin) - normalize100(center, xmax, xmin)) / (  a  ) )**2))
 
-def campana_invertida(t, a, center):
-    return 1 - math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
+def campana_invertida(x, a, center, xmax, xmin):
+    return 1.0 - gaussian(x, a, center, xmax, xmin)
 
 
 def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
@@ -349,7 +352,7 @@ def campana_invertida_plot():
 
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
-    yrow = [campana_invertida(t, a, center) for t in x]
+    yrow = [campana_invertida(t, a, center, max_v, min_v) for t in x]
     y = normalize01(yrow)
     fig = Figure(figsize=(6, 6))
     grid = plt.GridSpec(10, 1, hspace=0)
@@ -599,6 +602,7 @@ def logistic_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            k=request.args.get('k', 'nan'),
+                           saturacion = int(round(20 * ( ( float(request.args.get('k', '0.1')) - 0.01 ) / (0.5 - 0.01) ))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Logistica')
@@ -611,6 +615,7 @@ def logistica_invertida_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            k=request.args.get('k', 'nan'),
+                           saturacion = int(round(20 * ( ( float(request.args.get('k', '0.1')) - 0.01 ) / (0.5 - 0.01) ))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Logistica Invertida')
@@ -623,6 +628,7 @@ def gaussian_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            a=request.args.get('a', 'nan'),
+                           amplitud = 1 + int(round(19 * ( ( float(request.args.get('a', '25')) - 5 ) / (100 - 5) ))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Campana')
@@ -635,6 +641,7 @@ def campana_invertida_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            a=request.args.get('a', 'nan'),
+                           amplitud = 1 + int(round(19 * ( ( float(request.args.get('a', '25')) - 5 ) / (100 - 5) ))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Campana invertida')
@@ -691,6 +698,7 @@ def concava_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
                            show_map=request.args.get('show_map', False),
                            function_name='Concava decreciente')
 
@@ -702,6 +710,7 @@ def concava_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
                            show_map=request.args.get('show_map', False),
                            function_name='Concava creciente')
 
@@ -713,6 +722,7 @@ def convexa_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
                            show_map=request.args.get('show_map', False),
                            function_name='Convexa decreciente')
 
@@ -724,6 +734,7 @@ def convexa_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
+                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
                            show_map=request.args.get('show_map', False),
                            function_name='Convexa creciente')
 

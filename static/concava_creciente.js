@@ -2,7 +2,7 @@ var layer_url = document.currentScript.getAttribute('layer_url');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "concava_creciente";
 function concava_creciente_plot() {
-    var gama = $('#gama').val();
+    var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     params = n + "," + gama + "," + range['min'] + "," + range['max']
     // update plot
     document.getElementById("plot").src="/concava_creciente/plot/?params=" + params ;
@@ -20,17 +20,22 @@ function apply_concava_creciente(){
 
 
 function concava_creciente(x) {
-    var gama = $('#gama').val();
+    var gama = 0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     var xmax = range['max'];
     var xmin = range['min'];
-    return ((Math.exp(gama * x)) - Math.exp(gama * xmin)) / (Math.exp(gama * xmax) - Math.exp(gama * xmin))
+    
+    return ((Math.exp(gama * (100*(x - xmin)/(xmax - xmin) ) ) ) - 1) / ( Math.exp(gama * 100) -1 )
+    
+
+
+    //return ((Math.exp(gama * x)) - Math.exp(gama * xmin)) / (Math.exp(gama * xmax) - Math.exp(gama * xmin))
 
 }
 
 function concava_creciente_args_from_range() {
     if ($('#gama').val() == 'nan') {
         var center = range['min'] + ((range['max'] - range['min']) / 2);
-        var gama = 0.05;
+        saturacion = 1;
         //var gama = 0;
         //if (range['min'] > 0){
         //    	gama = (1.38 / center) * (1 + (Math.log(range['min']) / 2));
@@ -38,21 +43,17 @@ function concava_creciente_args_from_range() {
         //    	gama = (1.38 / center);
         //}
     } else {
-        	 gama = parseFloat($('#gama').val());
+        	 saturacion = parseInt($('#gama').val());
     }
 
 
-    
-    gama_max = gama * 5.0;
-    gama_min = gama / 10.0;
-
 
     //aqui hay que hacer el algebra
-    $('#gama').val(gama);
-    $( "#gama_slider" ).slider({max: gama_max,
-			     min: gama_min,
-			     value: gama,
-			     step: (gama_max - gama_min) / 100.0,
+    $('#gama').val(saturacion);
+    $( "#gama_slider" ).slider({max: 20,
+			     min: 0,
+			     value: saturacion,
+			     step: 1,
 			     change: function( event, ui ) {
 				 sync_gama();
 				 sync_plot();
@@ -75,7 +76,7 @@ function sync_plot() {
     apply_concava_creciente();
     concava_creciente_plot();
     
-    gama = parseFloat($('#gama').val());
+    gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}`);
     //update_equation();
 }
@@ -90,7 +91,7 @@ function update_to(url) {
 
 function latex_equation() {
 
-    var gama = $('#gama').val();
+    var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     var restale = Math.exp((gama) * range['min']);
     var denominador = Math.exp((gama) * range['max']) - Math.exp((gama) * range['min'])
 

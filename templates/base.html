@@ -81,6 +81,9 @@
     href = href.replace(host, host + "/json");
     document.getElementById("dwjson").href=href;
     }
+    function take_me_home(){
+        document.getElementById("home").href=window.location.origin;
+    }
   </script>
 
 
@@ -97,7 +100,9 @@
     <label>mapa</label>
   </div>
   </div>
-
+  <a id="home" class="item" href="#" onClick="take_me_home()">
+     <i class="home big layout icon"></i>
+  </a>
   <div class="right massive item">
     {{ layer }}
   </div>
