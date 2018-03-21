@@ -1,5 +1,26 @@
 {% extends "root.html" %}
 {% block extra_head %}
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.css"
+      integrity="sha256-fjKCwdf+fsFNnRRFfKZIznHEygdh6vtEJqVg8Eu3Kuw="
+      crossorigin="anonymous" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.12.0/ol.js"
+	integrity="sha256-Gox75luuxLxNYWsoO+2sGVMYOUcheq0zhGEB2310fuw=" crossorigin="anonymous"></script>
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-beta/katex.min.css"
+      integrity="sha384-L/SNYu0HM7XECWBeshTGLluQO9uVI1tvkCtunuoUbCHHoTH76cDyXty69Bb9I0qZ"
+      crossorigin="anonymous">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-beta/katex.min.js"
+	integrity="sha384-ad+n9lzhJjYgO67lARKETJH6WuQVDDlRfj81AJJSswMyMkXTD49wBj5EP004WOY6"
+	crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"
+	integrity="sha256-dsOXGNHAo/syFnazt+KTBsCQeRmlcW1XKL0bCK4Baec=" crossorigin="anonymous"></script>
+
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -271,20 +292,41 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <div class="four wide column"> 
         <div class="ui segment">
           <font size="4">
-                Capa:</br></br>
-                <select class="ui dropdown" name="layer">
-                {% for l in layers %}
-                <option value="{{ l.name }}">{{ l.name }}</option>
-                {% endfor %}
-          </select>
+              
+                        Capa:</br></br>
+                        <select class="ui dropdown" id="layer" name="layer" onchange="grabLayer()">
+                            {% for l in layers %}
+                                <option value="{{ l.name }}">{{ l.name }}</option>
+                            {% endfor %}
+                        </select>
+
             </font>
-          
-          
-        
-          
-        
+
         </div>
-        
+         <div class="ui segment">
+             <font size="4">
+                Nombre:</br></br>
+                <div class="ui input" style="width:100%">
+                		<input placeholder="nombre" id="nombre" name="nombre" value="">
+                </div>
+             </font>
+        </div>
+         <div class="ui segment" >
+            <div id="rango_segment">
+            <font size="4">
+                Rango:</br></br>
+                <label>Máximo</label>
+                <div class="ui input">
+                		<input placeholder="maximo" id="maximo" name="maximo" value="">
+                </div>
+                </br>
+                <label>Mínimo</label>
+                <div class="ui input">
+                		<input placeholder="minimo" id="minimo" name="minimo" value="">
+                </div>
+            </font>
+            </div>
+        </div>
         
         <div class="ui segment" >
             <div id="eq_segment">
@@ -347,6 +389,50 @@ span.onclick = function() {
 function handleClick(esta) {
     var eq_segment = document.getElementById("eq_segment");
     eq_segment.innerHTML = '<font size="4">Función:</br></br><label>'+esta+'</label></font>';
+    
+}
+function get_features(url) {
+    var data_layer = {};
+
+    $.ajax({
+	url: url,
+	async: false,
+	dataType: 'json',
+	success: function(data) {
+	    data_layer = data;
+	}
+    });
+    var format_data_layer = new ol.format.GeoJSON();
+    var features = format_data_layer.readFeatures(data_layer,
+						  {dataProjection: 'EPSG:4326',
+						   featureProjection: 'EPSG:3857'});
+
+    return features;
+}
+
+function grabLayer(){
+    
+    layer_name = document.getElementById("layer").value
+    if (layer_name == "Sin Capa"){
+        document.getElementById("nombre").value="";
+        max = "";
+        min = "";
+    }else{
+        document.getElementById("nombre").value=layer_name;
+        layer_url="/static/layers/"+ layer_name +".json";
+        jsonSource_data_layer = new ol.source.Vector();
+        jsonSource_data_layer.addFeatures(get_features(layer_url));
+        var max = -100000000, min = 100000000;    
+        jsonSource_data_layer.getFeatures().forEach(function(feature){
+            	max = Math.max(max, feature.get("value"));
+            	min = Math.min(min, feature.get("value"));	
+        });
+    }
+    
+    document.getElementById("maximo").value=max;
+    document.getElementById("minimo").value=min;
+    
+    
     
 }
 </script>

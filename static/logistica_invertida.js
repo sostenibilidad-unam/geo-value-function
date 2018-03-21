@@ -115,7 +115,7 @@ function sync_plot() {
 
     center = parseFloat($('#center').val());
     k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 );
-    window.history.replaceState({}, "", `?center=${center}&k=${k}&show_map=${show_map}`)
+    window.history.replaceState({}, "", `?center=${center}&k=${k}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`);
 
     //update_equation();
 }
@@ -123,7 +123,7 @@ function sync_plot() {
 
 function update_to(url) {
     set_layer(url);
-    range = get_range("value");
+    range = get_value_range();
     logistica_invertida_args_from_range();
     apply_logistica_invertida();
     logistica_invertida_plot();

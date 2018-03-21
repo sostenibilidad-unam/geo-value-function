@@ -108,13 +108,13 @@ function sync_plot() {
     campana_invertida_plot();
     center = parseFloat($('#center').val());
     a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 );
-    window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}`)
+    window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`)
     //update_equation();
 }
 
 function update_to(url) {
     set_layer(url);
-    range = get_range("value");
+    range = get_value_range();
     campana_invertida_args_from_range();
     apply_campana_invertida();
     campana_invertida_plot();

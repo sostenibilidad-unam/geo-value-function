@@ -1,9 +1,14 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "gaussian";
+function getVal(str) {
+    var v = window.location.search.match(new RegExp('(?:[\?\&]'+str+'=)([^&]+)'));
+    return v ? v[1] : null;
+}
 function gaussian_plot() {
     var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
+    
     params = n + "," + a + "," + center + "," + range['min'] + "," + range['max']
     // update plot
     document.getElementById("plot").src="/gaussian/plot/?params="+ params
@@ -46,8 +51,9 @@ function gaussian(x) {
 
 function gaussian_args_from_range() {
     // if no arguments suplied on URL, calculate values from layerc
+    
     if ($('#a').val() == 'nan' | $('#center').val() == 'nan') {
-	var center = range['min'] + ((range['max'] - range['min']) / 2);
+	var center = minimo + ((maximo - minimo) / 2);
 	var amplitud = 3;
     } else {
 	amplitud = parseInt($('#a').val());
@@ -111,13 +117,14 @@ function sync_plot() {
     gaussian_plot();
     center = parseFloat($('#center').val());
     a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 );
-    window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}`)
+    
+    window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`)
     //update_equation();
 }
 
 function update_to(url) {
     set_layer(url);
-    range = get_range("value");
+    range = get_value_range();
     gaussian_args_from_range();
     apply_gaussian();
     gaussian_plot();

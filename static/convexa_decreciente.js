@@ -71,13 +71,13 @@ function sync_plot() {
     convexa_decreciente_plot();
     
     gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
-    window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}`);
+    window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`);
     //update_equation();
 }
 
 function update_to(url) {
     set_layer(url);
-    range = get_range("value");
+    range = get_value_range();
     convexa_decreciente_args_from_range();
     apply_convexa_decreciente();
     convexa_decreciente_plot();

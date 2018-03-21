@@ -179,7 +179,7 @@ function get_features(url) {
 var jsonSource_data_layer = new ol.source.Vector();
 var layer = new ol.layer.Vector();
 var range = {'min': 100000000,
-	     'max': -100000000}
+	     'max': -100000000};
 
 
 function set_layer(url) {
@@ -200,13 +200,37 @@ function normalize_min_max(y, miny, maxy){
     return (y - miny)/(maxy - miny);
 
 }
+function getVal(str) {
+    var v = window.location.search.match(new RegExp('(?:[\?\&]'+str+'=)([^&]+)'));
+    return v ? v[1] : null;
+}
 
+function get_value_range(){
+    var max = -100000000, min = 100000000;    
+    jsonSource_data_layer.getFeatures().forEach(function(feature){
+	max = Math.max(max, feature.get("value"));
+	min = Math.min(min, feature.get("value"));	
+    });
+    minimo = parseFloat(getVal("min"));
+    if (minimo == null){
+        minimo = min;
+    }
+    maximo = parseFloat(getVal("max"));
+    if (maximo == null){
+        maximo = max;
+    }
+    return {'max': maximo,
+	    'min': minimo}
+
+}
 function get_range(field) {
+    
     var max = -100000000, min = 100000000;    
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	max = Math.max(max, feature.get(field));
 	min = Math.min(min, feature.get(field));	
     });
+    
     return {'max': max,
 	    'min': min}
 }

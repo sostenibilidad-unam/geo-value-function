@@ -142,9 +142,11 @@ def setup():
         return template.render(layers=get_layers())
     else:
        f = request.values.get('function')
-       l = request.values.get('layer')
+       l = request.values.get('nombre')
+       minimo = request.values.get('minimo')
+       maximo = request.values.get('maximo')
        pprint(request.values)
-       return redirect('/%s/%s' % (l, f),
+       return redirect('/%s/%s?min=%s&max=%s' % (l, f, minimo, maximo),
                        code=302)
 
 
@@ -756,7 +758,7 @@ def to_json(layer, function_name):
 
 
 def get_layers():
-    layers = []
+    layers = [{'name' :"Sin Capa", 'url':"none"}]
     for f in listdir('static/layers'):
         if f.endswith('.json'):
             layers.append({'name': f.replace('.json', ''),
