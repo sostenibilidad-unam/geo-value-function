@@ -12,29 +12,33 @@ import json
 
 from jinja2 import Environment, FileSystemLoader
 
-from flask import Flask, make_response, request, send_from_directory, redirect, Response
+from flask import Flask, make_response, request, \
+    send_from_directory, redirect, Response
 app = Flask(__name__)
 
 env = Environment(loader=FileSystemLoader('/var/www/geo-value-function/templates'))
 
+
 def normalize100(x, xmax, xmin):
-    return (100.0 * ( x - xmin )/( xmax - xmin ) )
+    return (100.0 * (x - xmin)/(xmax - xmin))
+
 
 def logistic(x, k, center, xmax, xmin):
-#def logistic(t, k, center):
-    #return 1 / (1.0 + math.exp(-k * (t - center)))
-    return 1 / (1.0 + math.exp(-k * (   (100 * ( x - xmin )/( xmax - xmin ) )  - ( 100 * ( center - xmin )/( xmax - xmin ) ) )) )
+    return 1 / (1.0
+                + math.exp(-k * (
+                    (100 * (x - xmin) / (xmax - xmin))
+                    - (100 * (center - xmin) / (xmax - xmin)))))
 
 
-#def logistica_invertida(t, k, center):
-def logistica_invertida(x, k, center, xmax, xmin):   
+def logistica_invertida(x, k, center, xmax, xmin):
     return 1.0 - logistic(x, k, center, xmax, xmin)
 
 
-#def gaussian(t, a, center):
 def gaussian(x, a, center, xmax, xmin):
-    #return math.exp(0.0 - (((t - center)/a)*((t - center) / a)))
-    return math.exp(0.0 - ((( normalize100(x, xmax, xmin) - normalize100(center, xmax, xmin)) / (  a  ) )**2))
+    return math.exp(0.0 - ((
+        (normalize100(x, xmax, xmin)
+         - normalize100(center, xmax, xmin)) / (a))**2))
+
 
 def campana_invertida(x, a, center, xmax, xmin):
     return 1.0 - gaussian(x, a, center, xmax, xmin)
@@ -57,29 +61,26 @@ def bojorquezSerrano(fp, categories=5, maximum=1.0, minimum=0.0):
 
 
 def concava_decreciente(x, gama, xmax, xmin):
-#    return ((math.exp(-gama * x)) - math.exp(-gama * xmax)) \
-#        / (math.exp(-gama * xmin) - math.exp(-gama * xmax))
-    return ( ( math.exp(gama * (100.0 - (100.0*(x - xmin)/(xmax - xmin) ) ) ) ) - 1 )  / ( math.exp(gama * 100) -1 )
+    return ((math.exp(gama * (
+        100.0 - (100.0*(x - xmin)
+                 / (xmax - xmin))))) - 1) / (math.exp(gama * 100) - 1)
 
 
 def concava_creciente(x, gama, xmax, xmin):
-#    return ((math.exp(gama * x)) - math.exp(gama * xmin)) \
-#        / (math.exp(gama * xmax) - math.exp(gama * xmin))
-    return ((math.exp(gama * (100*(x - xmin)/(xmax - xmin) ) ) ) - 1) / ( math.exp(gama * 100) -1 )
+    return ((math.exp(
+        gama * (100
+                *
+                (x - xmin)
+                /
+                (xmax - xmin)))) - 1) / (math.exp(gama * 100) - 1)
 
 
 def convexa_decreciente(x, gama, xmax, xmin):
-#    return (1-(math.exp((x-30)/gama)) - (1-(math.exp((xmax-30)/gama)))) \
-#        / (1-(math.exp((xmin-30)/gama)) - (1-(math.exp((xmax-30)/gama))))
-    return 1.0 - concava_creciente ( x, gama, xmax, xmin )
+    return 1.0 - concava_creciente(x, gama, xmax, xmin)
 
 
 def convexa_creciente(x, gama, xmax, xmin):
-#    return (1 - (math.exp((0.0 - x) * gama))
-#            - (1-(math.exp((0.0 - xmin) * gama)))) \
-#        / (1 - (math.exp((0.0 - xmax) * gama))
-#           - (1-(math.exp((0.0 - xmin) * gama))))
-    return 1.0 - concava_decreciente ( x, gama, xmax, xmin )
+    return 1.0 - concava_decreciente(x, gama, xmax, xmin)
 
 
 def wf(t, fp, min_v, max_v):
@@ -135,21 +136,19 @@ def root():
     return redirect('/setup/', code=302)
 
 
-from pprint import pprint
 @app.route("/setup/", methods=["GET", "POST"])
 def setup():
-
     if request.method == 'GET':
         template = env.get_template('setup.html')
         return template.render(layers=get_layers())
     else:
-       f = request.values.get('function')
-       l = request.values.get('nombre')
-       minimo = request.values.get('minimo')
-       maximo = request.values.get('maximo')
-       pprint(request.values)
-       return redirect('/%s/%s?min=%s&max=%s' % (l, f, minimo, maximo),
-                       code=302)
+        f = request.values.get('function')
+        L = request.values.get('nombre')
+        minimo = request.values.get('minimo')
+        maximo = request.values.get('maximo')
+
+        return redirect('/%s/%s?min=%s&max=%s' % (L, f, minimo, maximo),
+                        code=302)
 
 
 @app.route("/concava_creciente/plot/")
@@ -174,12 +173,13 @@ def concava_creciente_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -212,7 +212,9 @@ def concava_decreciente_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -249,7 +251,9 @@ def convexa_decreciente_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -286,12 +290,13 @@ def convexa_creciente_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -327,13 +332,14 @@ def gaussian_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    #var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
+
     ax = fig.add_subplot(grid[9:, 0])
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
-
 
     canvas = FigureCanvas(fig)
     png_output = StringIO.StringIO()
@@ -354,7 +360,6 @@ def campana_invertida_plot():
     value = float(request.args.get('value', -1))
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
-
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
     yrow = [campana_invertida(t, a, center, max_v, min_v) for t in x]
     y = normalize01(yrow)
@@ -367,7 +372,9 @@ def campana_invertida_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -384,12 +391,16 @@ def campana_invertida_plot():
 @app.route("/logistic/plot/")
 def logistic_plot():
     params = request.args.get('params', "").split(",")
-    n = int(params[0])
-    k = float(params[1])
-    center = float(params[2])
-    min_v = float(params[3])
-    max_v = float(params[4])
-    value = float(request.args.get('value', -1))
+    try:
+        n = int(params[0])
+        k = float(params[1])
+        center = float(params[2])
+        min_v = float(params[3])
+        max_v = float(params[4])
+        value = float(request.args.get('value', -1))
+    except ValueError:
+        return 0
+
     value_index = int(99 * ((value - min_v)/(max_v - min_v)))
 
     x = numpy.linspace(min_v, max_v, 100)  # 100 linearly spaced numbers
@@ -404,7 +415,9 @@ def logistic_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -506,8 +519,6 @@ def wf2_plot():
 
     ax = fig.add_subplot(grid[0:7, 0])
     markers_on = []
-    if value > -1:
-        markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
 
@@ -547,7 +558,9 @@ def linear_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -584,7 +597,9 @@ def lineal_decreciente_plot():
         markers_on.append(value_index)
 
     ax.plot(x, y, '-bD', markevery=markers_on)
-    cmap = colors.LinearSegmentedColormap.from_list("", ["#4ABEB5","#10005A"], N=n)
+    cmap = colors.LinearSegmentedColormap.from_list("",
+                                                    ["#4ABEB5", "#10005A"],
+                                                    N=n)
     ax = fig.add_subplot(grid[9:, 0])
     ax.imshow([y, y], cmap=cmap, extent=[0, 100, 0, 8])
     ax.get_xaxis().set_visible(False)
@@ -606,7 +621,11 @@ def logistic_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            k=request.args.get('k', 'nan'),
-                           saturacion = int(round(20 * ( ( float(request.args.get('k', '0.1')) - 0.01 ) / (0.5 - 0.01) ))),
+                           saturacion=int(
+                               round(20 * (
+                                   (float(
+                                       request.args.get('k', '0.1'))
+                                    - 0.01) / (0.5 - 0.01)))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Logistica')
@@ -619,7 +638,10 @@ def logistica_invertida_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            k=request.args.get('k', 'nan'),
-                           saturacion = int(round(20 * ( ( float(request.args.get('k', '0.1')) - 0.01 ) / (0.5 - 0.01) ))),
+                           saturacion=int(
+                               round(20 * (
+                                   (float(request.args.get('k', '0.1'))
+                                    - 0.01) / (0.5 - 0.01)))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Logistica Invertida')
@@ -632,7 +654,10 @@ def gaussian_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            a=request.args.get('a', 'nan'),
-                           amplitud = 1 + int(round(19 * ( ( float(request.args.get('a', '25')) - 5 ) / (100 - 5) ))),
+                           amplitud=1 + int(
+                               round(19
+                                     * ((float(request.args.get('a', '25'))
+                                         - 5) / (100 - 5)))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Campana')
@@ -645,7 +670,9 @@ def campana_invertida_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            a=request.args.get('a', 'nan'),
-                           amplitud = 1 + int(round(19 * ( ( float(request.args.get('a', '25')) - 5 ) / (100 - 5) ))),
+                           amplitud=1 + int(
+                               round(19 * ((float(request.args.get('a', '25'))
+                                            - 5) / (100 - 5)))),
                            center=request.args.get('center', 'nan'),
                            show_map=request.args.get('show_map', False),
                            function_name='Campana invertida')
@@ -702,7 +729,11 @@ def concava_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
+                           saturacion=int(
+                               round(20
+                                     *
+                                     ((float(request.args.get('gama', '0.05'))
+                                       - 0.005) / (0.3 - 0.005)))),
                            show_map=request.args.get('show_map', False),
                            function_name='Concava decreciente')
 
@@ -714,7 +745,11 @@ def concava_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
+                           saturacion=int(
+                               round(20
+                                     *
+                                     ((float(request.args.get('gama', '0.05'))
+                                       - 0.005) / (0.3 - 0.005)))),
                            show_map=request.args.get('show_map', False),
                            function_name='Concava creciente')
 
@@ -726,7 +761,11 @@ def convexa_decreciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
+                           saturacion=int(
+                               round(20
+                                     *
+                                     ((float(request.args.get('gama', '0.05'))
+                                       - 0.005) / (0.3 - 0.005)))),
                            show_map=request.args.get('show_map', False),
                            function_name='Convexa decreciente')
 
@@ -738,7 +777,11 @@ def convexa_creciente_form(layer):
                            layer_url="/static/layers/%s.json" % layer,
                            layer=layer,
                            gama=request.args.get('gama', 'nan'),
-                           saturacion= int(round(20 * ( ( float(request.args.get('gama', '0.05')) - 0.005 ) / (0.3 - 0.005) ))),
+                           saturacion=int(
+                               round(20
+                                     *
+                                     ((float(request.args.get('gama', '0.05'))
+                                       - 0.005) / (0.3 - 0.005)))),
                            show_map=request.args.get('show_map', False),
                            function_name='Convexa creciente')
 
@@ -755,8 +798,9 @@ def to_json(layer, function_name):
 
     return Response(json.dumps(vf_dict),
                     mimetype='application/json',
-                    headers={'Content-Disposition':'attachment;filename=%s.json'
-                             % layer})
+                    headers={
+                        'Content-Disposition': 'attachment;filename=%s.json'
+                        % layer})
 
 
 def get_layers():
