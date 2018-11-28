@@ -1,4 +1,6 @@
 import math
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
@@ -13,7 +15,7 @@ from jinja2 import Environment, FileSystemLoader
 from flask import Flask, make_response, request, send_from_directory, redirect, Response
 app = Flask(__name__)
 
-env = Environment(loader=FileSystemLoader('templates'))
+env = Environment(loader=FileSystemLoader('/var/www/geo-value-function/templates'))
 
 def normalize100(x, xmax, xmin):
     return (100.0 * ( x - xmin )/( xmax - xmin ) )
@@ -136,7 +138,7 @@ def root():
 from pprint import pprint
 @app.route("/setup/", methods=["GET", "POST"])
 def setup():
-    print "hola"
+
     if request.method == 'GET':
         template = env.get_template('setup.html')
         return template.render(layers=get_layers())
@@ -759,16 +761,16 @@ def to_json(layer, function_name):
 
 def get_layers():
     layers = [{'name' :"Sin Capa", 'url':"none"}]
-    for f in listdir('static/layers'):
+    for f in listdir('/var/www/geo-value-function/static/layers'):
         if f.endswith('.json'):
             layers.append({'name': f.replace('.json', ''),
                            'url': "/static/layers/%s" % f})
     return layers
 
 
-@app.route('/static/<path:path>')
-def serve_static(path):
-    return send_from_directory('static', path)
+#@app.route('/static/<path:path>')
+#def serve_static(path):
+#    return send_from_directory('static', path)
 
 
 if __name__ == "__main__":
