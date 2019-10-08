@@ -8,7 +8,12 @@ from matplotlib import colors
 import StringIO
 import numpy
 from os import listdir
+from os.path import basename
 import json
+from json import dumps
+from werkzeug import secure_filename
+import os
+import shapefile
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -16,7 +21,53 @@ from flask import Flask, make_response, request, \
     send_from_directory, redirect, Response
 app = Flask(__name__)
 
-env = Environment(loader=FileSystemLoader('/var/www/geo-value-function/templates'))
+ROOT = '/var/www/geo-value-function/'
+ROOT = '/home/rgarcia/geo-value-function/'
+
+app.config['UPLOAD_FOLDER'] = ROOT + 'uploads/'
+app.config['LAYER_FOLDER'] = ROOT + 'static/layers/'
+
+env = Environment(
+    loader=FileSystemLoader(ROOT + 'templates'))
+
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = ['prj', 'shp', 'dbf', 'shx']
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/upload/', methods=['POST'])
+def upload():
+    uploaded_files = request.files.getlist("file[]")
+    filenames = []
+    elShp = ""
+    # falta un chek de que viene el shp, shx, prj y dbf
+    for f in uploaded_files:
+        if f and allowed_file(f.filename):
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if f.filename.endswith(".shp"):
+                elShp = f.filename
+            filenames.append(filename)
+    reader = shapefile.Reader(os.path.join(app.config['UPLOAD_FOLDER'], elShp))
+    fields = reader.fields[1:]
+    field_names = [field[0] for field in fields]
+    buff = []
+    for sr in reader.shapeRecords():
+        atr = dict(zip(field_names, sr.record))
+        geom = sr.shape.__geo_interface__
+        buff.append(dict(type="Feature",
+                         geometry=geom, properties=atr))
+
+    # write the GeoJSON file
+    nombre = basename(elShp).replace('.shp', '.json')
+    with open(os.path.join(app.config['LAYER_FOLDER'], nombre),
+              "w") as geojson:
+        geojson.write(dumps({"type": "FeatureCollection",
+                             "features": buff}, indent=0))
+
+    return redirect("/")
 
 
 def normalize100(x, xmax, xmin):
@@ -805,7 +856,7 @@ def to_json(layer, function_name):
 
 def get_layers():
     layers = [{'name' :"Sin Capa", 'url':"none"}]
-    for f in listdir('/var/www/geo-value-function/static/layers'):
+    for f in listdir(ROOT + 'static/layers'):
         if f.endswith('.json'):
             layers.append({'name': f.replace('.json', ''),
                            'url': "/static/layers/%s" % f})
