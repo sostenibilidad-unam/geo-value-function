@@ -1,10 +1,11 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "convexa_decreciente";
 function convexa_decreciente_plot() {
     var gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     params = n + "," + gama + "," + range['min'] + "," + range['max']
-    
+
     // update plot
     document.getElementById("plot").src="/convexa_decreciente/plot/?params=" + params ;
 }
@@ -13,7 +14,7 @@ function convexa_decreciente_plot() {
 function apply_convexa_decreciente(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: convexa_decreciente(feature.get("value"))
+	    fv: convexa_decreciente(feature.get(layer_field))
 	});
     });
     layer.setStyle(style_data_layer);
@@ -26,7 +27,7 @@ function convexa_decreciente(x) {
     var xmin = range['min'];
     //return (1-(Math.exp((x-30)/gama)) - (1-(Math.exp((xmax-30)/gama)))) / (1-(Math.exp((xmin-30)/gama)) - (1-(Math.exp((xmax-30)/gama))))
     return 1.0 - ((Math.exp(gama * (100*(x - xmin)/(xmax - xmin) ) ) ) - 1) / ( Math.exp(gama * 100) -1 )
-    
+
 
 }
 
@@ -69,15 +70,15 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_convexa_decreciente();
     convexa_decreciente_plot();
-    
+
     gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`);
     //update_equation();
 }
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     convexa_decreciente_args_from_range();
     apply_convexa_decreciente();
     convexa_decreciente_plot();
@@ -98,5 +99,5 @@ function update_equation() {
 }
 
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

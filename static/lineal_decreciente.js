@@ -1,4 +1,5 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "lineal_decreciente";
 
@@ -14,11 +15,11 @@ function lineal_decreciente_plot() {
 function apply_lineal_decreciente(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: lineal_decreciente(feature.get("value"))
+	    fv: lineal_decreciente(feature.get(layer_field))
 	});
     });
     layer.setStyle(style_data_layer);
-    
+
 }
 
 
@@ -59,7 +60,7 @@ function sync_plot() {
     //update_equation();
 }
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
     range = get_range("value");
     lineal_decreciente_args_from_range();
@@ -71,10 +72,10 @@ function update_to(url) {
 function latex_equation() {
     var m = $('#m').val(),
 	b = $('#b').val();
-    
+
 	return `y = mx + b`;
-    
- 
+
+
 }
 
 function update_equation() {
@@ -86,5 +87,5 @@ function update_equation() {
 }
 
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

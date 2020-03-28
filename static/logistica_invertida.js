@@ -1,6 +1,6 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
-
 function_name = "logistica_invertida";
 
 function logistica_invertida_plot() {
@@ -15,7 +15,7 @@ function logistica_invertida_plot() {
 function apply_logistica_invertida(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: logistica_invertida(feature.get("value"))
+	    fv: logistica_invertida(feature.get(layer_field))
 	});
     });
     var range_y = get_range("fv");
@@ -57,7 +57,7 @@ function logistica_invertida_args_from_range() {
 	var center = range['min'] + ((range['max'] - range['min']) / 2),
 	    //k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
 	    saturacion = 3;
-	
+
     } else {
 	center = parseFloat($('#center').val());
 	saturacion = parseInt($('#k').val());
@@ -121,9 +121,9 @@ function sync_plot() {
 }
 
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     logistica_invertida_args_from_range();
     apply_logistica_invertida();
     logistica_invertida_plot();
@@ -143,5 +143,5 @@ function update_equation() {
 
 
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

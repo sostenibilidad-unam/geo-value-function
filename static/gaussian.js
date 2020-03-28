@@ -1,4 +1,5 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "gaussian";
 function getVal(str) {
@@ -8,7 +9,7 @@ function getVal(str) {
 function gaussian_plot() {
     var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
-    
+
     params = n + "," + a + "," + center + "," + range['min'] + "," + range['max']
     // update plot
     document.getElementById("plot").src="/gaussian/plot/?params="+ params
@@ -22,7 +23,7 @@ function gaussian_plot() {
 function apply_gaussian(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: gaussian(feature.get("value"))
+	    fv: gaussian(feature.get(layer_field))
 	});
     });
     var range_y = get_range("fv");
@@ -44,14 +45,14 @@ function gaussian(x) {
     var a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 ),
 	center = $('#center').val();
     //return Math.exp(0.0  - (((x - center)/a)*((x - center)/a)))
-    
+
     return Math.exp(0.0 - ((( normalize100(x) - normalize100(center)) / (  a ) ) **2))
 }
 
 
 function gaussian_args_from_range() {
     // if no arguments suplied on URL, calculate values from layerc
-    
+
     if ($('#a').val() == 'nan' | $('#center').val() == 'nan') {
 	var center = minimo + ((maximo - minimo) / 2);
 	var amplitud = 3;
@@ -117,14 +118,14 @@ function sync_plot() {
     gaussian_plot();
     center = parseFloat($('#center').val());
     a = 0 + (parseFloat($('#a').val()) * (100 - 5) / 19.0 );
-    
+
     window.history.replaceState({}, "", `?center=${center}&a=${a}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`)
     //update_equation();
 }
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     gaussian_args_from_range();
     apply_gaussian();
     gaussian_plot();
@@ -143,5 +144,5 @@ function update_equation() {
     katex.render(latex_equation(), equation_1);
 }
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

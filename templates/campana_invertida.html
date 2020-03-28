@@ -67,5 +67,7 @@
 
 
 {% block scripts %}
-<script src="/static/campana_invertida.js" layer_url="{{ layer_url }}" show_map="{{ show_map }}"></script>
+<script src="/static/map_setup.js" layer_url="{{ layer_url }}" layer_field="{{ layer_field }}" show_map="{{ show_map }}"></script>
+
+<script src="/static/campana_invertida.js" layer_url="{{ layer_url }}" layer_field="{{ layer_field }}" show_map="{{ show_map }}"></script>
 {% endblock %}

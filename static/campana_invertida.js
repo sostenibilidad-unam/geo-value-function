@@ -1,4 +1,5 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
 
 function_name = "campana_invertida";
@@ -14,7 +15,7 @@ function campana_invertida_plot() {
 function apply_campana_invertida(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: campana_invertida(feature.get("value"))
+	    fv: campana_invertida(feature.get(layer_field))
 	});
     });
     var range_y = get_range("fv");
@@ -112,9 +113,9 @@ function sync_plot() {
     //update_equation();
 }
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     campana_invertida_args_from_range();
     apply_campana_invertida();
     campana_invertida_plot();
@@ -134,5 +135,5 @@ function update_equation() {
 }
 
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

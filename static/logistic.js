@@ -1,11 +1,11 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
-
 function_name = "logistic";
 var range_y = [];
 function logistic_plot() {
     var k = 0.01 + (parseFloat($('#k').val()) * (0.5 - 0.01) / 20.0 );
-    
+
     var center = $('#center').val();
     params = n + "," + k + "," + center + "," + range['min'] + "," + range['max']
     // update plot
@@ -17,7 +17,7 @@ function logistic_plot() {
 function apply_logistic(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: logistic(feature.get("value"))
+	    fv: logistic(feature.get(layer_field))
 	});
     });
     range_y = get_range("fv");
@@ -51,7 +51,7 @@ function logistic_args_from_range() {
 	var center = range['min'] + ((range['max'] - range['min']) / 2.0),
 	   // k = 2 * (-4 * Math.log(1/3)) / (range['max'] - range['min']);
 	   saturacion = 3;
-	
+
     } else {
         	center = parseFloat($('#center').val());
         	saturacion = parseInt($('#k').val());
@@ -113,9 +113,9 @@ function sync_plot() {
 }
 
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     logistic_args_from_range();
     apply_logistic();
     logistic_plot();
@@ -145,5 +145,5 @@ function update_equation() {
 }
 
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

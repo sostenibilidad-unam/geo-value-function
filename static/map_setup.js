@@ -1,3 +1,4 @@
+var layer_field = document.currentScript.getAttribute('layer_field');
 var webber_cuts = [0.0,0.2,0.4,0.6,0.8,1.0];
 var paleta = ['rgba(74,190,181,0.8)', 'rgba(24,138,156,0.8)', 'rgba(0,69,132,0.8)', 'rgba(0,30,123,0.8)', 'rgba(16,0,90,0.8)'];
 var borde = 'rgba(255,255,255,0)';
@@ -25,10 +26,10 @@ function hexToRGB(hex, alpha) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
         b = parseInt(hex.slice(5, 7), 16);
-    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";   
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
 };
 
-	
+
 var colorscale = d3.scale.linear()
 .domain([0,1])
 .range(["#4ABEB5","#10005A"])
@@ -40,11 +41,11 @@ var style_100 = function(feature, resolution){
 			variables: {}
 	    };
 	    var value = feature.get("fv");
-	    
+
 	    var size = 0;
 	    var style_continuo = [ new ol.style.Style({
 		    	stroke: new ol.style.Stroke({
-			    		color: borde, 
+			    		color: borde,
 						lineDash: null,
 						lineCap: 'butt',
 						lineJoin: 'miter',
@@ -205,11 +206,13 @@ function getVal(str) {
     return v ? v[1] : null;
 }
 
-function get_value_range(){
-    var max = -100000000, min = 100000000;    
+
+
+function get_value_range(field){
+    var max = -100000000, min = 100000000;
     jsonSource_data_layer.getFeatures().forEach(function(feature){
-	max = Math.max(max, feature.get("value"));
-	min = Math.min(min, feature.get("value"));	
+	max = Math.max(max, feature.get(field));
+	min = Math.min(min, feature.get(field));
     });
     minimo = parseFloat(getVal("min"));
     if (minimo == null){
@@ -224,13 +227,13 @@ function get_value_range(){
 
 }
 function get_range(field) {
-    
-    var max = -100000000, min = 100000000;    
+
+    var max = -100000000, min = 100000000;
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	max = Math.max(max, feature.get(field));
-	min = Math.min(min, feature.get(field));	
+	min = Math.min(min, feature.get(field));
     });
-    
+
     return {'max': max,
 	    'min': min}
 }
@@ -257,7 +260,7 @@ var polygon_style2 = new ol.style.Style({
 var vectorSource = new ol.source.Vector({projection: 'EPSG:4326'});
 var miVector = new ol.layer.Vector({
     	source: vectorSource
-}); 
+});
 miVector.setStyle(polygon_style2);
 var map = new ol.Map({
     projection:"EPSG:4326",
@@ -279,8 +282,8 @@ var displayFeatureInfo = function (pixel) {
 	});
 
 	if (feature) {
-		
-		stats_div.innerHTML = "Valor original: " + feature.get("value") + "</br>Valor normalizado: " + feature.get("fv").toFixed(4) ;
+
+		stats_div.innerHTML = "Valor original: " + feature.get(layer_field).toFixed(4) + "</br>Valor normalizado: " + feature.get("fv").toFixed(4) ;
 	}else{
          vectorSource.clear();
 	    var a = $('#a').val(),
@@ -289,7 +292,7 @@ var displayFeatureInfo = function (pixel) {
                 // update plot
          document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params;
          stats_div.innerHTML = "";
-	    
+
 	}
 
 	if (feature !== highlight) {
@@ -300,13 +303,13 @@ var displayFeatureInfo = function (pixel) {
 		//}
 	    	if (feature) {
 			vectorSource.addFeature(feature);
-			
+
 			//esto tiene que ser general osea no para la gausian sino para la funcion que se este usando///////////////////////////////
         		var a = $('#a').val(),
                 center = $('#center').val();
 
                 // update plot
-            document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params +"&value=" + feature.get("value");
+            document.getElementById("plot").src="/" + function_name + "/plot/?params="+ params +"&value=" + feature.get(layer_field);
         		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		}
 		highlight = feature;

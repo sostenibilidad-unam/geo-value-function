@@ -1,10 +1,11 @@
 var layer_url = document.currentScript.getAttribute('layer_url');
+var layer_field = document.currentScript.getAttribute('layer_field');
 var show_map =  document.currentScript.getAttribute('show_map');
 function_name = "concava_decreciente";
 function concava_decreciente_plot() {
     var gama = 0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     params = n + "," + gama + "," + range['min'] + "," + range['max']
-    
+
     // update plot
     document.getElementById("plot").src="/concava_decreciente/plot/?params=" + params ;
 }
@@ -13,7 +14,7 @@ function concava_decreciente_plot() {
 function apply_concava_decreciente(){
     jsonSource_data_layer.getFeatures().forEach(function(feature){
 	feature.setProperties({
-	    fv: concava_decreciente(feature.get("value"))
+	    fv: concava_decreciente(feature.get(layer_field))
 	});
     });
     layer.setStyle(style_data_layer);
@@ -72,15 +73,15 @@ function sync_gama_slider() {
 function sync_plot() {
     apply_concava_decreciente();
     concava_decreciente_plot();
-    
+
     gama  =  0.005 + (parseFloat($('#gama').val()) * (0.3 - 0.005) / 20.0 );
     window.history.replaceState({}, "", `?gama=${gama}&show_map=${show_map}&max=${range['max']}&min=${range['min']}`);
     //update_equation();
 }
 
-function update_to(url) {
+function update_to(url, field) {
     set_layer(url);
-    range = get_value_range();
+    range = get_value_range(field);
     concava_decreciente_args_from_range();
     apply_concava_decreciente();
     concava_decreciente_plot();
@@ -101,5 +102,5 @@ function update_equation() {
     katex.render(latex_equation(), equation_1);
 }
 
-update_to(layer_url);
+update_to(layer_url, layer_field);
 //update_equation();

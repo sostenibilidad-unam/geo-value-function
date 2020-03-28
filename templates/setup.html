@@ -108,7 +108,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
     .modal-content {
-	width: 100%;
+        width: 100%;
     }
 }
 </style>
@@ -121,240 +121,249 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <form action="." method="POST">
     <div class="ui two column stackable grid" style="margin-top: 1em; margin-left: 0.5em; height: 100%;">
 
-		<div class="twelve wide column">
+        	<div class="nine wide column">
 
 
-	    <div class="ui segments">
-		<div class="ui segment">
-		  <div class="ui four column grid">
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/linear_icon.png" onclick="preview('/static/linear_icon.png', 'Lineal', 'linear')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="linear" id="linear" checked="checked" onclick="handleClick('Lineal');"/>
-			    <label><font size="6">A1</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+            <div class="ui segments">
+                <div class="ui segment">
+                  <div class="ui four column grid">
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/linear_icon.png" onclick="preview('/static/linear_icon.png', 'Lineal', 'linear')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="linear" id="linear" checked="checked" onclick="handleClick('Lineal');"/>
+                	    <label><font size="6">A1</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/logistic_icon.png" onclick="preview('/static/logistic_icon.png', 'Logística', 'logistic')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="logistic" id="logistic" onclick="handleClick('Logística');"/>
-			    <label><font size="6">A2</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/logistic_icon.png" onclick="preview('/static/logistic_icon.png', 'Logística', 'logistic')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="logistic" id="logistic" onclick="handleClick('Logística');"/>
+                	    <label><font size="6">A2</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/convexa_creciente_icon.png" onclick="preview('/static/convexa_creciente_icon.png', 'Convexa Creciente', 'convexa_creciente')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="convexa_creciente" id="convexa_creciente" onclick="handleClick('Convexa Creciente');"/>
-			    <label><font size="6">A3</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
-
-
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/concava_creciente_icon.png" onclick="preview('/static/concava_creciente_icon.png', 'Concava Creciente', 'concava_creciente')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="concava_creciente" id="concava_creciente" onclick="handleClick('Concava Creciente');"/>
-			    <label><font size="6">A4</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/convexa_creciente_icon.png" onclick="preview('/static/convexa_creciente_icon.png', 'Convexa Creciente', 'convexa_creciente')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="convexa_creciente" id="convexa_creciente" onclick="handleClick('Convexa Creciente');"/>
+                	    <label><font size="6">A3</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
 
-		  </div>
-		</div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/concava_creciente_icon.png" onclick="preview('/static/concava_creciente_icon.png', 'Concava Creciente', 'concava_creciente')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="concava_creciente" id="concava_creciente" onclick="handleClick('Concava Creciente');"/>
+                	    <label><font size="6">A4</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
 
 
 
-		<div class="ui segment">
+                <div class="ui segment">
 
-		  <div class="ui four column grid">
+                  <div class="ui four column grid">
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/lineal_decreciente_icon.png" onclick="preview('/static/lineal_decreciente_icon.png', 'Lineal Decreciente', 'lineal_decreciente')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="lineal_decreciente" id="lineal_decreciente" onclick="handleClick('Lineal Decreciente');"/>
-			    <label><font size="6">D1</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/lineal_decreciente_icon.png" onclick="preview('/static/lineal_decreciente_icon.png', 'Lineal Decreciente', 'lineal_decreciente')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="lineal_decreciente" id="lineal_decreciente" onclick="handleClick('Lineal Decreciente');"/>
+                	    <label><font size="6">D1</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/logistica_invertida_icon.png" onclick="preview('/static/logistica_invertida_icon.png', 'Logística Invertida', 'logistica_invertida')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="logistica_invertida" id="logistica_invertida" onclick="handleClick('Logística Invertida');"/>
-			    <label><font size="6">D2</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/logistica_invertida_icon.png" onclick="preview('/static/logistica_invertida_icon.png', 'Logística Invertida', 'logistica_invertida')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="logistica_invertida" id="logistica_invertida" onclick="handleClick('Logística Invertida');"/>
+                	    <label><font size="6">D2</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/convexa_decreciente_icon.png" onclick="preview('/static/convexa_decreciente_icon.png', 'Convexa Decreciente', 'convexa_decreciente')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="convexa_decreciente" id="convexa_decreciente" onclick="handleClick('Convexa Decreciente');"/>
-			    <label><font size="6">D3</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/convexa_decreciente_icon.png" onclick="preview('/static/convexa_decreciente_icon.png', 'Convexa Decreciente', 'convexa_decreciente')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="convexa_decreciente" id="convexa_decreciente" onclick="handleClick('Convexa Decreciente');"/>
+                	    <label><font size="6">D3</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/concava_decreciente_icon.png" onclick="preview('/static/concava_decreciente_icon.png', 'Concava Decreciente', 'concava_decreciente')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="concava_decreciente" id="concava_decreciente" onclick="handleClick('Concava Decreciente');"/>
-			    <label><font size="6">D4</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/concava_decreciente_icon.png" onclick="preview('/static/concava_decreciente_icon.png', 'Concava Decreciente', 'concava_decreciente')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="concava_decreciente" id="concava_decreciente" onclick="handleClick('Concava Decreciente');"/>
+                	    <label><font size="6">D4</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		  </div>
-		</div>
+                  </div>
+                </div>
 
-		<div class="ui segment">
-		  <div class="ui four column grid">
+                <div class="ui segment">
+                  <div class="ui four column grid">
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/gaussian_icon.png" onclick="preview('/static/gaussian_icon.png', 'Campana', 'gaussian')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="gaussian" id="gaussian" onclick="handleClick('Campana');"/>
-			    <label><font size="6">N1</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/gaussian_icon.png" onclick="preview('/static/gaussian_icon.png', 'Campana', 'gaussian')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="gaussian" id="gaussian" onclick="handleClick('Campana');"/>
+                	    <label><font size="6">N1</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		    <div class="column">
-		      <div class="ui card">
-			<div class="image">
-			  <img src="/static/campana_invertida_icon.png" onclick="preview('/static/campana_invertida_icon.png', 'Campana Invertida', 'campana_invertida')">
-			</div>
-			<div class="content">
-			  <div class="ui radio checkbox">
-			    <input type="radio" name="function" value="campana_invertida" id="campana_invertida" onclick="handleClick('Campana Invertida');"/>
-			    <label><font size="6">N2</font></label>
-			  </div>
-			</div>
-		      </div>
-		    </div>
+                    <div class="column">
+                      <div class="ui card">
+                	<div class="image">
+                	  <img src="/static/campana_invertida_icon.png" onclick="preview('/static/campana_invertida_icon.png', 'Campana Invertida', 'campana_invertida')">
+                	</div>
+                	<div class="content">
+                	  <div class="ui radio checkbox">
+                	    <input type="radio" name="function" value="campana_invertida" id="campana_invertida" onclick="handleClick('Campana Invertida');"/>
+                	    <label><font size="6">N2</font></label>
+                	  </div>
+                	</div>
+                      </div>
+                    </div>
 
-		  </div>
-		</div>
-	     </div>
-	 </div>
-
-
-    <div class="four wide column">
-	<div class="ui segment">
-	  <font size="4">
-
-			Capa:</br></br>
-			<select class="ui dropdown" id="layer" name="layer" onchange="grabLayer()">
-			    {% for l in layers %}
-				<option value="{{ l.name }}">{{ l.name }}</option>
-			    {% endfor %}
-			</select>
-
-	    </font>
-
-	</div>
-	 <div class="ui segment">
-	     <font size="4">
-		Nombre:</br></br>
-		<div class="ui input" style="width:100%">
-				<input placeholder="nombre" id="nombre" name="nombre" value="">
-		</div>
-	     </font>
-	</div>
-	 <div class="ui segment" >
-	    <div id="rango_segment">
-	    <font size="4">
-		Rango:</br></br>
-		<label>Máximo</label>
-		<div class="ui input">
-				<input placeholder="maximo" id="maximo" name="maximo" value="">
-		</div>
-		</br>
-		<label>Mínimo</label>
-		<div class="ui input">
-				<input placeholder="minimo" id="minimo" name="minimo" value="">
-		</div>
-	    </font>
-	    </div>
-	</div>
-
-	<div class="ui segment" >
-	    <div id="eq_segment">
-	    <font size="4">
-		Función:</br></br>
-		<label></label>
-	    </font>
-	    </div>
-	</div>
+                  </div>
+                </div>
+             </div>
+         </div>
 
 
-	<div class="ui segment">
-	 <button class="ui right labeled icon button">
-	    <i class="right arrow icon"></i>
-	    continuar
-	  </button>
-	</div>
+    <div class="seven wide column">
+        <div class="ui segment">
+          <font size="4">
+
+                        Capa:</br></br>
+                        <select class="ui dropdown" id="layer" name="layer" onchange="grabLayer()">
+                            {% for l in layers %}
+                                <option value="{{ l.name }}">{{ l.name }}</option>
+                            {% endfor %}
+                        </select>
+
+            </font>
+
+        </div>
+        <div class="ui segment">
+          <font size="4">
+            Campo:</br></br>
+            <div class="eight wide column">
+               <select id="fields" class="ui dropdown" onchange="displayField()"></select>
+           </div>
+
+            </font>
+
+        </div>
+         <div class="ui segment">
+             <font size="4">
+                Nombre:</br></br>
+                <div class="ui input" style="width:100%">
+                		<input placeholder="nombre" id="nombre" name="nombre" value="">
+                </div>
+             </font>
+        </div>
+         <div class="ui segment" >
+            <div id="rango_segment">
+            <font size="4">
+                Rango:</br></br>
+                <label>Máximo</label>
+                <div class="ui input">
+                		<input placeholder="maximo" id="maximo" name="maximo" value="">
+                </div>
+                </br>
+                <label>Mínimo</label>
+                <div class="ui input">
+                		<input placeholder="minimo" id="minimo" name="minimo" value="">
+                </div>
+            </font>
+            </div>
+        </div>
+
+        <div class="ui segment" >
+            <div id="eq_segment">
+            <font size="4">
+                Función:</br></br>
+                <label></label>
+            </font>
+            </div>
+        </div>
+
+
+        <div class="ui segment">
+         <button class="ui right labeled icon button">
+            <i class="right arrow icon"></i>
+            continuar
+          </button>
+        </div>
 
 
     </div>
   </form>
-
-<form action="/upload/" method="post" enctype="multipart/form-data">
-  <input type="file" name="file[]" multiple="multiple">
-  <input type="submit" value="Upload">
-</form>
+  <form action="/upload/" method="post" enctype="multipart/form-data">
+    <input type="file" name="file[]" multiple="multiple">
+    <input type="submit" value="Upload">
+  </form>
 
 </div>
 
@@ -420,28 +429,65 @@ function get_features(url) {
 function grabLayer(){
 
     layer_name = document.getElementById("layer").value
+
     if (layer_name == "Sin Capa"){
-	document.getElementById("nombre").value="";
-	max = "";
-	min = "";
+        document.getElementById("nombre").value="";
+        max = "";
+        min = "";
     }else{
-	document.getElementById("nombre").value=layer_name;
-	layer_url="/static/layers/"+ layer_name +".json";
-	jsonSource_data_layer = new ol.source.Vector();
-	jsonSource_data_layer.addFeatures(get_features(layer_url));
-	var max = -100000000, min = 100000000;
-	jsonSource_data_layer.getFeatures().forEach(function(feature){
-		max = Math.max(max, feature.get("value"));
-		min = Math.min(min, feature.get("value"));
-	});
+
+        layer_url="/static/layers/"+ layer_name +".json";
+        jsonSource_data_layer = new ol.source.Vector();
+        jsonSource_data_layer.addFeatures(get_features(layer_url));
+        var fields = Object.keys(jsonSource_data_layer.getFeatures()[0].getProperties());
+        var select = document.getElementById( 'fields' );
+
+        for( field in fields ) {
+            if (fields[field] != "geometry"){
+                select.add( new Option( fields[field] ) );
+            }
+
+
+        };
+        // var max = -100000000, min = 100000000;
+        // jsonSource_data_layer.getFeatures().forEach(function(feature){
+        //     	max = Math.max(max, feature.get("value"));
+        //     	min = Math.min(min, feature.get("value"));
+        // });
     }
+    //
+    // document.getElementById("maximo").value=max;
+    // document.getElementById("minimo").value=min;
 
-    document.getElementById("maximo").value=max;
-    document.getElementById("minimo").value=min;
 
 
+};
 
-}
+function displayField(){
+
+    layer_name = document.getElementById("layer").value
+
+    var select = document.getElementById( 'fields' );
+    selected_field = select.options[select.selectedIndex].value
+    document.getElementById("nombre").value = layer_name + ":" + selected_field;
+    range = get_range(selected_field);
+    //document.getElementById("nombre").value=layer_name;
+    document.getElementById("maximo").value=range['max'];
+    document.getElementById("minimo").value=range['min'];
+
+
+};
+function get_range(field) {
+
+    var max = -100000000, min = 100000000;
+    jsonSource_data_layer.getFeatures().forEach(function(feature){
+	max = Math.max(max, feature.get(field));
+	min = Math.min(min, feature.get(field));
+    });
+
+    return {'max': max,
+	    'min': min}
+};
 </script>
 
 {% endblock %}
