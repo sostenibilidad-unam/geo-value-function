@@ -817,8 +817,8 @@ def to_json(layer, field, function_name):
 
     return Response(json.dumps(vf_dict),
                     mimetype='application/json',
-                    headers={'Content-Disposition':'attachment;filename=%s.json'
-                             % layer})
+                    headers={'Content-Disposition':'attachment;filename=%s__%s.json'
+                             % (layer, field)})
 
 
 def get_layers():
