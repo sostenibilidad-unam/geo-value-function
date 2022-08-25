@@ -833,4 +833,16 @@ def serve_static(path):
 
 
 if __name__ == "__main__":
+
     app.run(host='0.0.0.0')
+    app.config.update (
+        DEBUG = True,
+    )
+
+
+app.config.update (
+    DEBUG = False,
+    SERVER_NAME = "gvf.apps.lancis.ecologia.unam.mx"
+)
+
+    
