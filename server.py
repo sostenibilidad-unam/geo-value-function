@@ -19,7 +19,7 @@ from pathlib import Path
 from flask import Flask, make_response, request, send_from_directory, redirect, Response
 app = Flask(__name__)
 
-
+host = "http://gvf.apps.lancis.ecologia.unam.mx/"
 ROOT = Path(__file__).resolve().parent
 print(ROOT.joinpath('templates'))
 app.config['UPLOAD_FOLDER'] = ROOT.joinpath('uploads/')
@@ -62,7 +62,10 @@ def upload():
         geojson.write(dumps({"type": "FeatureCollection",
                              "features": buff}, indent=0))
 
-    return redirect("/")
+    if DEVMODE:
+        return redirect("/")
+    else:
+        return redirect(host + "/")
 
 def normalize100(x, xmax, xmin):
     return (100.0 * ( x - xmin )/( xmax - xmin ) )
@@ -174,8 +177,10 @@ def normalize01(y):
 
 @app.route("/")
 def root():
-    return redirect('/setup/', code=302)
-
+    if DEVMODE:
+        return redirect('/setup/', code=302)
+    else:
+        return redirect(host + '/setup/', code=302)
 
 @app.route("/setup/", methods=["GET", "POST"])
 def setup():
@@ -193,9 +198,12 @@ def setup():
            c = "none"
        minimo = request.values.get('minimo')
        maximo = request.values.get('maximo')
-       return redirect('/%s/%s/%s?min=%s&max=%s' % (l, c, f, minimo, maximo),
-                       code=302)
-
+       if DEVMODE:
+           return redirect('/%s/%s/%s?min=%s&max=%s' % (l, c, f, minimo, maximo),
+                           code=302)
+       else:
+           return redirect(host + '/%s/%s/%s?min=%s&max=%s' % (l, c, f, minimo, maximo),
+                           code=302)
 
 @app.route("/concava_creciente/plot/")
 def concava_creciente_plot():
@@ -831,18 +839,8 @@ def serve_static(path):
 
 
 
-
+DEVMODE = False
 if __name__ == "__main__":
-
+    DEVMODE = True
     app.run(host='0.0.0.0')
-    app.config.update (
-        DEBUG = True,
-    )
-
-
-app.config.update (
-    DEBUG = False,
-    SERVER_NAME = "gvf.apps.lancis.ecologia.unam.mx"
-)
-
     
