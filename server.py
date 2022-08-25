@@ -23,7 +23,6 @@ from flask import Flask, make_response, request, send_from_directory, redirect, 
 app = Flask(__name__)
 
 ROOT = Path(__file__).resolve().parent
-print(ROOT.joinpath('templates'))
 config = {}
 config['UPLOAD_FOLDER'] = ROOT.joinpath('uploads/')
 config['LAYER_FOLDER'] = ROOT.joinpath('static/layers/')
