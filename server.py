@@ -24,8 +24,9 @@ app = Flask(__name__)
 
 ROOT = Path(__file__).resolve().parent
 print(ROOT.joinpath('templates'))
-app.config['UPLOAD_FOLDER'] = ROOT.joinpath('uploads/')
-app.config['LAYER_FOLDER'] = ROOT.joinpath('static/layers/')
+config = {}
+config['UPLOAD_FOLDER'] = ROOT.joinpath('uploads/')
+config['LAYER_FOLDER'] = ROOT.joinpath('static/layers/')
 
 env = Environment(loader=FileSystemLoader(ROOT.joinpath('templates')))
 
@@ -43,11 +44,11 @@ def upload():
     for f in uploaded_files:
         if f and allowed_file(f.filename):
             filename = secure_filename(f.filename)
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            f.save(os.path.join(config['UPLOAD_FOLDER'], filename))
             if f.filename.endswith(".shp"):
                 elShp = f.filename
             filenames.append(filename)
-    reader = shapefile.Reader(os.path.join(app.config['UPLOAD_FOLDER'], elShp))
+    reader = shapefile.Reader(os.path.join(config['UPLOAD_FOLDER'], elShp))
     fields = reader.fields[1:]
     field_names = [field[0] for field in fields]
     buff = []
@@ -59,7 +60,7 @@ def upload():
 
     # write the GeoJSON file
     nombre = basename(elShp).replace('.shp', '.json')
-    with open(os.path.join(app.config['LAYER_FOLDER'], nombre),
+    with open(os.path.join(config['LAYER_FOLDER'], nombre),
               "w") as geojson:
         geojson.write(dumps({"type": "FeatureCollection",
                              "features": buff}, indent=0))
@@ -823,7 +824,7 @@ def to_json(layer, field, function_name):
 
 def get_layers():
     layers = [{'name' :"Sin Capa", 'url':"none"}]
-    for f in listdir(app.config['LAYER_FOLDER']):
+    for f in listdir(config['LAYER_FOLDER']):
         if f.endswith('.json'):
             layers.append({'name': f.replace('.json', ''),
                            'url': "/static/layers/%s" % f})
