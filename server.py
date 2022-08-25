@@ -5,29 +5,27 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib import colors
-import StringIO
+from io import BytesIO
 import numpy
 from os import listdir
 from os.path import basename
 import json
 from json import dumps
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import os
 import shapefile
-
 from jinja2 import Environment, FileSystemLoader
-
+from pathlib import Path
 from flask import Flask, make_response, request, send_from_directory, redirect, Response
 app = Flask(__name__)
 
-ROOT = '/var/www/geo-value-function/'
-ROOT = '/home/rgarcia/geo-value-function/'
-ROOT = '/Users/fidel/geo-value-function/'
 
-app.config['UPLOAD_FOLDER'] = ROOT + 'uploads/'
-app.config['LAYER_FOLDER'] = ROOT + 'static/layers/'
+ROOT = Path(__file__).resolve().parent
+print(ROOT.joinpath('templates'))
+app.config['UPLOAD_FOLDER'] = ROOT.joinpath('uploads/')
+app.config['LAYER_FOLDER'] = ROOT.joinpath('static/layers/')
 
-env = Environment(loader=FileSystemLoader(ROOT + 'templates'))
+env = Environment(loader=FileSystemLoader(ROOT.joinpath('templates')))
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = ['prj', 'shp', 'dbf', 'shx']
@@ -179,10 +177,8 @@ def root():
     return redirect('/setup/', code=302)
 
 
-from pprint import pprint
 @app.route("/setup/", methods=["GET", "POST"])
 def setup():
-    print "hola"
     if request.method == 'GET':
         template = env.get_template('setup.html')
         return template.render(layers=get_layers())
@@ -197,7 +193,6 @@ def setup():
            c = "none"
        minimo = request.values.get('minimo')
        maximo = request.values.get('maximo')
-       pprint(request.values)
        return redirect('/%s/%s/%s?min=%s&max=%s' % (l, c, f, minimo, maximo),
                        code=302)
 
@@ -232,7 +227,7 @@ def concava_creciente_plot():
 
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -269,7 +264,7 @@ def concava_decreciente_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -306,7 +301,7 @@ def convexa_decreciente_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -344,7 +339,7 @@ def convexa_creciente_plot():
 
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -386,7 +381,7 @@ def gaussian_plot():
 
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -424,7 +419,7 @@ def campana_invertida_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -461,7 +456,7 @@ def logistic_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -500,7 +495,7 @@ def logistica_invertida_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -534,7 +529,7 @@ def wf_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -567,7 +562,7 @@ def wf2_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -604,7 +599,7 @@ def linear_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -641,7 +636,7 @@ def lineal_decreciente_plot():
     ax.get_yaxis().set_visible(False)
 
     canvas = FigureCanvas(fig)
-    png_output = StringIO.StringIO()
+    png_output = BytesIO()
     canvas.print_png(png_output)
     response = make_response(png_output.getvalue())
     response.headers['Content-Type'] = 'image/png'
@@ -838,7 +833,4 @@ def serve_static(path):
 
 
 if __name__ == "__main__":
-
-    #app.debug = True
-
     app.run(host='0.0.0.0')

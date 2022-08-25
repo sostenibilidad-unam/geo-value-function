@@ -16,4 +16,4 @@ Start development server:
 
 Then point your browser to http://localhost:5000/
 
-This software may also be running here: http://gvf.magrat.mine.nu/
+This software may also be running here: http://gvf.apps.lancis.ecologia.unam.mx/
