@@ -818,7 +818,7 @@ def to_json(layer, field, function_name):
 
 def get_layers():
     layers = [{'name' :"Sin Capa", 'url':"none"}]
-    for f in listdir('static/layers'):
+    for f in listdir(app.config['LAYER_FOLDER']):
         if f.endswith('.json'):
             layers.append({'name': f.replace('.json', ''),
                            'url': "/static/layers/%s" % f})
