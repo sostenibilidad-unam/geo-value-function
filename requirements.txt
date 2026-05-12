@@ -1,6 +1,6 @@
 numpy
 Flask
-GDAL==3.0.2
+GDAL==3.13.0
 Jinja2
 matplotlib
 pandas
